@@ -15,6 +15,13 @@ class AuthController extends AccessController
 	 */
 	public function actionLogin()
 	{
+		if ( !Yii::$app->user->isGuest )
+		{
+			$this->goHome();
+		}
+		
+		$this->layout = 'loginLayout';
+
 		$model = new LoginForm();
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->login() )

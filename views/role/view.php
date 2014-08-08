@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'child_permissions',
 					ArrayHelper::map($currentPermissions, 'name', 'name'),
-					ArrayHelper::map($permissions, 'name', 'name')
+					ArrayHelper::map($permissions, 'name', 'description')
 				) ?>
 
 				<hr/>

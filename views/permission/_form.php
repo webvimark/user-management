@@ -16,7 +16,7 @@ use yii\helpers\Html;
 
 <?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
 
-<?= $form->field($model, 'description')->textArea(['rows'=>5]) ?>
+<?= $form->field($model, 'description') ?>
 
 
 	<div class="form-group">

@@ -2,11 +2,13 @@
 
 namespace app\webvimark\modules\UserManagement\components;
 
+use app\webvimark\modules\UserManagement\models\rbacDB\Route;
 use app\webvimark\modules\UserManagement\models\User;
 use yii\base\Action;
 use Yii;
 use yii\base\Module;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\Controller;
 
@@ -168,11 +170,13 @@ class AccessController extends Controller
 
 		if ( !$commonRoutes )
 		{
-			$commonRoutes = (new Query())
+			$commonRoutesDB = (new Query())
 				->select('child')
 				->from('auth_item_child')
 				->where(['parent'=>Yii::$app->getModule('user-management')->commonPermissionName])
 				->column();
+
+			$commonRoutes = Route::withSubRoutes($commonRoutesDB, ArrayHelper::map(Route::find()->asArray()->all(), 'name', 'name'));
 
 			Yii::$app->cache->set('__commonRoutes', $commonRoutes, 3600);
 		}
