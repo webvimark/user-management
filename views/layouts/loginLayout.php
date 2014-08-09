@@ -22,6 +22,8 @@ $this->title = 'Авторизация';
 
 <?php $this->beginBody() ?>
 
+<canvas id="c">
+</canvas>
 <?= $content ?>
 
 <?php $this->endBody() ?>

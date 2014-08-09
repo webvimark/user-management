@@ -145,28 +145,7 @@ class PermissionController extends AdminDefaultController
 	 */
 	public function actionRefreshRoutes($id)
 	{
-		$allRoutes = AuthHelper::getRoutes();
-
-		$currentRoutes = ArrayHelper::map(Route::find()->asArray()->all(), 'name', 'name');
-
-		$toAdd = array_diff(array_keys($allRoutes), array_keys($currentRoutes));
-		$toRemove = array_diff(array_keys($currentRoutes), array_keys($allRoutes));
-
-
-		foreach ($toAdd as $addItem)
-		{
-			Route::create($addItem);
-		}
-
-		if ( $toRemove )
-		{
-			Route::deleteAll(['in', 'name', $toRemove]);
-		}
-
-		if ( $toAdd OR $toRemove )
-		{
-			Yii::$app->cache->delete('__commonRoutes');
-		}
+		Route::refreshRoutes();
 
 		$this->redirect(['view', 'id'=>$id]);
 	}

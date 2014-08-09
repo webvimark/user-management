@@ -4,8 +4,8 @@
  * @var app\webvimark\modules\UserManagement\models\User $user
  */
 
-use app\webvimark\modules\UserManagement\components\AuthHelper;
 use yii\helpers\ArrayHelper;
+use app\webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
 
 $this->title = 'Права для пользователя: ' . $user->username;
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="panel-body">
 
 				<ul>
-					<?php foreach (AuthHelper::separateRoutesAndPermissions(Yii::$app->authManager->getPermissionsByUser($user->id))->permissions as $permission): ?>
+					<?php foreach (Permission::getUserPermissions($user->id) as $permission): ?>
 						<li><?= $permission->description ?></li>
 					<?php endforeach ?>
 				</ul>

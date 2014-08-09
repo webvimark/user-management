@@ -54,31 +54,4 @@ class UserPermissionController extends RbacBaseController
 
 		$this->redirect(['set', 'id'=>$id]);
 	}
-
-	/**
-	 * @param int $id - User ID
-	 */
-	public function actionSetPermissions($id)
-	{
-		$oldPermissions = array_keys(\Yii::$app->authManager->getPermissionsByUser($id));
-		$newPermissions = \Yii::$app->request->post('permissions', []);
-
-		$toAdd = array_diff($newPermissions, $oldPermissions);
-		$toRemove = array_diff($oldPermissions, $newPermissions);
-
-		foreach ($toRemove as $item)
-		{
-			$permission = \Yii::$app->authManager->getPermission($item);
-			\Yii::$app->authManager->revoke($permission, $id);
-		}
-
-		foreach ($toAdd as $item)
-		{
-			$permission = \Yii::$app->authManager->getPermission($item);
-
-			\Yii::$app->authManager->assign($permission, $id);
-		}
-
-		$this->redirect(['view', 'id'=>$id]);
-	}
 }

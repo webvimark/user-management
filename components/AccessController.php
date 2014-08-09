@@ -9,13 +9,14 @@ use Yii;
 use yii\base\Module;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 use yii\web\Controller;
 
 class AccessController extends Controller
 {
 	/**
-	 * Full url like '/site/index' instead of ''
+	 * Full url like '/site/index' instead of '' or '/user-management/auth/login' instead of '/login'
 	 *
 	 * @var string
 	 */
@@ -37,7 +38,7 @@ class AccessController extends Controller
 	}
 
 	/**
-	 * Make full url like '/site/index' instead of ''
+	 * Make full url like '/site/index' instead of '' or '/user-management/auth/login' instead of '/login'
 	 *
 	 * @param Action $action
 	 */
@@ -79,29 +80,22 @@ class AccessController extends Controller
 	 */
 	public function beforeControllerAction($action)
 	{
-		if ( $this->isFreeAccess($action) )
+		if ( Route::isFreeAccess($this->currentFullRoute, $action) )
 		{
 			return true;
 		}
 
 		if ( Yii::$app->user->isGuest )
 		{
-			if ( $this->isRouteAllowedForEveryOne() )
-			{
-				return true;
-			}
-			else
-			{
-				$this->denyAccess();
-			}
+			$this->denyAccess();
 		}
 
-//		// If user has been deleted, then destroy session and redirect to home page
-//		if ( Yii::$app->user->identity === null )
-//		{
-//			Yii::$app->getSession()->destroy();
-//			$this->denyAccess();
-//		}
+		// If user has been deleted, then destroy session and redirect to home page
+		if ( ! Yii::$app->user->isGuest AND Yii::$app->user->identity === null )
+		{
+			Yii::$app->getSession()->destroy();
+			$this->denyAccess();
+		}
 
 		// Superadmin owns everyone
 		if ( Yii::$app->user->isSuperadmin )
@@ -123,66 +117,6 @@ class AccessController extends Controller
 		$this->denyAccess();
 	}
 
-	/**
-	 * Check if controller has $freeAccess = true or $action in $freeAccessActions
-	 * Or it's login, logout, error page
-	 *
-	 * @param Action $action
-	 *
-	 * @return bool
-	 */
-	protected function isFreeAccess($action)
-	{
-		$controller = $action->controller;
-
-		if ( $controller->hasProperty('freeAccess') AND $controller->freeAccess === true )
-		{
-			return true;
-		}
-
-		if ( $controller->hasProperty('freeAccessActions') AND isset($controller->freeAccessActions[$action->id]) )
-		{
-			return true;
-		}
-
-		$systemPages = [
-			AuthHelper::unifyRoute(Yii::$app->user->loginUrl),
-			AuthHelper::unifyRoute(['/user-management/auth/logout']),
-			AuthHelper::unifyRoute(Yii::$app->errorHandler->errorAction),
-		];
-
-		if ( in_array($this->currentFullRoute, $systemPages) )
-		{
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if current route allowed for everyone (in commonPermission routes)
-	 *
-	 * @return bool
-	 */
-	protected function isRouteAllowedForEveryOne()
-	{
-		$commonRoutes = Yii::$app->cache->get('__commonRoutes');
-
-		if ( !$commonRoutes )
-		{
-			$commonRoutesDB = (new Query())
-				->select('child')
-				->from('auth_item_child')
-				->where(['parent'=>Yii::$app->getModule('user-management')->commonPermissionName])
-				->column();
-
-			$commonRoutes = Route::withSubRoutes($commonRoutesDB, ArrayHelper::map(Route::find()->asArray()->all(), 'name', 'name'));
-
-			Yii::$app->cache->set('__commonRoutes', $commonRoutes, 3600);
-		}
-
-		return in_array($this->currentFullRoute, $commonRoutes);
-	}
 
 	/**
 	 * Denies the access of the user.

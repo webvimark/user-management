@@ -1,6 +1,8 @@
 <?php
 namespace app\webvimark\modules\UserManagement\components;
 
+use app\webvimark\modules\UserManagement\models\rbacDB\Route;
+use Exception;
 use webvimark\helpers\Singleton;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
@@ -130,7 +132,36 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 
 		$baseRoute = AuthHelper::unifyRoute($routeWithParams[0]);
 
+		if ( Route::isFreeAccess($baseRoute) )
+		{
+			return true;
+		}
+
 		return in_array($baseRoute, Yii::$app->session->get('__userRoutes',[]));
+	}
+
+	/**
+	 * Assign any RBAC item (role, permission, route) to user
+	 *
+	 * @param string $itemName
+	 * @param bool   $hideErrors
+	 *
+	 * @throws \Exception
+	 */
+	public function assignRbacItem($itemName, $hideErrors = true)
+	{
+		try
+		{
+			Yii::$app->db->createCommand()->insert('auth_assignment', [
+					'item_name' => $itemName,
+					'user_id'   => $this->id,
+				])->execute();
+		}
+		catch (Exception $e)
+		{
+			if ( !$hideErrors )
+				throw $e;
+		}
 	}
 
 	/**
@@ -321,22 +352,26 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 		}
 		else
 		{
-			if ( Yii::$app->user->id == $this->id )
+			// Console doesn't have Yii::$app->user, so we skip it for console
+			if ( php_sapi_name() != 'cli' )
 			{
-				// Make sure user will not deactivate himself
-				$this->status = static::STATUS_ACTIVE;
-
-				// Superadmin could not demote himself
-				if ( Yii::$app->user->isSuperadmin AND $this->superadmin != 1 )
+				if ( Yii::$app->user->id == $this->id )
 				{
-					$this->superadmin = 1;
-				}
-			}
+					// Make sure user will not deactivate himself
+					$this->status = static::STATUS_ACTIVE;
 
-			// Don't let non-superadmin edit superadmin
-			if ( !Yii::$app->user->isSuperadmin AND $this->oldAttributes['superadmin'] == 1 )
-			{
-				return false;
+					// Superadmin could not demote himself
+					if ( Yii::$app->user->isSuperadmin AND $this->superadmin != 1 )
+					{
+						$this->superadmin = 1;
+					}
+				}
+
+				// Don't let non-superadmin edit superadmin
+				if ( !Yii::$app->user->isSuperadmin AND $this->oldAttributes['superadmin'] == 1 )
+				{
+					return false;
+				}
 			}
 		}
 
@@ -354,16 +389,20 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	 */
 	public function beforeDelete()
 	{
-		// Don't let delete yourself
-		if ( Yii::$app->user->id == $this->id )
+		// Console doesn't have Yii::$app->user, so we skip it for console
+		if ( php_sapi_name() != 'cli' )
 		{
-			return false;
-		}
+			// Don't let delete yourself
+			if ( Yii::$app->user->id == $this->id )
+			{
+				return false;
+			}
 
-		// Don't let non-superadmin delete superadmin
-		if ( !Yii::$app->user->isSuperadmin AND $this->superadmin == 1 )
-		{
-			return false;
+			// Don't let non-superadmin delete superadmin
+			if ( !Yii::$app->user->isSuperadmin AND $this->superadmin == 1 )
+			{
+				return false;
+			}
 		}
 
 		return parent::beforeDelete();

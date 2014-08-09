@@ -53,6 +53,24 @@ abstract class AbstractItem extends ActiveRecord
 	}
 
 	/**
+	 * @param mixed $condition
+	 *
+	 * @return bool
+	 */
+	public static function deleteIfExists($condition)
+	{
+		$model = static::findOne($condition);
+
+		if ( $model )
+		{
+			$model->delete();
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function behaviors()

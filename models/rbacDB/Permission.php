@@ -3,31 +3,35 @@ namespace app\webvimark\modules\UserManagement\models\rbacDB;
 
 use Exception;
 use Yii;
+use yii\rbac\DbManager;
 
 class Permission extends AbstractItem
 {
 	const ITEM_TYPE = self::TYPE_PERMISSION;
 
 	/**
+	 * @param int $userId
+	 *
+	 * @return array|\yii\rbac\Permission[]
+	 */
+	public static function getUserPermissions($userId)
+	{
+		return (new DbManager())->getPermissionsByUser($userId);
+	}
+
+	/**
 	 * Assign route to permission and create them if they don't exists
 	 * Helper mainly for migrations
 	 *
 	 * @param string $permissionName
-	 * @param string $routeName
+	 * @param array $routes
 	 * @param null   $permissionDescription
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return true|static|string
 	 */
-	public static function assignRoute($permissionName, $routeName, $permissionDescription = null)
+	public static function assignRoutes($permissionName, $routes, $permissionDescription = null)
 	{
-		$route = Route::findOne(['name' => $routeName]);
-
-		if ( !$route )
-		{
-			throw new \InvalidArgumentException("Route {$routeName} not found");
-		}
-
 		$permission = static::findOne(['name' => $permissionName]);
 
 		if ( !$permission )
@@ -40,17 +44,21 @@ class Permission extends AbstractItem
 			}
 		}
 
-		try
+		foreach ($routes as $route)
 		{
-			Yii::$app->db->createCommand()
-				->insert('auth_item_child', [
-					'parent' => $permission->name,
-					'child'  => $route->name,
-				])->execute();
-		}
-		catch (Exception $e)
-		{
-			return $e->getMessage();
+			try
+			{
+				Yii::$app->db->createCommand()
+					->insert('auth_item_child', [
+						'parent' => $permission->name,
+						'child'  => $route,
+					])->execute();
+			}
+			catch (Exception $e)
+			{
+				// Don't throw Exception because this permission may already have this route,
+				// so just go to the next route
+			}
 		}
 
 
