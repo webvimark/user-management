@@ -5,7 +5,7 @@ use yii\widgets\Pjax;
 
 /**
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch $searchModel
+ * @var webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch $searchModel
  * @var yii\web\View $this
  */
 $this->title = 'Роли';

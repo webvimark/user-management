@@ -1,9 +1,9 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\controllers;
+namespace webvimark\modules\UserManagement\controllers;
 
-use app\webvimark\modules\UserManagement\components\AccessController;
-use app\webvimark\modules\UserManagement\models\LoginForm;
+use webvimark\modules\UserManagement\components\AccessController;
+use webvimark\modules\UserManagement\models\LoginForm;
 use Yii;
 
 class AuthController extends AccessController

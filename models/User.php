@@ -1,9 +1,9 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\models;
+namespace webvimark\modules\UserManagement\models;
 
-use app\webvimark\modules\UserManagement\components\UserIdentity;
-use app\webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\components\UserIdentity;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;

@@ -1,24 +1,24 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\components;
+namespace webvimark\modules\UserManagement\components;
 
 
-use app\webvimark\modules\UserManagement\models\rbacDB\Permission;
-use app\webvimark\modules\UserManagement\models\rbacDB\Role;
-use app\webvimark\modules\UserManagement\models\rbacDB\Route;
+use webvimark\modules\UserManagement\models\rbacDB\Permission;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\models\rbacDB\Route;
 use yii\web\User;
 use Yii;
 
 /**
  * Class UserConfig
- * @package app\webvimark\modules\UserManagement\components
+ * @package webvimark\modules\UserManagement\components
  */
 class UserConfig extends User
 {
 	/**
 	 * @inheritdoc
 	 */
-	public $identityClass = 'app\webvimark\modules\UserManagement\models\User';
+	public $identityClass = 'webvimark\modules\UserManagement\models\User';
 
 	/**
 	 * @inheritdoc

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $model app\webvimark\modules\UserManagement\models\LoginForm
+ * @var $model webvimark\modules\UserManagement\models\LoginForm
  */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

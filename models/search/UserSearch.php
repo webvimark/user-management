@@ -1,14 +1,14 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\models\search;
+namespace webvimark\modules\UserManagement\models\search;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\User;
 
 /**
- * UserSearch represents the model behind the search form about `app\webvimark\modules\UserManagement\models\User`.
+ * UserSearch represents the model behind the search form about `webvimark\modules\UserManagement\models\User`.
  */
 class UserSearch extends User
 {

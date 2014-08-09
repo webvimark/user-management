@@ -1,11 +1,11 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\controllers;
+namespace webvimark\modules\UserManagement\controllers;
 
-use app\webvimark\modules\UserManagement\components\AuthHelper;
-use app\webvimark\modules\UserManagement\models\rbacDB\Permission;
-use app\webvimark\modules\UserManagement\models\rbacDB\Role;
-use app\webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch;
+use webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\models\rbacDB\Permission;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch;
 use webvimark\components\AdminDefaultController;
 use yii\filters\VerbFilter;
 use Yii;
@@ -15,12 +15,12 @@ class RoleController extends AdminDefaultController
 	/**
 	 * @var Role
 	 */
-	public $modelClass = 'app\webvimark\modules\UserManagement\models\rbacDB\Role';
+	public $modelClass = 'webvimark\modules\UserManagement\models\rbacDB\Role';
 
 	/**
 	 * @var RoleSearch
 	 */
-	public $modelSearchClass = 'app\webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch';
+	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch';
 
 	public function behaviors()
 	{

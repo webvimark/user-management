@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var app\webvimark\modules\UserManagement\models\User $model
+ * @var webvimark\modules\UserManagement\models\User $model
  */
 
 $this->title = 'Изменение пароля пользователя: ' . ' ' . $model->username;

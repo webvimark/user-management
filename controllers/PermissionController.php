@@ -1,12 +1,12 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\controllers;
+namespace webvimark\modules\UserManagement\controllers;
 
 
-use app\webvimark\modules\UserManagement\components\AuthHelper;
-use app\webvimark\modules\UserManagement\models\rbacDB\Permission;
-use app\webvimark\modules\UserManagement\models\rbacDB\Route;
-use app\webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
+use webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\models\rbacDB\Permission;
+use webvimark\modules\UserManagement\models\rbacDB\Route;
+use webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
 use webvimark\components\AdminDefaultController;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -18,12 +18,12 @@ class PermissionController extends AdminDefaultController
 	/**
 	 * @var Permission
 	 */
-	public $modelClass = 'app\webvimark\modules\UserManagement\models\rbacDB\Permission';
+	public $modelClass = 'webvimark\modules\UserManagement\models\rbacDB\Permission';
 
 	/**
 	 * @var PermissionSearch
 	 */
-	public $modelSearchClass = 'app\webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch';
+	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch';
 
 	public function behaviors()
 	{

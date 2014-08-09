@@ -1,9 +1,9 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\components;
+namespace webvimark\modules\UserManagement\components;
 
 
-use app\webvimark\modules\UserManagement\forms\ItemForm;
+use webvimark\modules\UserManagement\forms\ItemForm;
 use yii\data\ActiveDataProvider;
 use yii\rbac\Role;
 use yii\rbac\Permission;

@@ -6,10 +6,10 @@
  * Time: 11:30 AM
  */
 
-namespace app\webvimark\modules\UserManagement\forms;
+namespace webvimark\modules\UserManagement\forms;
 
 
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\User;
 use yii\base\Model;
 
 class NewUserForm extends Model
@@ -27,13 +27,13 @@ class NewUserForm extends Model
 		return [
 			['username', 'filter', 'filter' => 'trim'],
 			['username', 'required'],
-			['username', 'unique', 'targetClass' => 'app\webvimark\modules\UserManagement\models\User', 'message' => 'This username has already been taken.'],
+			['username', 'unique', 'targetClass' => 'webvimark\modules\UserManagement\models\User', 'message' => 'This username has already been taken.'],
 			['username', 'string', 'min' => 2, 'max' => 255],
 
 			['email', 'filter', 'filter' => 'trim'],
 			['email', 'required', 'on'=>'singUp'],
 			['email', 'email'],
-			['email', 'unique', 'targetClass' => 'app\webvimark\modules\UserManagement\models\User', 'message' => 'This email address has already been taken.'],
+			['email', 'unique', 'targetClass' => 'webvimark\modules\UserManagement\models\User', 'message' => 'This email address has already been taken.'],
 
 			['password', 'required'],
 			['password', 'string', 'min' => 3],

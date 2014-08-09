@@ -1,6 +1,6 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement;
+namespace webvimark\modules\UserManagement;
 
 class UserManagementModule extends \yii\base\Module
 {
@@ -44,7 +44,7 @@ class UserManagementModule extends \yii\base\Module
 
 
 
-	public $controllerNamespace = 'app\webvimark\modules\UserManagement\controllers';
+	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 
 	public function init()
 	{

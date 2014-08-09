@@ -1,5 +1,5 @@
 <?php
-namespace app\webvimark\modules\UserManagement\models\rbacDB;
+namespace webvimark\modules\UserManagement\models\rbacDB;
 
 use Exception;
 use Yii;

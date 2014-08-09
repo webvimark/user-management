@@ -3,7 +3,7 @@
  *
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var app\webvimark\modules\UserManagement\forms\ItemForm $model
+ * @var webvimark\modules\UserManagement\forms\ItemForm $model
  */
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;

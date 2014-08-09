@@ -1,5 +1,5 @@
 <?php
-namespace app\webvimark\modules\UserManagement\models;
+namespace webvimark\modules\UserManagement\models;
 
 use yii\base\Model;
 use Yii;

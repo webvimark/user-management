@@ -1,7 +1,7 @@
 <?php
 
-use app\webvimark\modules\UserManagement\models\rbacDB\Role;
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
@@ -13,7 +13,7 @@ use yii\grid\GridView;
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\webvimark\modules\UserManagement\models\search\UserSearch $searchModel
+ * @var webvimark\modules\UserManagement\models\search\UserSearch $searchModel
  */
 
 $this->title = 'Пользователи';

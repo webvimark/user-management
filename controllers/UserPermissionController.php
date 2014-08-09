@@ -1,9 +1,9 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\controllers;
+namespace webvimark\modules\UserManagement\controllers;
 
-use app\webvimark\modules\UserManagement\components\RbacBaseController;
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\components\RbacBaseController;
+use webvimark\modules\UserManagement\models\User;
 use yii\web\NotFoundHttpException;
 
 class UserPermissionController extends RbacBaseController

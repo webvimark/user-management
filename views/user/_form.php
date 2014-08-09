@@ -1,13 +1,13 @@
 <?php
 
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\User;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 /**
  * @var yii\web\View $this
- * @var app\webvimark\modules\UserManagement\models\User $model
+ * @var webvimark\modules\UserManagement\models\User $model
  * @var yii\bootstrap\ActiveForm $form
  */
 ?>

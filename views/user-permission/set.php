@@ -1,11 +1,11 @@
 <?php
 /**
  * @var yii\web\View $this
- * @var app\webvimark\modules\UserManagement\models\User $user
+ * @var webvimark\modules\UserManagement\models\User $user
  */
 
 use yii\helpers\ArrayHelper;
-use app\webvimark\modules\UserManagement\models\rbacDB\Permission;
+use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
 
 $this->title = 'Права для пользователя: ' . $user->username;

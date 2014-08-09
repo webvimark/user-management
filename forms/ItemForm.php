@@ -6,7 +6,7 @@
  * Time: 5:50 PM
  */
 
-namespace app\webvimark\modules\UserManagement\forms;
+namespace webvimark\modules\UserManagement\forms;
 
 
 use yii\base\Exception;

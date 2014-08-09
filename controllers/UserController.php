@@ -1,12 +1,12 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\controllers;
+namespace webvimark\modules\UserManagement\controllers;
 
-use app\webvimark\modules\UserManagement\models\UserForm;
+use webvimark\modules\UserManagement\models\UserForm;
 use webvimark\components\AdminDefaultController;
 use Yii;
-use app\webvimark\modules\UserManagement\models\User;
-use app\webvimark\modules\UserManagement\models\search\UserSearch;
+use webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\search\UserSearch;
 use webvimark\components\BaseController;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
@@ -19,12 +19,12 @@ class UserController extends AdminDefaultController
 	/**
 	 * @var User
 	 */
-	public $modelClass = 'app\webvimark\modules\UserManagement\models\User';
+	public $modelClass = 'webvimark\modules\UserManagement\models\User';
 
 	/**
 	 * @var UserSearch
 	 */
-	public $modelSearchClass = 'app\webvimark\modules\UserManagement\models\search\UserSearch';
+	public $modelSearchClass = 'webvimark\modules\UserManagement\models\search\UserSearch';
 
 	public function behaviors()
 	{

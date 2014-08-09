@@ -1,7 +1,7 @@
 <?php
-namespace app\webvimark\modules\UserManagement\models\rbacDB;
+namespace webvimark\modules\UserManagement\models\rbacDB;
 
-use app\webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\components\AuthHelper;
 use yii\base\Action;
 use yii\db\Expression;
 use yii\db\Query;

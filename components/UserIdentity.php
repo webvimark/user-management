@@ -1,7 +1,7 @@
 <?php
-namespace app\webvimark\modules\UserManagement\components;
+namespace webvimark\modules\UserManagement\components;
 
-use app\webvimark\modules\UserManagement\models\rbacDB\Route;
+use webvimark\modules\UserManagement\models\rbacDB\Route;
 use Exception;
 use webvimark\helpers\Singleton;
 use yii\base\NotSupportedException;

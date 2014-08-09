@@ -5,7 +5,7 @@ use yii\widgets\Pjax;
 
 /**
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var app\webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch $searchModel
+ * @var webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch $searchModel
  * @var yii\web\View $this
  */
 $this->title = 'Права';

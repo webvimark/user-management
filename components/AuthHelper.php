@@ -1,6 +1,6 @@
 <?php
 
-namespace app\webvimark\modules\UserManagement\components;
+namespace webvimark\modules\UserManagement\components;
 
 
 use Yii;

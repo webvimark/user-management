@@ -1,13 +1,13 @@
 <?php
 
-use app\webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\models\User;
 use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var app\webvimark\modules\UserManagement\models\User $model
+ * @var webvimark\modules\UserManagement\models\User $model
  */
 
 $this->title = 'Редактирование пользователя: ' . ' ' . $model->username;
