@@ -15,13 +15,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist webvimark/generators "*"
+php composer.phar require --prefer-dist webvimark/module-user-management "*"
 ```
 
 or add
 
 ```
-"webvimark/generators": "*"
+"webvimark/module-user-management": "*"
 ```
 
 to the require section of your `composer.json` file.
