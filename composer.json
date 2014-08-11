@@ -5,5 +5,8 @@
 		"psr-4": {
 			"webvimark\\modules\\UserManagement\\": ""
 		}
+	},
+	"require": {
+		"webvimark/components": "dev-master"
 	}
 }

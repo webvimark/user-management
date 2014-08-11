@@ -8,6 +8,8 @@ use Yii;
 
 class AuthController extends AccessController
 {
+	public $freeAccess = true;
+
 	/**
 	 * Login form
 	 *
