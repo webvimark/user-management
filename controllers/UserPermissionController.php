@@ -2,13 +2,15 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
-use webvimark\modules\UserManagement\components\RbacBaseController;
+use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\models\User;
+use yii\rbac\DbManager;
 use yii\web\NotFoundHttpException;
+use Yii;
 
-class UserPermissionController extends RbacBaseController
+class UserPermissionController extends BaseController
 {
-	public $enableBaseActions = false;
+	public $layout = '//back';
 
 	/**
 	 * @param int $id User ID
@@ -33,23 +35,25 @@ class UserPermissionController extends RbacBaseController
 	 */
 	public function actionSetRoles($id)
 	{
-		$oldAssignments = array_keys(\Yii::$app->authManager->getRolesByUser($id));
-		$newAssignments = \Yii::$app->request->post('roles', []);
+		$authManager = new DbManager();
+		
+		$oldAssignments = array_keys($authManager->getRolesByUser($id));
+		$newAssignments = Yii::$app->request->post('roles', []);
 
 		$toAssign = array_diff($newAssignments, $oldAssignments);
 		$toRevoke = array_diff($oldAssignments, $newAssignments);
 
 		foreach ($toRevoke as $item)
 		{
-			$role = \Yii::$app->authManager->getRole($item);
-			\Yii::$app->authManager->revoke($role, $id);
+			$role = $authManager->getRole($item);
+			$authManager->revoke($role, $id);
 		}
 
 		foreach ($toAssign as $item)
 		{
-			$role = \Yii::$app->authManager->getRole($item);
+			$role = $authManager->getRole($item);
 
-			\Yii::$app->authManager->assign($role, $id);
+			$authManager->assign($role, $id);
 		}
 
 		$this->redirect(['set', 'id'=>$id]);

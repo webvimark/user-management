@@ -4,9 +4,11 @@
  * @var webvimark\modules\UserManagement\models\User $user
  */
 
+use webvimark\modules\UserManagement\models\rbacDB\Role;
 use yii\helpers\ArrayHelper;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
+use yii\rbac\DbManager;
 
 $this->title = 'Права для пользователя: ' . $user->username;
 
@@ -28,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<?= Html::checkboxList(
 					'roles',
-					ArrayHelper::map(Yii::$app->authManager->getRolesByUser($user->id), 'name', 'name'),
-					ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
+					ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name'),
+					ArrayHelper::map((new DbManager())->getRoles(), 'name', 'name')
 				) ?>
 				<br/>
 

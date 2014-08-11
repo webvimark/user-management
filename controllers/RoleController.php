@@ -9,6 +9,7 @@ use webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch;
 use webvimark\components\AdminDefaultController;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\rbac\DbManager;
 
 class RoleController extends AdminDefaultController
 {
@@ -43,6 +44,8 @@ class RoleController extends AdminDefaultController
 	{
 		$role = $this->findModel($id);
 
+		$authManager = new DbManager();
+
 		$allRoles = Role::find()
 			->asArray()
 			->andWhere('name != :current_name', [':current_name'=>$id])
@@ -53,9 +56,9 @@ class RoleController extends AdminDefaultController
 			->asArray()
 			->all();
 
-		$childRoles = Yii::$app->authManager->getChildren($role->name);
+		$childRoles = $authManager->getChildren($role->name);
 
-		$currentRoutesAndPermissions = AuthHelper::separateRoutesAndPermissions(Yii::$app->authManager->getPermissionsByRole($role->name));
+		$currentRoutesAndPermissions = AuthHelper::separateRoutesAndPermissions($authManager->getPermissionsByRole($role->name));
 
 		$currentPermissions = $currentRoutesAndPermissions->permissions;
 
@@ -71,21 +74,23 @@ class RoleController extends AdminDefaultController
 	{
 		$role = $this->findModel($id);
 
+		$authManager = new DbManager();
+
 		$newChildRoles = Yii::$app->request->post('child_roles', []);
 
-		$oldChildRoles = array_keys(Yii::$app->authManager->getChildren($role->name));
+		$oldChildRoles = array_keys($authManager->getChildren($role->name));
 
 		$toRemove = array_diff($oldChildRoles, $newChildRoles);
 		$toAdd = array_diff($newChildRoles, $oldChildRoles);
 
 		foreach ($toAdd as $addItem)
 		{
-			Yii::$app->authManager->addChild($role, Yii::$app->authManager->getRole($addItem));
+			$authManager->addChild($role, $authManager->getRole($addItem));
 		}
 
 		foreach ($toRemove as $removeItem)
 		{
-			Yii::$app->authManager->removeChild($role, Yii::$app->authManager->getRole($removeItem));
+			$authManager->removeChild($role, $authManager->getRole($removeItem));
 		}
 
 		$this->redirect(['view', 'id'=>$id]);
@@ -100,21 +105,23 @@ class RoleController extends AdminDefaultController
 	{
 		$role = $this->findModel($id);
 
+		$authManager = new DbManager();
+
 		$newChildPermissions = Yii::$app->request->post('child_permissions', []);
 
-		$oldChildPermissions = array_keys(Yii::$app->authManager->getPermissionsByRole($role->name));
+		$oldChildPermissions = array_keys($authManager->getPermissionsByRole($role->name));
 
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
 
 		foreach ($toAdd as $addItem)
 		{
-			Yii::$app->authManager->addChild($role, Yii::$app->authManager->getPermission($addItem));
+			$authManager->addChild($role, $authManager->getPermission($addItem));
 		}
 
 		foreach ($toRemove as $removeItem)
 		{
-			Yii::$app->authManager->removeChild($role, Yii::$app->authManager->getPermission($removeItem));
+			$authManager->removeChild($role, $authManager->getPermission($removeItem));
 		}
 
 		$this->redirect(['view', 'id'=>$id]);

@@ -27,7 +27,7 @@ class AuthHelper
 	/**
 	 * Select items that has "/" in permissions
 	 *
-	 * @param array $allPermissions - \Yii::$app->authManager->getPermissions()
+	 * @param array $allPermissions
 	 *
 	 * @return object
 	 */

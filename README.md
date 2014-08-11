@@ -36,9 +36,6 @@ In your config/web.php
 		'user' => [
 			'class' => 'webvimark\modules\UserManagement\components\UserConfig',
 		],
-		'authManager' => [
-			'class' => 'yii\rbac\DbManager',
-		],
 	],
 
 	'modules'=>[

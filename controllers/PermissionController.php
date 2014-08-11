@@ -12,6 +12,7 @@ use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use Yii;
+use yii\rbac\DbManager;
 
 class PermissionController extends AdminDefaultController
 {
@@ -53,7 +54,9 @@ class PermissionController extends AdminDefaultController
 			->asArray()
 			->all();
 
-		$currentRoutesAndPermissions = AuthHelper::separateRoutesAndPermissions(Yii::$app->authManager->getChildren($item->name));
+		$authManager = new DbManager();
+
+		$currentRoutesAndPermissions = AuthHelper::separateRoutesAndPermissions($authManager->getChildren($item->name));
 
 		$childRoutes = $currentRoutesAndPermissions->routes;
 		$childPermissions = $currentRoutesAndPermissions->permissions;
@@ -70,21 +73,23 @@ class PermissionController extends AdminDefaultController
 	{
 		$item = $this->findModel($id);
 
+		$authManager = new DbManager();
+
 		$newChildPermissions = Yii::$app->request->post('child_permissions', []);
 
-		$oldChildPermissions = array_keys(Yii::$app->authManager->getChildren($item->name));
+		$oldChildPermissions = array_keys($authManager->getChildren($item->name));
 
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
 
 		foreach ($toAdd as $addItem)
 		{
-			Yii::$app->authManager->addChild($item, Yii::$app->authManager->getPermission($addItem));
+			$authManager->addChild($item, $authManager->getPermission($addItem));
 		}
 
 		foreach ($toRemove as $removeItem)
 		{
-			Yii::$app->authManager->removeChild($item, Yii::$app->authManager->getPermission($removeItem));
+			$authManager->removeChild($item, $authManager->getPermission($removeItem));
 		}
 
 		$this->redirect(['view', 'id'=>$id]);

@@ -15,6 +15,9 @@ use yii\web\Controller;
 
 class AccessController extends Controller
 {
+	public $freeAccess = false;
+	public $freeAccessActions = [];
+
 	/**
 	 * Full url like '/site/index' instead of '' or '/user-management/auth/login' instead of '/login'
 	 *
