@@ -54,6 +54,11 @@ class UserSearch extends User
 			return $dataProvider;
 		}
 
+		if ( $this->gridRoleSearch )
+		{
+			$query->joinWith(['roles']);
+		}
+
 		$query->andFilterWhere([
 			'id' => $this->id,
 			'superadmin' => $this->superadmin,

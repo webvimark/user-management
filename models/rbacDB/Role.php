@@ -67,6 +67,8 @@ class Role extends AbstractItem
 
 		foreach ($routes as $route)
 		{
+			Route::create($route);
+
 			try
 			{
 				Yii::$app->db->createCommand()
