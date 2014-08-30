@@ -35,15 +35,6 @@ class UserManagementModule extends \yii\base\Module
 	 */
 	public $rbacLayout = '@app/views/layouts/back.php';
 
-	/**
-	 * Login, logout, change password, etc
-	 *
-	 * @var string
-	 */
-	public $authControllerLayout = '@app/views/layouts/main.php';
-
-
-
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 
 	public function init()

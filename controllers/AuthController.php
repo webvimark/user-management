@@ -50,16 +50,4 @@ class AuthController extends AccessController
 	{
 		return $this->render('changePassword');
 	}
-
-	/**
-	 * Set layout
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		$this->layout = $this->module->authControllerLayout;
-
-		return parent::beforeAction($action);
-	}
 }

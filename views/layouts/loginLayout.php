@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-AppAsset::register($this);
+//AppAsset::register($this);
 $this->title = 'Авторизация';
 ?>
 <?php $this->beginPage() ?>
@@ -22,8 +22,6 @@ $this->title = 'Авторизация';
 
 <?php $this->beginBody() ?>
 
-<canvas id="c">
-</canvas>
 <?= $content ?>
 
 <?php $this->endBody() ?>

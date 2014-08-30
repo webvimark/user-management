@@ -21,7 +21,7 @@ class Role extends AbstractItem
 	}
 
 	/**
-	 * Assign route to role via permission and create permission if it don't exists
+	 * Assign route to role via permission and create permission or route if it don't exists
 	 * Helper mainly for migrations
 	 *
 	 * @param string $roleName

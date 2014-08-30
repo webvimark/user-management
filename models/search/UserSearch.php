@@ -30,7 +30,6 @@ class UserSearch extends User
 	{
 		$query = User::find();
 
-//		$query->joinWith(['roles']);
 		$query->with(['roles']);
 
 		if ( !Yii::$app->user->isSuperadmin )
@@ -41,7 +40,7 @@ class UserSearch extends User
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'pagination' => [
-				'pageSize' => \Yii::$app->request->cookies->getValue('_grid_page_size', 20),
+				'pageSize' => Yii::$app->request->cookies->getValue('_grid_page_size', 20),
 			],
 			'sort'=>[
 				'defaultOrder'=>[
