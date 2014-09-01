@@ -106,7 +106,7 @@ class AccessController extends Controller
 			return true;
 		}
 
-		if ( Yii::$app->user->identity->status != User::STATUS_ACTIVE)
+		if ( Yii::$app->user->identity AND Yii::$app->user->identity->status != User::STATUS_ACTIVE)
 		{
 			Yii::$app->user->logout();
 			Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
