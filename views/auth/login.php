@@ -34,7 +34,7 @@ BootstrapAsset::register($this);
 					<?= $form->field($model, 'password')
 						->passwordInput(['placeholder'=>$model->getAttributeLabel('password'), 'autocomplete'=>'off']) ?>
 
-					<?= $form->field($model, 'rememberMe')->checkbox() ?>
+					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
 
 					<?= Html::submitButton('Войти', ['class' => 'btn btn-lg btn-success btn-block']) ?>
 
