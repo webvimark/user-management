@@ -46,7 +46,7 @@ class GhostNav extends Nav
 				}
 			}
 
-			if ( !isset( $item['visible'] ) OR $item['visible'] === true )
+			if ( isset( $item['label'] ) AND ( !isset( $item['visible'] ) OR $item['visible'] === true ) )
 			{
 				$allVisible = true;
 			}
