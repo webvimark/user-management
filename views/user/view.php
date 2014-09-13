@@ -24,6 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		    <p>
 			<?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']) ?>
 			<?= Html::a('Создать', ['create'], ['class' => 'btn btn-sm btn-success']) ?>
+			<?= Html::a(
+				'Права и роли',
+				['/user-management/user-permission/set', 'id'=>$model->id],
+				['class' => 'btn btn-sm btn-default']
+			) ?>
+
 			<?= Html::a('Удалить', ['delete', 'id' => $model->id], [
 			    'class' => 'btn btn-sm btn-danger pull-right',
 			    'data' => [
