@@ -12,7 +12,7 @@ class AuthHelper
 {
 
 	/**
-	 * Return '/some/another/here'
+	 * Return route without baseUrl and start it with slash
 	 *
 	 * @param string|array $route
 	 *
@@ -20,7 +20,28 @@ class AuthHelper
 	 */
 	public static function unifyRoute($route)
 	{
-		return '/' . ltrim(Url::to($route), '/');
+		if ( Yii::$app->getUrlManager()->showScriptName === true )
+		{
+			$baseUrl = Yii::$app->getRequest()->scriptUrl;
+		}
+		else
+		{
+			$baseUrl = Yii::$app->getRequest()->baseUrl;
+		}
+
+		$route = Url::to($route);
+
+		// If it's not clean url like localhost/folder/index.php/bla-bla then remove
+		// baseUrl and leave only relative path 'bla-bla'
+		if ( $baseUrl )
+		{
+			if ( strpos($route, $baseUrl) === 0 )
+			{
+				$route = substr_replace($route, '', 0, strlen($baseUrl));
+			}
+		}
+
+		return '/' . ltrim($route, '/');
 	}
 
 

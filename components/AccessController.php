@@ -19,19 +19,10 @@ class AccessController extends Controller
 	public $freeAccessActions = [];
 
 	/**
-	 * Full url like '/site/index' instead of '' or '/user-management/auth/login' instead of '/login'
-	 *
-	 * @var string
-	 */
-	public $currentFullRoute;
-
-	/**
 	 * @inheritdoc
 	 */
 	public function beforeAction($action)
 	{
-		$this->calculateFullRoute($action);
-
 		if ( !$this->beforeControllerAction($action) )
 		{
 			return false;
@@ -39,40 +30,6 @@ class AccessController extends Controller
 
 		return parent::beforeAction($action);
 	}
-
-	/**
-	 * Make full url like '/site/index' instead of '' or '/user-management/auth/login' instead of '/login'
-	 *
-	 * @param Action $action
-	 */
-	protected function calculateFullRoute($action)
-	{
-		$parts[] = $action->id;
-		$parts[] = $action->controller->id;
-
-		$fullParts = $this->prependModulesRecursive($action->controller->module, $parts);
-
-		$this->currentFullRoute = '/' . implode('/', array_reverse($fullParts));
-	}
-
-	/**
-	 * @param Module $module
-	 * @param array $parts
-	 *
-	 * @return array
-	 */
-	protected function prependModulesRecursive($module, $parts)
-	{
-		if ( $module->module )
-		{
-			$parts[] = $module->id;
-
-			return $this->prependModulesRecursive($module->module, $parts);
-		}
-
-		return $parts;
-	}
-
 
 	/**
 	 * Check if user has access to current route
@@ -83,7 +40,9 @@ class AccessController extends Controller
 	 */
 	public function beforeControllerAction($action)
 	{
-		if ( Route::isFreeAccess($this->currentFullRoute, $action) )
+		$route = '/' . $action->uniqueId;
+
+		if ( Route::isFreeAccess($route, $action) )
 		{
 			return true;
 		}
@@ -112,7 +71,7 @@ class AccessController extends Controller
 			Yii::$app->getResponse()->redirect(Yii::$app->getHomeUrl());
 		}
 
-		if ( User::canRoute($this->currentFullRoute) )
+		if ( User::canRoute($route) )
 		{
 			return true;
 		}

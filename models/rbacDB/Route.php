@@ -135,12 +135,12 @@ class Route extends AbstractItem
 	 * Check if controller has $freeAccess = true or $action in $freeAccessActions
 	 * Or it's login, logout, error page
 	 *
-	 * @param string $currentFullRoute
+	 * @param string $route
 	 * @param Action|null $action
 	 *
 	 * @return bool
 	 */
-	public static function isFreeAccess($currentFullRoute, $action = null)
+	public static function isFreeAccess($route, $action = null)
 	{
 		if ( $action )
 		{
@@ -158,17 +158,17 @@ class Route extends AbstractItem
 		}
 
 		$systemPages = [
-			'/user-management/auth/login',
 			'/user-management/auth/logout',
 			AuthHelper::unifyRoute(Yii::$app->errorHandler->errorAction),
+			AuthHelper::unifyRoute(Yii::$app->user->loginUrl),
 		];
 
-		if ( in_array($currentFullRoute, $systemPages) )
+		if ( in_array($route, $systemPages) )
 		{
 			return true;
 		}
 
-		if ( static::isInCommonPermission($currentFullRoute) )
+		if ( static::isInCommonPermission($route) )
 		{
 			return true;
 		}
