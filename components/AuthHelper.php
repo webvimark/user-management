@@ -29,19 +29,25 @@ class AuthHelper
 			$baseUrl = Yii::$app->getRequest()->baseUrl;
 		}
 
-		$route = Url::to($route);
+		// Check if $route has been passed as array or as string with params (or without)
+		if ( !is_array($route) )
+		{
+			$route = explode('?', $route);
+		}
+
+		$routeAsString = $route[0];
 
 		// If it's not clean url like localhost/folder/index.php/bla-bla then remove
 		// baseUrl and leave only relative path 'bla-bla'
 		if ( $baseUrl )
 		{
-			if ( strpos($route, $baseUrl) === 0 )
+			if ( strpos($routeAsString, $baseUrl) === 0 )
 			{
-				$route = substr_replace($route, '', 0, strlen($baseUrl));
+				$routeAsString = substr_replace($routeAsString, '', 0, strlen($baseUrl));
 			}
 		}
 
-		return '/' . ltrim($route, '/');
+		return '/' . ltrim($routeAsString, '/');
 	}
 
 

@@ -128,9 +128,7 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 			return true;
 		}
 
-		$routeWithParams = explode('?', Url::to($route));
-
-		$baseRoute = AuthHelper::unifyRoute($routeWithParams[0]);
+		$baseRoute = AuthHelper::unifyRoute($route);
 
 		if ( Route::isFreeAccess($baseRoute) )
 		{
