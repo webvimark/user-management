@@ -35,7 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'child_roles',
 					ArrayHelper::map($childRoles, 'name', 'name'),
-					ArrayHelper::map($allRoles, 'name', 'name')
+					ArrayHelper::map($allRoles, 'name', 'name'),
+					['separator'=>'<br>']
 				) ?>
 
 				<hr/>
@@ -62,7 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'child_permissions',
 					ArrayHelper::map($currentPermissions, 'name', 'name'),
-					ArrayHelper::map($permissions, 'name', 'description')
+					ArrayHelper::map($permissions, 'name', 'description'),
+					['separator'=>'<br>']
 				) ?>
 
 				<hr/>

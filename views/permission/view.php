@@ -34,7 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'child_permissions',
 					ArrayHelper::map($childPermissions, 'name', 'name'),
-					ArrayHelper::map($permissions, 'name', 'description')
+					ArrayHelper::map($permissions, 'name', 'description'),
+					['separator'=>'<br>']
 				) ?>
 
 				<hr/>
@@ -99,7 +100,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					'child_routes',
 					ArrayHelper::map($childRoutes, 'name', 'name'),
 					ArrayHelper::map($routes, 'name', 'name'),
-					['id'=>'routes-list']
+					[
+						'id'=>'routes-list',
+						'separator'=>'<div class="separator"></div>',
+//						'item'=>function ($index, $label, $name, $checked, $value){
+//								return $index;
+//							},
+					]
 				) ?>
 
 				<hr/>
@@ -134,7 +141,8 @@ $('#show-only-selected-routes').on('click', function(){
 
 		if ( ! _t.is(':checked') )
 		{
-			_t.closest('div.checkbox').addClass('hide');
+			_t.closest('label').addClass('hide');
+			_t.closest('div.separator').addClass('hide');
 		}
 	});
 });
@@ -162,11 +170,13 @@ $('#search-in-routes').on('change keyup', function(){
 
 		if ( _t.html().indexOf(input.val()) > -1 )
 		{
-			_t.closest('div.checkbox').removeClass('hide');
+			_t.closest('label').removeClass('hide');
+			_t.closest('div.separator').removeClass('hide');
 		}
 		else
 		{
-			_t.closest('div.checkbox').addClass('hide');
+			_t.closest('label').addClass('hide');
+			_t.closest('div.separator').addClass('hide');
 		}
 	});
 });

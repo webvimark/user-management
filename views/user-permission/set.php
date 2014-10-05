@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'roles',
 					ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name'),
-					ArrayHelper::map((new DbManager())->getRoles(), 'name', 'name')
+					ArrayHelper::map((new DbManager())->getRoles(), 'name', 'name'),
+					['separator'=>'<br>']
 				) ?>
 				<br/>
 
