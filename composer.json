@@ -7,6 +7,8 @@
 		}
 	},
 	"require": {
-		"webvimark/components": "dev-master"
+		"webvimark/components": "dev-master",
+		"cbschuld/browser.php": "dev-master",
+		"webvimark/helpers": "dev-master"
 	}
 }
