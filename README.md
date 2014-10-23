@@ -32,6 +32,7 @@ Configuration
 In your config/web.php
 
 ```php
+
 	'components'=>[
 		'user' => [
 			'class' => 'webvimark\modules\UserManagement\components\UserConfig',
@@ -48,4 +49,6 @@ In your config/web.php
 Usage
 -----
 
-Go to gii
+Users - http://site.com/user-management/user/index
+Roles - http://site.com/user-management/role/index
+Permissions - http://site.com/user-management/permission/index

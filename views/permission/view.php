@@ -103,9 +103,14 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'id'=>'routes-list',
 						'separator'=>'<div class="separator"></div>',
-//						'item'=>function ($index, $label, $name, $checked, $value){
-//								return $index;
-//							},
+						'item'=>function($index, $label, $name, $checked, $value) {
+								return Html::checkbox($name, $checked, [
+									'value' => $value,
+									'label' => '<span class="route-text">' . $label . '</span>',
+									'labelOptions'=>['class'=>'route-label'],
+									'class'=>'route-checkbox',
+								]);
+						},
 					]
 				) ?>
 
@@ -125,18 +130,64 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 $js = <<<JS
 
+var routeCheckboxes = $('.route-checkbox');
+var routeText = $('.route-text');
+
+// For checked routes
+var backgroundColor = '#D6FFDE';
+
 function showAllRoutesBack() {
 	$('#routes-list').find('.hide').each(function(){
 		$(this).removeClass('hide');
 	});
 }
 
+//Make tree-like structure by padding controllers and actions
+routeText.each(function(){
+	var _t = $(this);
+
+	var chunks = _t.html().split('/').reverse();
+	var margin = chunks.length * 40 - 40;
+
+	if ( chunks[0] == '*' )
+	{
+		margin -= 40;
+	}
+
+	_t.closest('label').css('margin-left', margin);
+
+});
+
+// Highlight selected checkboxes
+routeCheckboxes.each(function(){
+	var _t = $(this);
+
+	if ( _t.is(':checked') )
+	{
+		_t.closest('label').css('background', backgroundColor);
+	}
+});
+
+routeCheckboxes.on('change', function(){
+	var _t = $(this);
+
+	if ( _t.is(':checked') )
+	{
+		_t.closest('label').css('background', backgroundColor);
+	}
+	else
+	{
+		_t.closest('label').css('background', 'none');
+	}
+});
+
+
 // Hide on not selected routes
 $('#show-only-selected-routes').on('click', function(){
 	$(this).addClass('hide');
 	$('#show-all-routes').removeClass('hide');
 
-	$('#routes-list').find('input[type="checkbox"]').each(function(){
+	routeCheckboxes.each(function(){
 		var _t = $(this);
 
 		if ( ! _t.is(':checked') )
@@ -165,7 +216,7 @@ $('#search-in-routes').on('change keyup', function(){
 		return;
 	}
 
-	$('#routes-list').find('label').each(function(){
+	routeText.each(function(){
 		var _t = $(this);
 
 		if ( _t.html().indexOf(input.val()) > -1 )
