@@ -36,6 +36,13 @@ In your config/web.php
 	'components'=>[
 		'user' => [
 			'class' => 'webvimark\modules\UserManagement\components\UserConfig',
+
+			// Uncomment this if you want to record user logins
+			/**
+        		'on afterLogin' => function($event) {
+        				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
+        			}
+        		*/
 		],
 	],
 
@@ -50,5 +57,9 @@ Usage
 -----
 
 Users - http://site.com/user-management/user/index
+
 Roles - http://site.com/user-management/role/index
+
 Permissions - http://site.com/user-management/permission/index
+
+Visit log - http://site.com/user-management/user-visit-log/index
