@@ -36,7 +36,7 @@ BootstrapAsset::register($this);
 
 					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
 
-					<?= Html::submitButton('Войти', ['class' => 'btn btn-lg btn-success btn-block']) ?>
+					<?= Html::submitButton('Войти', ['class' => 'btn btn-lg btn-primary btn-block']) ?>
 
 					<?php ActiveForm::end() ?>
 				</div>
@@ -48,7 +48,7 @@ BootstrapAsset::register($this);
 <?php
 $css = <<<CSS
 html, body {
-	background: #333;
+	background: #eee;
 	-webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 	box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 	height: 100%;
