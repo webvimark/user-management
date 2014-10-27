@@ -10,11 +10,12 @@
  * @var yii\rbac\Role $role
  */
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 $this->title = $role->name;
-$this->params['breadcrumbs'][] = ['label' => 'Роли', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Roles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
-					<span class="glyphicon glyphicon-th"></span> Дочерние роли
+					<span class="glyphicon glyphicon-th"></span> <?= UserManagementModule::t('back', 'Child roles') ?>
 				</strong>
 			</div>
 			<div class="panel-body">
@@ -41,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<hr/>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class'=>'btn btn-primary btn-sm']
 				) ?>
 
@@ -54,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
-					<span class="glyphicon glyphicon-th"></span> Права
+					<span class="glyphicon glyphicon-th"></span> <?= UserManagementModule::t('back', 'Permissions') ?>
 				</strong>
 			</div>
 			<div class="panel-body">
@@ -69,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<hr/>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class'=>'btn btn-primary btn-sm']
 				) ?>
 

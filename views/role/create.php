@@ -3,13 +3,12 @@
  *
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\forms\ItemForm $model
+ * @var webvimark\modules\UserManagement\models\rbacDB\Role $model
  */
-use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use webvimark\modules\UserManagement\UserManagementModule;
 
-$this->title = 'Создание роли';
-$this->params['breadcrumbs'][] = ['label' => 'Роли', 'url' => ['index']];
+$this->title = UserManagementModule::t('back', 'Role creation');
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Roles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="panel panel-default">
@@ -21,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<?= $this->render('_form', [
 			'model'=>$model,
-			'insert'=>true,
 		]) ?>
 	</div>
 </div>

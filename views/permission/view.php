@@ -8,14 +8,16 @@
  * @var array $childPermissions
  * @var yii\rbac\Permission $item
  */
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+
 $this->title = $item->name;
-$this->params['breadcrumbs'][] = ['label' => 'Права', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2>Настройки для правила: <b><?= $this->title ?></b></h2>
+<h2><?= UserManagementModule::t('back', 'Settings for permission:') ?> <b><?= $this->title ?></b></h2>
 <br/>
 
 
@@ -24,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
-					<span class="glyphicon glyphicon-th"></span> Дочерние права
+					<span class="glyphicon glyphicon-th"></span> <?= UserManagementModule::t('back', 'Child permissions') ?>
 				</strong>
 			</div>
 			<div class="panel-body">
@@ -40,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<hr/>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class'=>'btn btn-primary btn-sm']
 				) ?>
 
@@ -74,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="row">
 					<div class="col-sm-3">
 						<?= Html::submitButton(
-							'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+							'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 							['class'=>'btn btn-primary btn-sm']
 						) ?>
 					</div>
@@ -116,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<hr/>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class'=>'btn btn-primary btn-sm']
 				) ?>
 
@@ -168,6 +170,7 @@ routeCheckboxes.each(function(){
 	}
 });
 
+// Change background on check/uncheck
 routeCheckboxes.on('change', function(){
 	var _t = $(this);
 

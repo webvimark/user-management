@@ -4,6 +4,7 @@ namespace webvimark\modules\UserManagement\models;
 
 use webvimark\modules\UserManagement\components\UserIdentity;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
@@ -63,15 +64,15 @@ class User extends UserIdentity
 	*/
 	public function attributeLabels()
 	{
-		return ArrayHelper::merge(parent::attributeLabels(),[
-			'id' => 'ID',
-			'username' => 'Логин',
-			'superadmin' => 'Суперадмин',
+		return ArrayHelper::merge(parent::attributeLabels(), [
+			'id'                 => 'ID',
+			'username'           => UserManagementModule::t('back', 'Login'),
+			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
 			'confirmation_token' => 'Confirmation Token',
-			'status' => 'Статус',
-			'gridRoleSearch' => 'Роли',
-			'created_at' => 'Создано',
-			'updated_at' => 'Обновлено',
+			'status'             => UserManagementModule::t('back', 'Status'),
+			'gridRoleSearch'     => UserManagementModule::t('back', 'Roles'),
+			'created_at'         => UserManagementModule::t('back', 'Created'),
+			'updated_at'         => UserManagementModule::t('back', 'Updated'),
 		]);
 	}
 

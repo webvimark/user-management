@@ -1,11 +1,12 @@
 <?php
 use app\assets\AppAsset;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-$this->title = 'Авторизация';
+$this->title = UserManagementModule::t('front', 'Authorization');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

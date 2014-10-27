@@ -3,13 +3,13 @@
  *
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\forms\ItemForm $model
+ * @var webvimark\modules\UserManagement\models\rbacDB\Permission $model
  */
-use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
 
-$this->title = 'Создание правила';
-$this->params['breadcrumbs'][] = ['label' => 'Права', 'url' => ['index']];
+use webvimark\modules\UserManagement\UserManagementModule;
+
+$this->title = UserManagementModule::t('back', 'Permission creation');
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="panel panel-default">
@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<?= $this->render('_form', [
 			'model'=>$model,
-			'insert'=>true,
 		]) ?>
 	</div>
 </div>

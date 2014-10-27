@@ -4,6 +4,7 @@ namespace webvimark\modules\UserManagement\components;
 use webvimark\modules\UserManagement\models\rbacDB\Route;
 use Exception;
 use webvimark\helpers\Singleton;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
@@ -186,9 +187,9 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	public function attributeLabels()
 	{
 		return [
-			'password'=>'Пароль',
-			'repeat_password'=>'Повторите пароль',
-			'current_password'=>'Текущией пароль',
+			'password'         => UserManagementModule::t('back', 'Password'),
+			'repeat_password'  => UserManagementModule::t('back', 'Repeat password'),
+			'current_password' => UserManagementModule::t('back', 'Current password'),
 		];
 	}
 
@@ -199,8 +200,8 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	public static function getStatusList()
 	{
 		return array(
-			self::STATUS_ACTIVE => 'Активен',
-			self::STATUS_INACTIVE => 'Нективен',
+			self::STATUS_ACTIVE   => UserManagementModule::t('back', 'Active'),
+			self::STATUS_INACTIVE => UserManagementModule::t('back', 'Inactive'),
 		);
 	}
 

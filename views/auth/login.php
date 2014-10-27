@@ -3,6 +3,7 @@
  * @var $this yii\web\View
  * @var $model webvimark\modules\UserManagement\models\LoginForm
  */
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
@@ -16,7 +17,7 @@ BootstrapAsset::register($this);
 		<div class="col-md-4 col-md-offset-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Авторизация</h3>
+					<h3 class="panel-title"><?= UserManagementModule::t('front', 'Authorization') ?></h3>
 				</div>
 				<div class="panel-body">
 
@@ -36,7 +37,10 @@ BootstrapAsset::register($this);
 
 					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
 
-					<?= Html::submitButton('Войти', ['class' => 'btn btn-lg btn-primary btn-block']) ?>
+					<?= Html::submitButton(
+						UserManagementModule::t('front', 'Login'),
+						['class' => 'btn btn-lg btn-primary btn-block']
+					) ?>
 
 					<?php ActiveForm::end() ?>
 				</div>

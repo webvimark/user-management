@@ -5,14 +5,15 @@
  */
 
 use webvimark\modules\UserManagement\models\rbacDB\Role;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
 use yii\rbac\DbManager;
 
-$this->title = 'Права для пользователя: ' . $user->username;
+$this->title = UserManagementModule::t('back', 'Permissions for user: ') . $user->username;
 
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['/user-management/user/index']];
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -21,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
-					<span class="glyphicon glyphicon-th"></span> Роли
+					<span class="glyphicon glyphicon-th"></span> <?= UserManagementModule::t('back', 'Roles') ?>
 				</strong>
 			</div>
 			<div class="panel-body">
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<br/>
 
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class'=>'btn btn-primary btn-sm']
 				) ?>
 
@@ -50,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
-					<span class="glyphicon glyphicon-th"></span> Права
+					<span class="glyphicon glyphicon-th"></span> <?= UserManagementModule::t('back', 'Permissions') ?>
 				</strong>
 			</div>
 			<div class="panel-body">

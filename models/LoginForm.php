@@ -1,6 +1,7 @@
 <?php
 namespace webvimark\modules\UserManagement\models;
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
 use Yii;
 
@@ -30,9 +31,9 @@ class LoginForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'username'=>'Логин',
-			'password'=>'Пароль',
-			'rememberMe'=>'Запомнить меня',
+			'username'   => UserManagementModule::t('front', 'Login'),
+			'password'   => UserManagementModule::t('front', 'Password'),
+			'rememberMe' => UserManagementModule::t('front', 'Remember me'),
 		];
 	}
 
@@ -47,8 +48,7 @@ class LoginForm extends Model
 			$user = $this->getUser();
 			if ( !$user || !$user->validatePassword($this->password) )
 			{
-				$this->addError('password', 'Неверный логин или пароль.');
-//				$this->addError('password', 'Incorrect username or password.');
+				$this->addError('password', UserManagementModule::t('front', 'Incorrect username or password.'));
 			}
 		}
 	}

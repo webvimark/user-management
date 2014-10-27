@@ -1,4 +1,5 @@
 <?php
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -8,7 +9,7 @@ use yii\widgets\Pjax;
  * @var webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch $searchModel
  * @var yii\web\View $this
  */
-$this->title = 'Права';
+$this->title = UserManagementModule::t('back', 'Permissions');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -21,7 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 	<div class="panel-body">
 		<p>
-			<?= Html::a('<span class="glyphicon glyphicon-plus-sign"></span> ' . 'Создать', ['create'], ['class' => 'btn btn-sm btn-success']) ?>
+			<?= Html::a(
+				'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
+				['create'],
+				['class' => 'btn btn-sm btn-success']
+			) ?>
 		</p>
 
 		<?php Pjax::begin([

@@ -1,6 +1,7 @@
 <?php
 namespace webvimark\modules\UserManagement\models\rbacDB;
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use Yii;
@@ -123,13 +124,13 @@ abstract class AbstractItem extends ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'name' => 'Название',
-			'description' => 'Описание',
-			'rule_name' => 'Правило',
-			'data' => 'Данные',
-			'type' => 'Тип',
-			'created_at' => 'Создано',
-			'updated_at' => 'Обновлено',
+			'name'        => UserManagementModule::t('back', 'Name'),
+			'description' => UserManagementModule::t('back', 'Description'),
+			'rule_name'   => UserManagementModule::t('back', 'Rule'),
+			'data'        => UserManagementModule::t('back', 'Data'),
+			'type'        => UserManagementModule::t('back', 'Type'),
+			'created_at'  => UserManagementModule::t('back', 'Created'),
+			'updated_at'  => UserManagementModule::t('back', 'Updated'),
 		];
 	}
 
