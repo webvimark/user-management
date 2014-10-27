@@ -1,11 +1,13 @@
 <?php
 /**
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\forms\ItemForm $model
+ * @var webvimark\modules\UserManagement\models\rbacDB\Permission $model
  */
 
-$this->title = 'Редактирование правила: ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Права', 'url' => ['index']];
+use webvimark\modules\UserManagement\UserManagementModule;
+
+$this->title = UserManagementModule::t('back', 'Editing permission: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -18,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel-body">
 		<?= $this->render('_form', [
 			'model'=>$model,
-			'insert'=>false,
 		]) ?>
 	</div>
 </div>

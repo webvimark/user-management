@@ -2,6 +2,7 @@
 
 use webvimark\modules\UserManagement\models\User;
 use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
@@ -10,10 +11,10 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = 'Редактирование пользователя: ' . ' ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
+$this->title = UserManagementModule::t('back', 'Editing user: ') . ' ' . $model->username;
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Редактирование';
+$this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Editing');
 ?>
 <div class="user-update">
 
@@ -43,12 +44,12 @@ $this->params['breadcrumbs'][] = 'Редактирование';
 					<div class="col-sm-offset-3 col-sm-9">
 						<?php if ( $model->isNewRecord ): ?>
 							<?= Html::submitButton(
-								'<span class="glyphicon glyphicon-plus-sign"></span> Создать',
+								'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
 								['class' => 'btn btn-success']
 							) ?>
 						<?php else: ?>
 							<?= Html::submitButton(
-								'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+								'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 								['class' => 'btn btn-primary']
 							) ?>
 						<?php endif; ?>

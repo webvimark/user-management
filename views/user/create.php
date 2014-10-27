@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 
 /**
@@ -7,8 +8,8 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = 'Создание пользователя';
-$this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
+$this->title = UserManagementModule::t('back', 'User creation');
+$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-create">

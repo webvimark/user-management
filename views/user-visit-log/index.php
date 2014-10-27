@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use webvimark\extensions\GridPageSize\GridPageSize;
@@ -11,7 +12,7 @@ use yii\grid\GridView;
  * @var webvimark\modules\UserManagement\models\search\UserVisitLogSearch $searchModel
  */
 
-$this->title = 'Лог заходов';
+$this->title = UserManagementModule::t('back', 'Visit log');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-visit-log-index">

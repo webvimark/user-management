@@ -1,10 +1,9 @@
 <?php
 /**
- * @var bool $insert
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\forms\ItemForm $model
+ * @var webvimark\modules\UserManagement\models\rbacDB\Role $model
  */
-
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 ?>
@@ -21,14 +20,14 @@ use yii\helpers\Html;
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">
-			<?php if ( $insert ): ?>
+			<?php if ( $model->isNewRecord ): ?>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-plus-sign"></span> Создать',
+					'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
 					['class' => 'btn btn-success']
 				) ?>
 			<?php else: ?>
 				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> Сохранить',
+					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
 					['class' => 'btn btn-primary']
 				) ?>
 			<?php endif; ?>
