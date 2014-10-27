@@ -85,8 +85,10 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 			return true;
 		}
 
-		$cachedRoles = $searchInChildRoles ? Yii::$app->session->get('__userRolesWithChildren',[])
-			: Yii::$app->session->get('__userRoles',[]);
+		AuthHelper::ensurePermissionsUpToDate();
+
+		$cachedRoles = $searchInChildRoles ? Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES_WITH_CHILDREN,[])
+			: Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES,[]);
 
 		return in_array($role, $cachedRoles);
 	}
@@ -104,7 +106,9 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 			return true;
 		}
 
-		return in_array($permission, Yii::$app->session->get('__userPermissions',[]));
+		AuthHelper::ensurePermissionsUpToDate();
+
+		return in_array($permission, Yii::$app->session->get(AuthHelper::SESSION_PREFIX_PERMISSIONS,[]));
 	}
 
 	/**
@@ -135,7 +139,9 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 			return true;
 		}
 
-		return in_array($baseRoute, Yii::$app->session->get('__userRoutes',[]));
+		AuthHelper::ensurePermissionsUpToDate();
+
+		return in_array($baseRoute, Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROUTES,[]));
 	}
 
 	/**
@@ -340,6 +346,9 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	}
 
 	/**
+	 * Make sure user will not deactivate himself and superadmin could not demote himself
+	 * Also don't let non-superadmin edit superadmin
+	 *
 	 * @inheritdoc
 	 */
 	public function beforeSave($insert)
@@ -383,6 +392,8 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	}
 
 	/**
+	 * Don't let delete yourself and don't let non-superadmin delete superadmin
+	 *
 	 * @inheritdoc
 	 */
 	public function beforeDelete()

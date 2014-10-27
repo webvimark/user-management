@@ -2,10 +2,6 @@
 
 namespace webvimark\modules\UserManagement\components;
 
-
-use webvimark\modules\UserManagement\models\rbacDB\Permission;
-use webvimark\modules\UserManagement\models\rbacDB\Role;
-use webvimark\modules\UserManagement\models\rbacDB\Route;
 use yii\web\User;
 use Yii;
 
@@ -53,26 +49,9 @@ class UserConfig extends User
 	 */
 	protected function afterLogin($identity, $cookieBased, $duration)
 	{
-		$this->storeDataInSession($identity);
+		AuthHelper::updatePermissions($identity);
 
 		parent::afterLogin($identity, $cookieBased, $duration);
 	}
 
-	/**
-	 * Store accesses and some user details in session
-	 *
-	 * @param UserIdentity $identity
-	 */
-	protected function storeDataInSession($identity)
-	{
-		$session = Yii::$app->session;
-
-		$session->set('__userRoles', array_keys(Role::getUserRoles($identity->id)));
-
-		$session->set('__userRolesWithChildren', array_keys(Role::getUserRoles($identity->id, true)));
-
-		$session->set('__userPermissions', array_keys(Permission::getUserPermissions($identity->id)));
-
-		$session->set('__userRoutes', Route::getUserRoutes($identity->id));
-	}
 } 
