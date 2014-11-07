@@ -73,13 +73,13 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	}
 
 	/**
-	 * @param string $role
-	 * @param bool   $superAdminAllowed
-	 * @param bool   $searchInChildRoles
+	 * @param string|array $roles
+	 * @param bool         $superAdminAllowed
+	 * @param bool         $searchInChildRoles
 	 *
 	 * @return bool
 	 */
-	public static function hasRole($role, $superAdminAllowed = true, $searchInChildRoles = false)
+	public static function hasRole($roles, $superAdminAllowed = true, $searchInChildRoles = false)
 	{
 		if ( $superAdminAllowed AND Yii::$app->user->isSuperadmin )
 		{
@@ -91,7 +91,7 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 		$cachedRoles = $searchInChildRoles ? Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES_WITH_CHILDREN,[])
 			: Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES,[]);
 
-		return in_array($role, $cachedRoles);
+		return array_intersect($roles, $cachedRoles) !== [];
 	}
 
 	/**
