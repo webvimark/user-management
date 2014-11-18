@@ -3,6 +3,7 @@
 namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
+use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\models\User;
 use yii\rbac\DbManager;
 use yii\web\NotFoundHttpException;
@@ -10,7 +11,31 @@ use Yii;
 
 class UserPermissionController extends BaseController
 {
-	public $layout = '//back';
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
+	{
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * @param int $id User ID
@@ -55,6 +80,8 @@ class UserPermissionController extends BaseController
 
 			$authManager->assign($role, $id);
 		}
+
+		AuthHelper::invalidatePermissions();
 
 		$this->redirect(['set', 'id'=>$id]);
 	}

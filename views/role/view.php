@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Ro
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2>Права для роли: <b><?= $this->title ?></b></h2>
+<h2><?= UserManagementModule::t('back', 'Permissions for role:') ?> <b><?= $this->title ?></b></h2>
 <br/>
 
 <div class="row">

@@ -23,16 +23,30 @@ class RoleController extends AdminDefaultController
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch';
 
-	public function behaviors()
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
 	{
-		return [
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['post'],
-				],
-			],
-		];
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -83,15 +97,14 @@ class RoleController extends AdminDefaultController
 		$toRemove = array_diff($oldChildRoles, $newChildRoles);
 		$toAdd = array_diff($newChildRoles, $oldChildRoles);
 
-		foreach ($toAdd as $addItem)
-		{
-			$authManager->addChild($role, $authManager->getRole($addItem));
-		}
+		Role::addChild($role->name, $toAdd);
 
 		foreach ($toRemove as $removeItem)
 		{
 			$authManager->removeChild($role, $authManager->getRole($removeItem));
 		}
+
+		AuthHelper::invalidatePermissions();
 
 		$this->redirect(['view', 'id'=>$id]);
 	}
@@ -123,6 +136,8 @@ class RoleController extends AdminDefaultController
 		{
 			$authManager->removeChild($role, $authManager->getPermission($removeItem));
 		}
+
+		AuthHelper::invalidatePermissions();
 
 		$this->redirect(['view', 'id'=>$id]);
 	}

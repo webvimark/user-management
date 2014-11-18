@@ -24,18 +24,39 @@ class UserManagementModule extends \yii\base\Module
 	public $confirmationTokenExpire = 3600; // 1 hour
 
 	/**
-	 * Users CRUD
+	 * Layouts for controller => action in this module
 	 *
-	 * @var string
+	 * @var array
 	 */
-	public $userControllerLayout = '@app/views/layouts/back.php';
+	public $layouts = [
+		'user'=>[
+			'*'=>'//main.php',
+		],
+		'permission'=>[
+			'*'=>'//main.php',
+		],
+		'role'=>[
+			'*'=>'//main.php',
+		],
+		'user-visit-log'=>[
+			'*'=>'//main.php',
+		],
+		'user-permission'=>[
+			'*'=>'//main.php',
+		],
+		'auth'=>[
+			'*'=>'@app/views/layouts/main.php',
+			'login'=>'loginLayout.php',
+		],
+	];
 
 	/**
-	 * Role CRUD
+	 * Roles that will be assigned to user registered via user-management/auth/registration
 	 *
-	 * @var string
+	 * @var array
 	 */
-	public $rbacLayout = '@app/views/layouts/back.php';
+	public $rolesAfterRegistration = [];
+
 
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 

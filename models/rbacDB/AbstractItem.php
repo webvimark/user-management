@@ -1,10 +1,14 @@
 <?php
 namespace webvimark\modules\UserManagement\models\rbacDB;
 
+use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
+use yii\base\InvalidCallException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\rbac\DbManager;
 
 
 /**
@@ -15,6 +19,7 @@ use Yii;
  * @property string $data
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $is_system
  */
 abstract class AbstractItem extends ActiveRecord
 {
@@ -35,10 +40,11 @@ abstract class AbstractItem extends ActiveRecord
 	 * @param null|string $description
 	 * @param null|string $ruleName
 	 * @param null|string $data
+	 * @param int         $is_system
 	 *
 	 * @return static
 	 */
-	public static function create($name, $description = null, $ruleName = null, $data = null)
+	public static function create($name, $description = null, $ruleName = null, $data = null, $is_system = 0)
 	{
 		$item = new static;
 
@@ -47,10 +53,72 @@ abstract class AbstractItem extends ActiveRecord
 		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? $name : $description;
 		$item->rule_name = $ruleName;
 		$item->data = $data;
+		$item->is_system = $is_system;
 
 		$item->save();
 
 		return $item;
+	}
+
+
+	/**
+	 * Helper for adding children to role or permission
+	 *
+	 * @param string       $parentName
+	 * @param array|string $childrenNames
+	 * @param bool         $throwException
+	 *
+	 * @throws InvalidCallException
+	 */
+	public static function addChild($parentName, $childrenNames, $throwException = false)
+	{
+		$parent = (object)['name'=>$parentName];
+
+		$childrenNames = (array) $childrenNames;
+
+		$dbManager = new DbManager();
+		$db = Yii::$app->db;
+
+		foreach ($childrenNames as $childName)
+		{
+			$child = (object)['name'=>$childName];
+
+			if ($dbManager->detectLoop($parent, $child))
+			{
+				if ( $throwException )
+				{
+					throw new InvalidCallException("Cannot add '{$child->name}' as a child of '{$parent->name}'. A loop has been detected.");
+				}
+			}
+			else
+			{
+				$db->createCommand()
+					->insert('auth_item_child', ['parent' => $parent->name, 'child' => $child->name])
+					->execute();
+			}
+		}
+
+		AuthHelper::invalidatePermissions();
+	}
+
+	/**
+	 * @param string $parentName
+	 * @param string $childName
+	 *
+	 * @return bool
+	 */
+	public static function removeChild($parentName, $childName)
+	{
+		$result = Yii::$app->db->createCommand()
+			->delete('auth_item_child', ['parent' => $parentName, 'child' => $childName])
+			->execute() > 0;
+
+		if ( $result )
+		{
+			AuthHelper::invalidatePermissions();
+		}
+
+		return $result;
 	}
 
 	/**
@@ -65,6 +133,9 @@ abstract class AbstractItem extends ActiveRecord
 		if ( $model )
 		{
 			$model->delete();
+
+			AuthHelper::invalidatePermissions();
+
 			return true;
 		}
 
@@ -112,6 +183,7 @@ abstract class AbstractItem extends ActiveRecord
 
 	/**
 	 * @inheritdoc
+	 * @return ActiveQuery the newly created [[ActiveQuery]] instance.
 	 */
 	public static function find()
 	{

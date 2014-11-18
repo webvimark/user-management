@@ -187,7 +187,7 @@ class Route extends AbstractItem
 	{
 		$commonRoutes = Yii::$app->cache->get('__commonRoutes');
 
-		if ( !$commonRoutes )
+		if ( $commonRoutes === false )
 		{
 			$commonRoutesDB = (new Query())
 				->select('child')

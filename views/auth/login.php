@@ -3,14 +3,11 @@
  * @var $this yii\web\View
  * @var $model webvimark\modules\UserManagement\models\LoginForm
  */
+use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
-use yii\bootstrap\BootstrapAsset;
 use yii\helpers\Html;
-
-BootstrapAsset::register($this);
 ?>
-
 
 <div class="container" id="login-wrapper">
 	<div class="row">
@@ -35,11 +32,22 @@ BootstrapAsset::register($this);
 					<?= $form->field($model, 'password')
 						->passwordInput(['placeholder'=>$model->getAttributeLabel('password'), 'autocomplete'=>'off']) ?>
 
-					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
 
 					<?= Html::submitButton(
 						UserManagementModule::t('front', 'Login'),
 						['class' => 'btn btn-lg btn-primary btn-block']
+					) ?>
+
+					<?= GhostHtml::a(
+						UserManagementModule::t('front', "Don't have account ?"),
+						['/user-management/auth/registration'],
+						['class' => 'btn btn-lg btn-success btn-block registration-btn']
+					) ?>
+
+					<?= GhostHtml::a(
+						UserManagementModule::t('front', "Forgot password ?"),
+						['/user-management/auth/password-recovery'],
+						['class' => 'btn btn-sm btn-default btn-block']
 					) ?>
 
 					<?php ActiveForm::end() ?>
@@ -62,6 +70,9 @@ html, body {
 #login-wrapper {
 	position: relative;
 	top: 30%;
+}
+#login-wrapper a.registration-btn {
+	margin-top: 30px;
 }
 CSS;
 

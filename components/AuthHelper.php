@@ -68,6 +68,7 @@ class AuthHelper
 		if ( !is_file($file) )
 		{
 			file_put_contents($file, '');
+			chmod($file, 0777);
 		}
 
 		return $file;

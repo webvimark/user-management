@@ -26,16 +26,30 @@ class PermissionController extends AdminDefaultController
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch';
 
-	public function behaviors()
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
 	{
-		return [
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['post'],
-				],
-			],
-		];
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -139,6 +153,7 @@ class PermissionController extends AdminDefaultController
 			Yii::$app->cache->delete('__commonRoutes');
 		}
 
+		AuthHelper::invalidatePermissions();
 
 		$this->redirect(['view', 'id'=>$id]);
 	}

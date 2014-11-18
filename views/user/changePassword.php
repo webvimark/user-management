@@ -1,6 +1,5 @@
 <?php
 
-use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -56,8 +55,6 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Changing passw
 				<?php ActiveForm::end(); ?>
 
 			</div>
-
-			<?php BootstrapSwitch::widget() ?>
 		</div>
 	</div>
 
