@@ -18,8 +18,15 @@
  */
 return [
     'Authorization' => '',
+    'Check your E-mail for further instructions' => '',
+    'Don\'t have account ?' => '',
+    'Forgot password ?' => '',
     'Incorrect username or password.' => '',
     'Login' => '',
     'Password' => '',
+    'Password recovery' => '',
+    'Recover' => '',
+    'Register' => '',
+    'Registration ' => '',
     'Remember me' => '',
 ];

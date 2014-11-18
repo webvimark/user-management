@@ -9,7 +9,7 @@ use yii\helpers\Html;
  * @var yii\base\DynamicModel $model
  */
 
-$this->title = UserManagementModule::t('front', 'Password recovery ');
+$this->title = UserManagementModule::t('front', 'Password recovery');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

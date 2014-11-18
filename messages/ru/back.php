@@ -17,9 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Browser And Os' => '',
+    'Change own password' => 'Смена пароля',
+    'Password has been changed' => 'Пароль был изменён',
+    'Permissions for role:' => 'Права для роли:',
+    'Wrong format. Enter valid IPs separated by comma' => 'Неверный формат. Введите список IP разделённых запятой',
+    'Wrong password' => 'Неверный пароль',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
-    'Browser And Os' => '',
     'Change password' => 'Сменить пароль',
     'Changing password' => 'Смена пароля',
     'Changing password for user: ' => 'Сменя пароля для пользователя: ',
