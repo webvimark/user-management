@@ -23,9 +23,9 @@ class Permission extends AbstractItem
 	 * Assign route to permission and create them if they don't exists
 	 * Helper mainly for migrations
 	 *
-	 * @param string $permissionName
-	 * @param array $routes
-	 * @param null   $permissionDescription
+	 * @param string       $permissionName
+	 * @param array|string $routes
+	 * @param null         $permissionDescription
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return true|static|string
@@ -33,6 +33,7 @@ class Permission extends AbstractItem
 	public static function assignRoutes($permissionName, $routes, $permissionDescription = null)
 	{
 		$permission = static::findOne(['name' => $permissionName]);
+		$routes = (array)$routes;
 
 		if ( !$permission )
 		{
@@ -46,6 +47,7 @@ class Permission extends AbstractItem
 
 		foreach ($routes as $route)
 		{
+			$route = '/' . ltrim($route, '/');
 			try
 			{
 				Yii::$app->db->createCommand()

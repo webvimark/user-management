@@ -3,8 +3,10 @@ namespace webvimark\modules\UserManagement\models\rbacDB;
 
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\rbac\DbManager;
 
 
 /**
@@ -15,6 +17,7 @@ use Yii;
  * @property string $data
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $is_system
  */
 abstract class AbstractItem extends ActiveRecord
 {
@@ -35,10 +38,11 @@ abstract class AbstractItem extends ActiveRecord
 	 * @param null|string $description
 	 * @param null|string $ruleName
 	 * @param null|string $data
+	 * @param int         $is_system
 	 *
 	 * @return static
 	 */
-	public static function create($name, $description = null, $ruleName = null, $data = null)
+	public static function create($name, $description = null, $ruleName = null, $data = null, $is_system = 0)
 	{
 		$item = new static;
 
@@ -47,6 +51,7 @@ abstract class AbstractItem extends ActiveRecord
 		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? $name : $description;
 		$item->rule_name = $ruleName;
 		$item->data = $data;
+		$item->is_system = $is_system;
 
 		$item->save();
 
@@ -112,6 +117,7 @@ abstract class AbstractItem extends ActiveRecord
 
 	/**
 	 * @inheritdoc
+	 * @return ActiveQuery the newly created [[ActiveQuery]] instance.
 	 */
 	public static function find()
 	{

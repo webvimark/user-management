@@ -9,10 +9,8 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = UserManagementModule::t('back', 'Changing password for user: ') . ' ' . $model->username;
-$this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Changing password');
+$this->title = UserManagementModule::t('back', 'Change own password');
+$this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Change own password');
 ?>
 <div class="user-update">
 
@@ -24,12 +22,20 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Changing passw
 		</div>
 		<div class="panel-body">
 
+			<?php if ( Yii::$app->session->hasFlash('success') ): ?>
+				<div class="alert alert-success text-center">
+					<?= Yii::$app->session->getFlash('success') ?>
+				</div>
+			<?php endif; ?>
+
 			<div class="user-form">
 
 				<?php $form = ActiveForm::begin([
 					'id'=>'user',
 					'layout'=>'horizontal',
 				]); ?>
+
+				<?= $form->field($model, 'current_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 
 				<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 

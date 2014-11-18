@@ -23,4 +23,30 @@ class UserVisitLogController extends AdminDefaultController
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\search\UserVisitLogSearch';
 
 	protected $baseActions = ['index', 'view', 'gridPageSize'];
+
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
+	{
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
+	}
 }

@@ -26,16 +26,30 @@ class UserController extends AdminDefaultController
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\search\UserSearch';
 
-	public function behaviors()
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
 	{
-		return [
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['post'],
-				],
-			],
-		];
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

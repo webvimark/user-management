@@ -2,13 +2,42 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
-use webvimark\modules\UserManagement\components\AccessController;
+use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\models\LoginForm;
+use webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
+use yii\web\ForbiddenHttpException;
 
-class AuthController extends AccessController
+class AuthController extends BaseController
 {
-	public $freeAccess = true;
+	public $freeAccessActions = ['login', 'logout'];
+
+	/**
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
+	{
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = $this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Login form
@@ -22,8 +51,6 @@ class AuthController extends AccessController
 			$this->goHome();
 		}
 		
-		$this->layout = 'loginLayout';
-
 		$model = new LoginForm();
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->login() )
@@ -31,10 +58,7 @@ class AuthController extends AccessController
 			$this->goBack();
 		}
 
-		if ( Yii::$app->request->isAjax )
-			return $this->renderAjax('login', compact('model'));
-		else
-			return $this->render('login', compact('model'));
+		return $this->renderIsAjax('login', compact('model'));
 	}
 
 	/**
@@ -43,11 +67,45 @@ class AuthController extends AccessController
 	public function actionLogout()
 	{
 		Yii::$app->user->logout();
+
 		$this->redirect(Yii::$app->homeUrl);
 	}
 
-	public function actionChangePassword()
+	/**
+	 * Change tour own password
+	 *
+	 * @throws \yii\web\ForbiddenHttpException
+	 * @return string|\yii\web\Response
+	 */
+	public function actionChangeOwnPassword()
 	{
-		return $this->render('changePassword');
+		if ( Yii::$app->user->isGuest )
+		{
+			$this->goHome();
+		}
+
+		$model = User::getCurrentUser();
+		$model->scenario = 'changeOwnPassword';
+
+		if ( $model->status != User::STATUS_ACTIVE )
+		{
+			throw new ForbiddenHttpException();
+		}
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->save() )
+		{
+			Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Password has been changed'));
+
+			$model->password = $model->current_password = $model->repeat_password = null;
+
+			if ( !Yii::$app->request->isAjax )
+			{
+				$this->refresh();
+
+				Yii::$app->end();
+			}
+		}
+
+		return $this->renderIsAjax('changeOwnPassword', compact('model'));
 	}
 }

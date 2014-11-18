@@ -7,7 +7,6 @@ use webvimark\helpers\Singleton;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
-use yii\helpers\Url;
 use yii\web\IdentityInterface;
 use Yii;
 
@@ -51,7 +50,7 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	 *
 	 * @param bool $fromSingleton
 	 *
-	 * @return mixed|static
+	 * @return static|\webvimark\modules\UserManagement\models\User
 	 */
 	public static function getCurrentUser($fromSingleton = true)
 	{
@@ -85,6 +84,7 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 		{
 			return true;
 		}
+		$roles = (array)$roles;
 
 		AuthHelper::ensurePermissionsUpToDate();
 
@@ -169,23 +169,6 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 		}
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [
-			['password', 'required', 'on'=>['register', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
-			['password', 'string', 'max' => 255],
-			[['password', 'username'], 'filter', 'filter' => 'trim'],
-
-			['repeat_password', 'required', 'on'=>['register', 'newUser', 'changePassword', 'changeOwnPassword']],
-			['repeat_password', 'compare', 'compareAttribute'=>'password'],
-
-			['current_password', 'required', 'on'=>'changeOwnPassword'],
-			['current_password', 'validatePassword', 'on'=>'changeOwnPassword'],
-		];
-	}
 
 	/**
 	 * @inheritdoc
@@ -345,76 +328,4 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	{
 		$this->confirmation_token = null;
 	}
-
-	/**
-	 * Make sure user will not deactivate himself and superadmin could not demote himself
-	 * Also don't let non-superadmin edit superadmin
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeSave($insert)
-	{
-		if ( $insert )
-		{
-			$this->generateAuthKey();
-		}
-		else
-		{
-			// Console doesn't have Yii::$app->user, so we skip it for console
-			if ( php_sapi_name() != 'cli' )
-			{
-				if ( Yii::$app->user->id == $this->id )
-				{
-					// Make sure user will not deactivate himself
-					$this->status = static::STATUS_ACTIVE;
-
-					// Superadmin could not demote himself
-					if ( Yii::$app->user->isSuperadmin AND $this->superadmin != 1 )
-					{
-						$this->superadmin = 1;
-					}
-				}
-
-				// Don't let non-superadmin edit superadmin
-				if ( !Yii::$app->user->isSuperadmin AND $this->oldAttributes['superadmin'] == 1 )
-				{
-					return false;
-				}
-			}
-		}
-
-		// If password has been set, than create password hash
-		if ( $this->password )
-		{
-			$this->setPassword($this->password);
-		}
-
-		return parent::beforeSave($insert);
-	}
-
-	/**
-	 * Don't let delete yourself and don't let non-superadmin delete superadmin
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeDelete()
-	{
-		// Console doesn't have Yii::$app->user, so we skip it for console
-		if ( php_sapi_name() != 'cli' )
-		{
-			// Don't let delete yourself
-			if ( Yii::$app->user->id == $this->id )
-			{
-				return false;
-			}
-
-			// Don't let non-superadmin delete superadmin
-			if ( !Yii::$app->user->isSuperadmin AND $this->superadmin == 1 )
-			{
-				return false;
-			}
-		}
-
-		return parent::beforeDelete();
-	}
-} 
+}
