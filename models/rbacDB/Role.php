@@ -65,6 +65,8 @@ class Role extends AbstractItem
 			// but need to add new routes to it
 		}
 
+		$routes = (array)$routes;
+
 		foreach ($routes as $route)
 		{
 			Route::create($route);

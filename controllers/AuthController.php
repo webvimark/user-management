@@ -2,11 +2,12 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
-use webvimark\modules\UserManagement\components\AccessController;
+use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\models\LoginForm;
+use webvimark\modules\UserManagement\models\User;
 use Yii;
 
-class AuthController extends AccessController
+class AuthController extends BaseController
 {
 	public $freeAccess = true;
 
@@ -49,5 +50,24 @@ class AuthController extends AccessController
 	public function actionChangePassword()
 	{
 		return $this->render('changePassword');
+	}
+
+	/**
+	 * Registration logic
+	 *
+	 * @return string
+	 */
+	public function actionRegister()
+	{
+		$model = new User(['scenario'=>'register']);
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->save() )
+		{
+			Yii::$app->user->login($model);
+
+			$this->redirect(Yii::$app->user->returnUrl);
+		}
+
+		return $this->renderIsAjax('register', compact('model'));
 	}
 }
