@@ -68,33 +68,30 @@ abstract class AbstractItem extends ActiveRecord
 	 * @param array|string $childrenNames
 	 * @param bool         $throwException
 	 *
-	 * @throws InvalidCallException
+	 * @throws \Exception
 	 */
-	public static function addChild($parentName, $childrenNames, $throwException = false)
+	public static function addChildren($parentName, $childrenNames, $throwException = false)
 	{
 		$parent = (object)['name'=>$parentName];
 
 		$childrenNames = (array) $childrenNames;
 
 		$dbManager = new DbManager();
-		$db = Yii::$app->db;
 
 		foreach ($childrenNames as $childName)
 		{
 			$child = (object)['name'=>$childName];
 
-			if ($dbManager->detectLoop($parent, $child))
+			try
+			{
+				$dbManager->addChild($parent, $child);
+			}
+			catch (\Exception $e)
 			{
 				if ( $throwException )
 				{
-					throw new InvalidCallException("Cannot add '{$child->name}' as a child of '{$parent->name}'. A loop has been detected.");
+					throw $e;
 				}
-			}
-			else
-			{
-				$db->createCommand()
-					->insert('auth_item_child', ['parent' => $parent->name, 'child' => $child->name])
-					->execute();
 			}
 		}
 
@@ -102,23 +99,21 @@ abstract class AbstractItem extends ActiveRecord
 	}
 
 	/**
-	 * @param string $parentName
-	 * @param string $childName
-	 *
-	 * @return bool
+	 * @param string       $parentName
+	 * @param array|string $childrenNames
 	 */
-	public static function removeChild($parentName, $childName)
+	public static function removeChildren($parentName, $childrenNames)
 	{
-		$result = Yii::$app->db->createCommand()
-			->delete('auth_item_child', ['parent' => $parentName, 'child' => $childName])
-			->execute() > 0;
+		$childrenNames = (array) $childrenNames;
 
-		if ( $result )
+		foreach ($childrenNames as $childName)
 		{
-			AuthHelper::invalidatePermissions();
+			Yii::$app->db->createCommand()
+				->delete('auth_item_child', ['parent' => $parentName, 'child' => $childName])
+				->execute();
 		}
 
-		return $result;
+		AuthHelper::invalidatePermissions();
 	}
 
 	/**

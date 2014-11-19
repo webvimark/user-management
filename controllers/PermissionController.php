@@ -96,15 +96,8 @@ class PermissionController extends AdminDefaultController
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
 
-		foreach ($toAdd as $addItem)
-		{
-			$authManager->addChild($item, $authManager->getPermission($addItem));
-		}
-
-		foreach ($toRemove as $removeItem)
-		{
-			$authManager->removeChild($item, $authManager->getPermission($removeItem));
-		}
+		Permission::addChildren($item->name, $toAdd);
+		Permission::removeChildren($item->name, $toRemove);
 
 		$this->redirect(['view', 'id'=>$id]);
 	}

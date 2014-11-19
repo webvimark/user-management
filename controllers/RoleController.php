@@ -97,14 +97,8 @@ class RoleController extends AdminDefaultController
 		$toRemove = array_diff($oldChildRoles, $newChildRoles);
 		$toAdd = array_diff($newChildRoles, $oldChildRoles);
 
-		Role::addChild($role->name, $toAdd);
-
-		foreach ($toRemove as $removeItem)
-		{
-			$authManager->removeChild($role, $authManager->getRole($removeItem));
-		}
-
-		AuthHelper::invalidatePermissions();
+		Role::addChildren($role->name, $toAdd);
+		Role::removeChildren($role->name, $toRemove);
 
 		$this->redirect(['view', 'id'=>$id]);
 	}
@@ -127,17 +121,8 @@ class RoleController extends AdminDefaultController
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
 
-		foreach ($toAdd as $addItem)
-		{
-			$authManager->addChild($role, $authManager->getPermission($addItem));
-		}
-
-		foreach ($toRemove as $removeItem)
-		{
-			$authManager->removeChild($role, $authManager->getPermission($removeItem));
-		}
-
-		AuthHelper::invalidatePermissions();
+		Role::addChildren($role->name, $toAdd);
+		Role::removeChildren($role->name, $toRemove);
 
 		$this->redirect(['view', 'id'=>$id]);
 	}
