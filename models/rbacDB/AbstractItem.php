@@ -19,7 +19,6 @@ use yii\rbac\DbManager;
  * @property string $data
  * @property integer $created_at
  * @property integer $updated_at
- * @property integer $is_system
  */
 abstract class AbstractItem extends ActiveRecord
 {
@@ -40,11 +39,10 @@ abstract class AbstractItem extends ActiveRecord
 	 * @param null|string $description
 	 * @param null|string $ruleName
 	 * @param null|string $data
-	 * @param int         $is_system
 	 *
 	 * @return static
 	 */
-	public static function create($name, $description = null, $ruleName = null, $data = null, $is_system = 0)
+	public static function create($name, $description = null, $ruleName = null, $data = null)
 	{
 		$item = new static;
 
@@ -53,7 +51,6 @@ abstract class AbstractItem extends ActiveRecord
 		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? $name : $description;
 		$item->rule_name = $ruleName;
 		$item->data = $data;
-		$item->is_system = $is_system;
 
 		$item->save();
 
