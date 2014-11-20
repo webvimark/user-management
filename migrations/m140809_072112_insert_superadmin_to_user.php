@@ -13,7 +13,7 @@ class m140809_072112_insert_superadmin_to_user extends Migration
 		$user->status = User::STATUS_ACTIVE;
 		$user->username = 'superadmin';
 		$user->password = 'superadmin';
-		$user->save();
+		$user->save(false);
 	}
 
 	public function safeDown()
