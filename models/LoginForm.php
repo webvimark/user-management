@@ -1,6 +1,7 @@
 <?php
 namespace webvimark\modules\UserManagement\models;
 
+use webvimark\helpers\LittleBigHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
 use Yii;
@@ -19,12 +20,11 @@ class LoginForm extends Model
 	public function rules()
 	{
 		return [
-			// username and password are both required
 			[['username', 'password'], 'required'],
-			// rememberMe must be a boolean value
 			['rememberMe', 'boolean'],
-			// password is validated by validatePassword()
 			['password', 'validatePassword'],
+
+			['username', 'validateIP'],
 		];
 	}
 
@@ -49,6 +49,26 @@ class LoginForm extends Model
 			if ( !$user || !$user->validatePassword($this->password) )
 			{
 				$this->addError('password', UserManagementModule::t('front', 'Incorrect username or password.'));
+			}
+		}
+	}
+
+	/**
+	 * Check if user is binded to IP and compare it with his actual IP
+	 */
+	public function validateIP()
+	{
+		$user = $this->getUser();
+
+		if ( $user AND $user->bind_to_ip )
+		{
+			$ips = explode(',', $user->bind_to_ip);
+
+			$ips = array_map('trim', $ips);
+
+			if ( !in_array(LittleBigHelper::getRealIp(), $ips) )
+			{
+				$this->addError('password', UserManagementModule::t('front', "You could not login from this IP"));
 			}
 		}
 	}

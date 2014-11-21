@@ -2,7 +2,9 @@
 namespace webvimark\modules\UserManagement\models\rbacDB;
 
 use Exception;
+use webvimark\modules\UserManagement\components\AuthHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\rbac\DbManager;
 
 class Role extends AbstractItem
@@ -18,6 +20,34 @@ class Role extends AbstractItem
 	public static function getUserRoles($userId, $withChildren = false)
 	{
 		return (new DbManager())->getRolesByUser($userId);
+	}
+
+	public static function getPermissionsByRole($roleName, $asArray = true)
+	{
+		$rbacPermissions = (new DbManager())->getPermissionsByRole($roleName);
+
+		$permissionNames = ArrayHelper::map($rbacPermissions, 'name', 'description');
+
+		return $asArray ? $permissionNames : Permission::find()->andWhere(['name'=>array_keys($permissionNames)])->all();
+	}
+
+	/**
+	 * Return only roles, that are assigned to the current user.
+	 * Return all if superadmin
+	 * Useful for forms where user can give roles to another users, but we restrict him only with roles he possess
+	 *
+	 * @param bool $showAll
+	 * @param bool $asArray
+	 *
+	 * @return static[]
+	 */
+	public static function getAvailableRoles($showAll = false, $asArray = false)
+	{
+		$condition = Yii::$app->user->isSuperAdmin OR $showAll ? [] : ['name'=>Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES)];
+
+		$result = static::find()->andWhere($condition)->all();
+
+		return $asArray ? ArrayHelper::map($result, 'name', 'name') : $result;
 	}
 
 	/**

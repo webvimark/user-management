@@ -1,4 +1,5 @@
 <?php
+use webvimark\extensions\GridPageSize\GridPageSize;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -19,6 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		<strong>
 			<span class="glyphicon glyphicon-th"></span> <?= $this->title ?>
 		</strong>
+		
+		<?= GridPageSize::widget(['pjaxId'=>'permission-grid-pjax']) ?>
 	</div>
 	<div class="panel-body">
 		<p>
@@ -30,11 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		</p>
 
 		<?php Pjax::begin([
-			'id'=>'role-grid-pjax',
+			'id'=>'permission-grid-pjax',
 		]) ?>
 
 		<?= GridView::widget([
-			'id'=>'role-grid',
+			'id'=>'permission-grid',
 			'dataProvider' => $dataProvider,
 			'pager'=>[
 				'options'=>['class'=>'pagination pagination-sm'],

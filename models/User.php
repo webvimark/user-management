@@ -249,6 +249,8 @@ class User extends UserIdentity
 			['username', 'required'],
 			['username', 'unique'],
 
+			['status', 'integer'],
+
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'filter', 'filter'=>'trim'],
 

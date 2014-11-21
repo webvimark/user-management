@@ -4,8 +4,8 @@ namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
-use yii\rbac\DbManager;
 use yii\web\NotFoundHttpException;
 use Yii;
 
@@ -52,7 +52,7 @@ class UserPermissionController extends BaseController
 			throw new NotFoundHttpException('User not found');
 		}
 
-		return $this->render('set', compact('user'));
+		return $this->renderIsAjax('set', compact('user'));
 	}
 
 	/**
@@ -60,25 +60,22 @@ class UserPermissionController extends BaseController
 	 */
 	public function actionSetRoles($id)
 	{
-		$authManager = new DbManager();
-		
-		$oldAssignments = array_keys($authManager->getRolesByUser($id));
-		$newAssignments = Yii::$app->request->post('roles', []);
+		$oldAssignments = array_keys(Role::getUserRoles($id));
+
+		// To be sure that user didn't attempt to assign himself some unavailable roles
+		$newAssignments = array_intersect(Role::getAvailableRoles(true), Yii::$app->request->post('roles', []));
 
 		$toAssign = array_diff($newAssignments, $oldAssignments);
 		$toRevoke = array_diff($oldAssignments, $newAssignments);
 
-		foreach ($toRevoke as $item)
+		foreach ($toRevoke as $role)
 		{
-			$role = $authManager->getRole($item);
-			$authManager->revoke($role, $id);
+			User::revokeRole($id, $role);
 		}
 
-		foreach ($toAssign as $item)
+		foreach ($toAssign as $role)
 		{
-			$role = $authManager->getRole($item);
-
-			$authManager->assign($role, $id);
+			User::assignRole($id, $role);
 		}
 
 		AuthHelper::invalidatePermissions();

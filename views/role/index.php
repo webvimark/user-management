@@ -1,4 +1,5 @@
 <?php
+use webvimark\extensions\GridPageSize\GridPageSize;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -19,6 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<strong>
 			<span class="glyphicon glyphicon-th"></span> <?= $this->title ?>
 		</strong>
+
+		<?= GridPageSize::widget(['pjaxId'=>'role-grid-pjax']) ?>
+
 	</div>
 	<div class="panel-body">
 		<p>

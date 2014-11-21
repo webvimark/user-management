@@ -6,16 +6,20 @@
 
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\UserManagementModule;
+use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\ArrayHelper;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
-use yii\rbac\DbManager;
 
-$this->title = UserManagementModule::t('back', 'Permissions for user: ') . $user->username;
+BootstrapPluginAsset::register($this);
+$this->title = UserManagementModule::t('back', 'Roles and permissions for user:') . ' ' . $user->username;
 
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<h2><?= $this->title ?></h2>
+<br/>
 
 <div class="row">
 	<div class="col-sm-6">
@@ -32,8 +36,37 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'roles',
 					ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name'),
-					ArrayHelper::map((new DbManager())->getRoles(), 'name', 'name'),
-					['separator'=>'<br>']
+					ArrayHelper::map(Role::getAvailableRoles(), 'name', 'name'),
+					[
+						'item'=>function ($index, $label, $name, $checked, $value) {
+								$list = '<ul style="padding-left: 10px">';
+								foreach (Role::getPermissionsByRole($value) as $name => $description)
+								{
+									$list .= $description ? "<li>{$description}</li>" : "<li>{$name}</li>";
+								}
+								$list .= '</ul>';
+
+								$helpIcon = Html::beginTag('span', [
+									'title'        => UserManagementModule::t('back', 'Permissions for role - "{role}"',[
+											'role'=>$label,
+										]),
+									'data-content' => $list,
+									'data-toggle'  => 'popover',
+									'data-html'    => 'true',
+									'role'         => 'button',
+									'style'        => 'margin-bottom: 5px; padding: 0 5px',
+									'class'        => 'btn btn-sm btn-default',
+								]);
+								$helpIcon .= '?';
+								$helpIcon .= Html::endTag('span');
+
+								$isChecked = $checked ? 'checked' : '';
+								$checkbox = "<label><input type='checkbox' name='{$name}' value='{$value}' {$isChecked}> {$label}</label>";
+
+								return $helpIcon . ' ' . $checkbox;
+							},
+						'separator'=>'<br>',
+					]
 				) ?>
 				<br/>
 
@@ -65,3 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 	</div>
 </div>
+
+<?php
+$this->registerJs(<<<JS
+$('[data-toggle="popover"]').popover();
+JS
+);
+?>
