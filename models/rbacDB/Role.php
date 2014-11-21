@@ -22,6 +22,14 @@ class Role extends AbstractItem
 		return (new DbManager())->getRolesByUser($userId);
 	}
 
+	/**
+	 * Get permissions assigned to this role or its children
+	 *
+	 * @param string $roleName
+	 * @param bool   $asArray
+	 *
+	 * @return array|Permission[]
+	 */
 	public static function getPermissionsByRole($roleName, $asArray = true)
 	{
 		$rbacPermissions = (new DbManager())->getPermissionsByRole($roleName);

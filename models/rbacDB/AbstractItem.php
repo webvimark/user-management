@@ -126,8 +126,6 @@ abstract class AbstractItem extends ActiveRecord
 		{
 			$model->delete();
 
-			AuthHelper::invalidatePermissions();
-
 			return true;
 		}
 
@@ -208,5 +206,15 @@ abstract class AbstractItem extends ActiveRecord
 		$this->type = static::ITEM_TYPE;
 
 		return parent::beforeSave($insert);
+	}
+
+	/**
+	 * Invalidate permissions if some item is deleted
+	 */
+	public function afterDelete()
+	{
+		parent::afterDelete();
+
+		AuthHelper::invalidatePermissions();
 	}
 } 
