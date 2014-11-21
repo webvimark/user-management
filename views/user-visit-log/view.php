@@ -31,13 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute'=>'user_id',
 						'value'=>@$model->user->username,
 					],
-					'language',
 					'ip',
-					[
-						'attribute'=>'browser_and_os',
-						'value'=>'<pre>' . $model->browser_and_os . '</pre>',
-						'format'=>'raw',
-					],
+					'language',
+					'os',
+					'browser',
+					'user_agent',
 
 					'visit_time:datetime',
 				],

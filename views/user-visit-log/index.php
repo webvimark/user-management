@@ -57,6 +57,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 					],
 					'language',
+					'os',
+					'browser',
 					array(
 						'attribute'=>'ip',
 						'value'=>function($model){

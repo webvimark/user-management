@@ -16,7 +16,7 @@ class UserVisitLogSearch extends UserVisitLog
 	{
 		return [
 			[['id', 'visit_time'], 'integer'],
-			[['token', 'ip', 'language', 'user_id', 'browser_and_os'], 'safe'],
+			[['token', 'ip', 'language', 'user_id', 'os', 'browser'], 'safe'],
 		];
 	}
 
@@ -53,6 +53,8 @@ class UserVisitLogSearch extends UserVisitLog
 
         	$query->andFilterWhere(['like', 'user.username', $this->user_id])
 			->andFilterWhere(['like', 'user_visit_log.ip', $this->ip])
+			->andFilterWhere(['like', 'user_visit_log.os', $this->os])
+			->andFilterWhere(['like', 'user_visit_log.browser', $this->browser])
 			->andFilterWhere(['like', 'user_visit_log.language', $this->language]);
 
 		return $dataProvider;

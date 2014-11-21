@@ -14,7 +14,9 @@ use Yii;
  * @property string $token
  * @property string $ip
  * @property string $language
- * @property string $browser_and_os
+ * @property string $browser
+ * @property string $os
+ * @property string $user_agent
  * @property integer $user_id
  * @property integer $visit_time
  *
@@ -32,20 +34,16 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 	public static function newVisitor($userId)
 	{
 		$browser = new Browser();
-		$userAgent = array(
-			'platform' => $browser->getPlatform(),
-			'browser'  => $browser->getBrowser(),
-			'version'  => $browser->getVersion(),
-			'summary'  => $browser->getUserAgent(),
-		);
 
-		$model                 = new self();
-		$model->user_id        = $userId;
-		$model->token          = uniqid();
-		$model->ip             = LittleBigHelper::getRealIp();
-		$model->language       = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
-		$model->browser_and_os = print_r($userAgent, true);
-		$model->visit_time     = time();
+		$model             = new self();
+		$model->user_id    = $userId;
+		$model->token      = uniqid();
+		$model->ip         = LittleBigHelper::getRealIp();
+		$model->language   = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
+		$model->browser    = $browser->getBrowser();
+		$model->os         = $browser->getPlatform();
+		$model->user_agent = $browser->getUserAgent();
+		$model->visit_time = time();
 		$model->save(false);
 
 		Yii::$app->session->set(self::SESSION_TOKEN, $model->token);

@@ -8,7 +8,7 @@
 	},
 	"require": {
 		"webvimark/components": "dev-master",
-		"cbschuld/browser.php": "dev-master",
+		"ikimea/browser": "dev-master",
 		"webvimark/helpers": "dev-master"
 	}
 }
