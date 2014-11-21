@@ -40,9 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'item'=>function ($index, $label, $name, $checked, $value) {
 								$list = '<ul style="padding-left: 10px">';
-								foreach (Role::getPermissionsByRole($value) as $name => $description)
+								foreach (Role::getPermissionsByRole($value) as $permissionName => $permissionDescription)
 								{
-									$list .= $description ? "<li>{$description}</li>" : "<li>{$name}</li>";
+									$list .= $permissionDescription ? "<li>{$permissionDescription}</li>" : "<li>{$permissionName}</li>";
 								}
 								$list .= '</ul>';
 
