@@ -2,6 +2,7 @@
 namespace webvimark\modules\UserManagement\models\rbacDB;
 
 use Exception;
+use webvimark\modules\UserManagement\components\AuthHelper;
 use Yii;
 use yii\rbac\DbManager;
 
@@ -63,6 +64,7 @@ class Permission extends AbstractItem
 			}
 		}
 
+		AuthHelper::invalidatePermissions();
 
 		return true;
 	}

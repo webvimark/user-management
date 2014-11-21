@@ -116,7 +116,7 @@ class Role extends AbstractItem
 			}
 		}
 
-
+		AuthHelper::invalidatePermissions();
 
 		return true;
 	}
