@@ -29,4 +29,5 @@ return [
     'Register' => '',
     'Registration ' => '',
     'Remember me' => '',
+    'You could not login from this IP' => '',
 ];
