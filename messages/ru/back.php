@@ -17,9 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Browser And Os' => '',
-    'Permissions for role - "{role}"' => 'Права для роли - "{role}"',
-    'Roles and permissions for user:' => 'Роли и права для пользователя',
+    'Browser' => 'Браузер',
+    'OS' => 'ОС',
+    'User agent' => 'User agent',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
     'Change own password' => 'Смена пароля',
@@ -47,11 +47,13 @@ return [
     'Password has been changed' => 'Пароль был изменён',
     'Permission creation' => 'Создание права',
     'Permissions' => 'Права',
+    'Permissions for role - "{role}"' => 'Права для роли - "{role}"',
     'Permissions for role:' => 'Права для роли:',
     'Repeat password' => 'Повторите пароль',
     'Role creation' => 'Создание роли',
     'Roles' => 'Роли',
     'Roles and permissions' => 'Роли и права',
+    'Roles and permissions for user:' => 'Роли и права для пользователя',
     'Rule' => 'Правило',
     'Save' => 'Сохранить',
     'Settings for permission:' => 'Настройки для права',

@@ -101,12 +101,14 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'id' => 'ID',
-			'token' => 'Token',
-			'ip' => 'IP',
-			'language' => UserManagementModule::t('back', 'Language'),
-			'browser_and_os' => UserManagementModule::t('back', 'Browser And Os'),
-			'user_id' => UserManagementModule::t('back', 'User'),
+			'id'         => 'ID',
+			'token'      => 'Token',
+			'ip'         => 'IP',
+			'language'   => UserManagementModule::t('back', 'Language'),
+			'browser'    => UserManagementModule::t('back', 'Browser'),
+			'os'         => UserManagementModule::t('back', 'OS'),
+			'user_agent' => UserManagementModule::t('back', 'User agent'),
+			'user_id'    => UserManagementModule::t('back', 'User'),
 			'visit_time' => UserManagementModule::t('back', 'Visit Time'),
 		];
 	}
