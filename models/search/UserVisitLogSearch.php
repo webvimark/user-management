@@ -15,8 +15,8 @@ class UserVisitLogSearch extends UserVisitLog
 	public function rules()
 	{
 		return [
-			[['id', 'visit_time'], 'integer'],
-			[['token', 'ip', 'language', 'user_id', 'os', 'browser'], 'safe'],
+			[['id'], 'integer'],
+			[['token', 'ip', 'language', 'user_id', 'os', 'browser', 'visit_time'], 'safe'],
 		];
 	}
 
@@ -46,9 +46,17 @@ class UserVisitLogSearch extends UserVisitLog
 			return $dataProvider;
 		}
 
+		if ( $this->visit_time )
+		{
+			$tmp = explode(' - ', $this->visit_time);
+			if ( isset($tmp[0], $tmp[1]) )
+			{
+				$query->andFilterWhere(['between','user_visit_log.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
+			}
+		}
+
 		$query->andFilterWhere([
 			'user_visit_log.id' => $this->id,
-			'user_visit_log.visit_time' => $this->visit_time,
 		]);
 
         	$query->andFilterWhere(['like', 'user.username', $this->user_id])

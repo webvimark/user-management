@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\extensions\DateRangePicker\DateRangePicker;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -79,3 +80,8 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 	</div>
 </div>
+
+<?php DateRangePicker::widget([
+	'model'     => $searchModel,
+	'attribute' => 'visit_time',
+]) ?>
