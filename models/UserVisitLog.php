@@ -2,7 +2,7 @@
 
 namespace webvimark\modules\UserManagement\models;
 
-use Browser;
+use Ikimea\Browser\Browser;
 use webvimark\helpers\LittleBigHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
