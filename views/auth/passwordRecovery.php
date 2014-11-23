@@ -15,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="password-recovery">
 
+	<h2 class="text-center"><?= $this->title ?></h2>
+
 	<?php $form = ActiveForm::begin([
 		'id'=>'user',
 		'layout'=>'horizontal',

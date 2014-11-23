@@ -4,8 +4,10 @@
  * @var webvimark\modules\UserManagement\models\rbacDB\Permission $model
  */
 
+use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 ?>
 
@@ -14,10 +16,12 @@ use yii\helpers\Html;
 	'layout'=>'horizontal',
 ]) ?>
 
-<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
+	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
 
-<?= $form->field($model, 'description') ?>
+	<?= $form->field($model, 'description') ?>
 
+	<?= $form->field($model, 'group_code')
+		->dropDownList(ArrayHelper::map(AuthItemGroup::find()->asArray()->all(), 'code', 'name'), ['prompt'=>'']) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">

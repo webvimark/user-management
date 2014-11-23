@@ -15,10 +15,13 @@ use yii\rbac\DbManager;
  * @property integer $type
  * @property string $name
  * @property string $description
+ * @property string $group_code
  * @property string $rule_name
  * @property string $data
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property AuthItemGroup $group
  */
 abstract class AbstractItem extends ActiveRecord
 {
@@ -156,15 +159,13 @@ abstract class AbstractItem extends ActiveRecord
 	public function rules()
 	{
 		return [
-			[['name', 'rule_name'], 'filter', 'filter' => 'trim'],
+			[['name', 'rule_name', 'description', 'group_code'], 'trim'],
 
 			['name', 'required'],
 			['name', 'unique'],
 			[['name', 'rule_name'], 'string', 'max' => 64],
 
-			['rule_name', 'default', 'value'=>null],
-
-			[['description', 'data'], 'safe'],
+			[['rule_name', 'description', 'group_code', 'data'], 'default', 'value'=>null],
 
 			['type', 'integer'],
 			['type', 'in', 'range'=>[static::TYPE_ROLE, static::TYPE_PERMISSION, static::TYPE_ROUTE]],
@@ -189,11 +190,19 @@ abstract class AbstractItem extends ActiveRecord
 			'name'        => UserManagementModule::t('back', 'Name'),
 			'description' => UserManagementModule::t('back', 'Description'),
 			'rule_name'   => UserManagementModule::t('back', 'Rule'),
+			'group_code'  => UserManagementModule::t('back', 'Group'),
 			'data'        => UserManagementModule::t('back', 'Data'),
 			'type'        => UserManagementModule::t('back', 'Type'),
 			'created_at'  => UserManagementModule::t('back', 'Created'),
 			'updated_at'  => UserManagementModule::t('back', 'Updated'),
 		];
+	}
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getGroup()
+	{
+		return $this->hasOne(AuthItemGroup::className(), ['code' => 'group_code']);
 	}
 
 	/**

@@ -248,17 +248,20 @@ class User extends UserIdentity
 		return [
 			['username', 'required'],
 			['username', 'unique'],
+			['username', 'trim'],
+			['username', 'string', 'max'=>50, 'on'=>'registration'],
+			['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp, 'on'=>'registration'],
+			['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp, 'on'=>'registration'],
 
 			['status', 'integer'],
 
 			['bind_to_ip', 'validateBindToIp'],
-			['bind_to_ip', 'filter', 'filter'=>'trim'],
-
-			[['username', 'bind_to_ip'], 'string', 'max' => 255],
+			['bind_to_ip', 'trim'],
+			['bind_to_ip', 'string', 'max' => 255],
 
 			['password', 'required', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
-			['password', 'string', 'max' => 255],
-			[['password', 'username'], 'filter', 'filter' => 'trim'],
+			['password', 'string', 'max' => 255, 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
+			['password', 'trim', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
 
 			['repeat_password', 'required', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword']],
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],

@@ -87,10 +87,12 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 	public function rules()
 	{
 		return [
-			[['token', 'ip', 'language', 'browser_and_os', 'visit_time'], 'required'],
+			[['token', 'ip', 'language', 'visit_time'], 'required'],
 			[['user_id', 'visit_time'], 'integer'],
-			[['token', 'browser_and_os'], 'string', 'max' => 255],
+			[['token', 'user_agent'], 'string', 'max' => 255],
 			[['ip'], 'string', 'max' => 15],
+			[['os'], 'string', 'max' => 20],
+			[['browser'], 'string', 'max' => 30],
 			[['language'], 'string', 'max' => 2]
 		];
 	}

@@ -57,6 +57,21 @@ class UserManagementModule extends \yii\base\Module
 	 */
 	public $rolesAfterRegistration = [];
 
+	/**
+	 * Pattern that will be applied for names on registration.
+	 * Default pattern allows user enter only numbers and letters.
+	 *
+	 * @var string
+	 */
+	public $registrationRegexp = '/^(\w|\d)+$/';
+
+	/**
+	 * Pattern that will be applied for names on registration. It contain regexp that should NOT be in username
+	 * Default pattern doesn't allow anything having "admin"
+	 *
+	 * @var string
+	 */
+	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
 
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 

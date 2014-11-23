@@ -1,7 +1,10 @@
 <?php
 use webvimark\extensions\GridPageSize\GridPageSize;
+use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
+use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -59,6 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					'format'=>'raw',
 				],
 				'description',
+				[
+					'attribute'=>'group_code',
+					'filter'=>ArrayHelper::map(AuthItemGroup::find()->asArray()->all(), 'code', 'name'),
+					'value'=>function(Role $model){
+							return $model->group_code ? $model->group->name : '';
+						},
+				],
 
 				[
 					'class' => 'yii\grid\ActionColumn',

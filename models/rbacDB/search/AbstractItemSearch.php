@@ -14,7 +14,7 @@ abstract class AbstractItemSearch extends AbstractItem
 	public function rules()
 	{
 		return [
-			[['name', 'description'], 'string'],
+			[['name', 'description', 'group_code'], 'string'],
 		];
 	}
 
@@ -27,6 +27,8 @@ abstract class AbstractItemSearch extends AbstractItem
 	public function search($params)
 	{
 		$query = ( static::ITEM_TYPE == static::TYPE_ROLE ) ? Role::find() : Permission::find();
+
+		$query->joinWith(['group']);
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
@@ -44,8 +46,10 @@ abstract class AbstractItemSearch extends AbstractItem
 			return $dataProvider;
 		}
 
+
         	$query->andFilterWhere(['like', 'name', $this->name])
-			->andFilterWhere(['like', 'description', $this->description]);
+			->andFilterWhere(['like', 'description', $this->description])
+			->andFilterWhere(['group_code'=>$this->group_code]);
 
 		return $dataProvider;
 	}

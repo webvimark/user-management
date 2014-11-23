@@ -9,11 +9,13 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = UserManagementModule::t('front', 'Registration ');
+$this->title = UserManagementModule::t('front', 'Registration');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="user-registration">
+
+	<h2 class="text-center"><?= $this->title ?></h2>
 
 	<?php $form = ActiveForm::begin([
 		'id'=>'user',
