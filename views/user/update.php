@@ -19,13 +19,7 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Editing');
 <div class="user-update">
 
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<strong>
-				<span class="glyphicon glyphicon-th"></span> <?= Html::encode($this->title) ?>
-			</strong>
-		</div>
 		<div class="panel-body">
-
 
 			<div class="user-form">
 

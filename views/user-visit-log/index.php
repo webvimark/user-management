@@ -21,16 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<strong>
-				<span class="glyphicon glyphicon-th"></span>  <?= Html::encode($this->title) ?>
-			</strong>
-
-			<?= GridPageSize::widget(['pjaxId'=>'user-visit-log-grid-pjax']) ?>
-		</div>
 
 		<div class="panel-body">
 
+			<div class="row">
+				<div class="col-sm-12 text-right">
+					<?= GridPageSize::widget(['pjaxId'=>'user-visit-log-grid-pjax']) ?>
+				</div>
+			</div>
 
 			<?php Pjax::begin([
 				'id'=>'user-visit-log-grid-pjax',

@@ -18,9 +18,6 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Us
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2><?= $this->title ?></h2>
-<br/>
-
 <div class="row">
 	<div class="col-sm-6">
 		<div class="panel panel-default">

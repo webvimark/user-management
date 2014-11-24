@@ -16,11 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<strong>
-				<span class="glyphicon glyphicon-th"></span> <?= Html::encode($this->title) ?>
-			</strong>
-		</div>
 		<div class="panel-body">
 
 		    <p>

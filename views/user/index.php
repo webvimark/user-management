@@ -24,14 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<strong>
-				<span class="glyphicon glyphicon-th"></span>  <?= Html::encode($this->title) ?>
-			</strong>
-
-			<?= GridPageSize::widget(['pjaxId'=>'user-grid-pjax']) ?>
-		</div>
-
 		<div class="panel-body">
 
 			<div class="row">
@@ -39,14 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
 					<p>
 						<?= GhostHtml::a(
 							'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
-							['create'],
+							['/user-management/user/create'],
 							['class' => 'btn btn-sm btn-success']
 						) ?>
 					</p>
 				</div>
 
 				<div class="col-sm-6 text-right">
-					<?= GridBulkActions::widget(['gridId'=>'user-grid']) ?>
+					<?= GridPageSize::widget(['pjaxId'=>'user-grid-pjax']) ?>
 				</div>
 			</div>
 
@@ -65,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'firstPageLabel'=>'<<',
 				],
 				'filterModel' => $searchModel,
-				'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}</div></div>',
+				'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}'.GridBulkActions::widget(['gridId'=>'user-grid']).'</div></div>',
 				'columns' => [
 					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 

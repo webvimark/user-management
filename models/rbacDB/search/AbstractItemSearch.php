@@ -47,9 +47,9 @@ abstract class AbstractItemSearch extends AbstractItem
 		}
 
 
-        	$query->andFilterWhere(['like', 'name', $this->name])
-			->andFilterWhere(['like', 'description', $this->description])
-			->andFilterWhere(['group_code'=>$this->group_code]);
+        	$query->andFilterWhere(['like', 'auth_item.name', $this->name])
+			->andFilterWhere(['like', 'auth_item.description', $this->description])
+			->andFilterWhere(['auth_item.group_code'=>$this->group_code]);
 
 		return $dataProvider;
 	}
