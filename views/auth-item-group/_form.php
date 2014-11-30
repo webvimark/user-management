@@ -15,11 +15,13 @@ use yii\bootstrap\ActiveForm;
 	<?php $form = ActiveForm::begin([
 		'id'=>'auth-item-group-form',
 		'layout'=>'horizontal',
-		]); ?>
+		'validateOnBlur' => false,
 
-	<?= $form->field($model, 'code')->textInput(['maxlength' => 64, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
+	]); ?>
 
-	<?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
+	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
+
+	<?= $form->field($model, 'code')->textInput(['maxlength' => 64]) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">

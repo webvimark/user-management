@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\models\rbacDB;
 
+use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -53,10 +54,10 @@ class AuthItemGroup extends \yii\db\ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'code' => Yii::t('app', 'Code'),
-			'name' => Yii::t('app', 'Name'),
-			'created_at' => Yii::t('app', 'Created'),
-			'updated_at' => Yii::t('app', 'Updated'),
+			'name'        => UserManagementModule::t('back', 'Name'),
+			'code'        => UserManagementModule::t('back', 'Code'),
+			'created_at'  => UserManagementModule::t('back', 'Created'),
+			'updated_at'  => UserManagementModule::t('back', 'Updated'),
 		];
 	}
 }

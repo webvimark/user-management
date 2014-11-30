@@ -35,7 +35,7 @@ class PermissionController extends AdminDefaultController
 	{
 		if ( parent::beforeAction($action) )
 		{
-			$layouts = $this->module->layouts[$this->id];
+			$layouts = @$this->module->layouts[$this->id];
 
 			if ( isset($layouts[$action->id]) )
 			{
@@ -64,9 +64,15 @@ class PermissionController extends AdminDefaultController
 		$routes = Route::find()->asArray()->all();
 
 		$permissions = Permission::find()
-			->andWhere(['not in', 'name', [Yii::$app->getModule('user-management')->commonPermissionName, $id]])
-			->asArray()
+			->andWhere(['not in', 'auth_item.name', [Yii::$app->getModule('user-management')->commonPermissionName, $id]])
+			->joinWith('group')
 			->all();
+
+		$permissionsByGroup = [];
+		foreach ($permissions as $permission)
+		{
+			$permissionsByGroup[@$permission->group->name][] = $permission;
+		}
 
 		$authManager = new DbManager();
 
@@ -75,7 +81,7 @@ class PermissionController extends AdminDefaultController
 		$childRoutes = $currentRoutesAndPermissions->routes;
 		$childPermissions = $currentRoutesAndPermissions->permissions;
 
-		return $this->render('view', compact('item', 'childPermissions', 'routes', 'permissions', 'childRoutes'));
+		return $this->render('view', compact('item', 'childPermissions', 'routes', 'permissionsByGroup', 'childRoutes'));
 	}
 
 	/**
@@ -165,23 +171,41 @@ class PermissionController extends AdminDefaultController
 
 
 	/**
-	 * @inheritdoc
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * @return mixed
 	 */
-	protected function getRedirectPage($action, $model = null)
+	public function actionCreate()
 	{
-		switch ($action)
+		$model = new $this->modelClass;
+		$model->scenario = 'webInput';
+
+		if ( $model->load(Yii::$app->request->post()) && $model->save() )
 		{
-			case 'delete':
-				return ['index'];
-				break;
-			case 'update':
-				return ['view', 'id'=>$model->name];
-				break;
-			case 'create':
-				return ['view', 'id'=>$model->name];
-				break;
-			default:
-				return ['index'];
+			return $this->redirect(['view', 'id'=>$model->name]);
 		}
+
+		return $this->renderIsAjax('create', compact('model'));
+	}
+
+	/**
+	 * Updates an existing model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 *
+	 * @param integer $id
+	 *
+	 * @return mixed
+	 */
+	public function actionUpdate($id)
+	{
+		$model = $this->findModel($id);
+		$model->scenario = 'webInput';
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->save())
+		{
+			return $this->redirect(['view', 'id'=>$model->name]);
+		}
+
+		return $this->renderIsAjax('update', compact('model'));
 	}
 } 

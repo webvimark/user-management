@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -15,7 +16,7 @@ use yii\grid\GridView;
  * @var webvimark\modules\UserManagement\models\rbacDB\search\AuthItemGroupSearch $searchModel
  */
 
-$this->title = UserManagementModule::t('back', 'Role and permission groups');
+$this->title = UserManagementModule::t('back', 'Permission groups');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auth-item-group-index">
@@ -23,25 +24,21 @@ $this->params['breadcrumbs'][] = $this->title;
 	<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<strong>
-				<span class="glyphicon glyphicon-th"></span>  <?= Html::encode($this->title) ?>
-			</strong>
-
-			<?= GridPageSize::widget(['pjaxId'=>'auth-item-group-grid-pjax']) ?>
-		</div>
 
 		<div class="panel-body">
-
 			<div class="row">
 				<div class="col-sm-6">
 					<p>
-						<?= Html::a('<span class="glyphicon glyphicon-plus-sign"></span> ' . Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-sm btn-success']) ?>
+						<?= GhostHtml::a(
+							'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
+							['create'],
+							['class' => 'btn btn-success']
+						) ?>
 					</p>
 				</div>
 
 				<div class="col-sm-6 text-right">
-					<?= GridBulkActions::widget(['gridId'=>'auth-item-group-grid']) ?>
+					<?= GridPageSize::widget(['pjaxId'=>'auth-item-group-grid-pjax']) ?>
 				</div>
 			</div>
 

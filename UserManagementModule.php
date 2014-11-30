@@ -44,6 +44,9 @@ class UserManagementModule extends \yii\base\Module
 		'user-permission'=>[
 			'*'=>'//main.php',
 		],
+		'auth-item-group'=>[
+			'*'=>'//main.php',
+		],
 		'auth'=>[
 			'*'=>'@app/views/layouts/main.php',
 			'login'=>'loginLayout.php',
@@ -73,30 +76,58 @@ class UserManagementModule extends \yii\base\Module
 	 */
 	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
 
+	/**
+	 * Helps to check if translations have been registered already
+	 *
+	 * @var bool
+	 */
+	protected static $_translationsRegistered = false;
+
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 
-	public function init()
+	/**
+	 * For Menu
+	 *
+	 * @return array
+	 */
+	public static function menuItems()
 	{
-		parent::init();
-
-		$this->registerTranslations();
-	}
-
-	public function registerTranslations()
-	{
-		Yii::$app->i18n->translations['modules/user-management/*'] = [
-			'class'          => 'yii\i18n\PhpMessageSource',
-			'sourceLanguage' => 'en',
-			'basePath'       => '@vendor/webvimark/module-user-management/messages',
-			'fileMap'        => [
-				'modules/user-management/back' => 'back.php',
-				'modules/user-management/front' => 'front.php',
-			],
+		return [
+			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
+			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
+			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
+			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
+			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
 		];
 	}
 
+	/**
+	 * I18N helper
+	 *
+	 * @param string      $category
+	 * @param string      $message
+	 * @param array       $params
+	 * @param null|string $language
+	 *
+	 * @return string
+	 */
 	public static function t($category, $message, $params = [], $language = null)
 	{
+		if ( !static::$_translationsRegistered )
+		{
+			Yii::$app->i18n->translations['modules/user-management/*'] = [
+				'class'          => 'yii\i18n\PhpMessageSource',
+				'sourceLanguage' => 'en',
+				'basePath'       => '@vendor/webvimark/module-user-management/messages',
+				'fileMap'        => [
+					'modules/user-management/back' => 'back.php',
+					'modules/user-management/front' => 'front.php',
+				],
+			];
+
+			static::$_translationsRegistered = true;
+		}
+
 		return Yii::t('modules/user-management/' . $category, $message, $params, $language);
 	}
 }

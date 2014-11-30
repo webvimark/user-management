@@ -33,7 +33,7 @@ class UserVisitLogController extends AdminDefaultController
 	{
 		if ( parent::beforeAction($action) )
 		{
-			$layouts = $this->module->layouts[$this->id];
+			$layouts = @$this->module->layouts[$this->id];
 
 			if ( isset($layouts[$action->id]) )
 			{

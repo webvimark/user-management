@@ -1,5 +1,6 @@
 <?php
 use webvimark\extensions\GridPageSize\GridPageSize;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\UserManagementModule;
@@ -19,22 +20,22 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<strong>
-			<span class="glyphicon glyphicon-th"></span> <?= $this->title ?>
-		</strong>
-
-		<?= GridPageSize::widget(['pjaxId'=>'role-grid-pjax']) ?>
-
-	</div>
 	<div class="panel-body">
-		<p>
-			<?= Html::a(
-				'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
-				['create'],
-				['class' => 'btn btn-sm btn-success']
-			) ?>
-		</p>
+		<div class="row">
+			<div class="col-sm-6">
+				<p>
+					<?= GhostHtml::a(
+						'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
+						['create'],
+						['class' => 'btn btn-success']
+					) ?>
+				</p>
+			</div>
+
+			<div class="col-sm-6 text-right">
+				<?= GridPageSize::widget(['pjaxId'=>'role-grid-pjax']) ?>
+			</div>
+		</div>
 
 		<?php Pjax::begin([
 			'id'=>'role-grid-pjax',
@@ -55,21 +56,13 @@ $this->params['breadcrumbs'][] = $this->title;
 				['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 
 				[
-					'attribute'=>'name',
-					'value'=>function($model){
-							return Html::a($model->name, ['view', 'id'=>$model->name], ['data-pjax'=>0]);
+					'attribute'=>'description',
+					'value'=>function(Role $model){
+							return Html::a($model->description, ['view', 'id'=>$model->name], ['data-pjax'=>0]);
 						},
 					'format'=>'raw',
 				],
-				'description',
-				[
-					'attribute'=>'group_code',
-					'filter'=>ArrayHelper::map(AuthItemGroup::find()->asArray()->all(), 'code', 'name'),
-					'value'=>function(Role $model){
-							return $model->group_code ? $model->group->name : '';
-						},
-				],
-
+				'name',
 				[
 					'class' => 'yii\grid\ActionColumn',
 					'contentOptions'=>['style'=>'width:70px; text-align:center;'],

@@ -99,6 +99,8 @@ class User extends UserIdentity
 					'created_at' => time(),
 				])->execute();
 
+			AuthHelper::invalidatePermissions();
+
 			return true;
 		}
 		catch (\Exception $e)
@@ -117,9 +119,16 @@ class User extends UserIdentity
 	 */
 	public static function revokeRole($userId, $roleName)
 	{
-		return Yii::$app->db->createCommand()
+		$result = Yii::$app->db->createCommand()
 			->delete('auth_assignment', ['user_id' => $userId, 'item_name' => $roleName])
 			->execute() > 0;
+
+		if ( $result )
+		{
+			AuthHelper::invalidatePermissions();
+		}
+
+		return $result;
 	}
 
 	/**

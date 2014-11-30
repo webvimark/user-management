@@ -18,6 +18,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 	<?php $form = ActiveForm::begin([
 		'id'=>'user',
 		'layout'=>'horizontal',
+		'validateOnBlur' => false,
 	]); ?>
 
 	<?= $form->field($model->loadDefaultValues(), 'status')

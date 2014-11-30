@@ -1,6 +1,7 @@
 <?php
 /**
  * @var yii\web\View $this
+ * @var array $permissionsByGroup
  * @var webvimark\modules\UserManagement\models\User $user
  */
 
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::checkboxList(
 					'roles',
 					ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name'),
-					ArrayHelper::map(Role::getAvailableRoles(), 'name', 'name'),
+					ArrayHelper::map(Role::getAvailableRoles(), 'name', 'description'),
 					[
 						'item'=>function ($index, $label, $name, $checked, $value) {
 								$list = '<ul style="padding-left: 10px">';
@@ -48,11 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
 											'role'=>$label,
 										]),
 									'data-content' => $list,
-									'data-toggle'  => 'popover',
 									'data-html'    => 'true',
 									'role'         => 'button',
 									'style'        => 'margin-bottom: 5px; padding: 0 5px',
-									'class'        => 'btn btn-sm btn-default',
+									'class'        => 'btn btn-sm btn-default role-help-btn',
 								]);
 								$helpIcon .= '?';
 								$helpIcon .= Html::endTag('span');
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 	</div>
 
-	<div class="col-sm-6">
+	<div class="col-sm-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<strong>
@@ -86,11 +86,27 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 			<div class="panel-body">
 
-				<ul>
-					<?php foreach (Permission::getUserPermissions($user->id) as $permission): ?>
-						<li><?= $permission->description ?></li>
+				<div class="row">
+					<?php foreach ($permissionsByGroup as $groupName => $permissions): ?>
+
+						<div class="col-sm-6">
+							<fieldset>
+								<legend><?= $groupName ?></legend>
+
+								<ul>
+									<?php foreach ($permissions as $permission): ?>
+										<li><?= $permission->description ?></li>
+									<?php endforeach ?>
+								</ul>
+							</fieldset>
+
+							<br/>
+						</div>
+
 					<?php endforeach ?>
-				</ul>
+
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -98,7 +114,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 $this->registerJs(<<<JS
-$('[data-toggle="popover"]').popover();
+
+$('.role-help-btn').off('mouseover mouseleave')
+	.on('mouseover', function(){
+		var _t = $(this);
+		_t.popover('show');
+	}).on('mouseleave', function(){
+		var _t = $(this);
+		_t.popover('hide');
+	});
 JS
 );
 ?>

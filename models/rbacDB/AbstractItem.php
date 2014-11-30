@@ -161,9 +161,12 @@ abstract class AbstractItem extends ActiveRecord
 		return [
 			[['name', 'rule_name', 'description', 'group_code'], 'trim'],
 
+			['description', 'required', 'on'=>'webInput'],
+			['description', 'string', 'max' => 255],
+
 			['name', 'required'],
 			['name', 'unique'],
-			[['name', 'rule_name'], 'string', 'max' => 64],
+			[['name', 'rule_name', 'group_code'], 'string', 'max' => 64],
 
 			[['rule_name', 'description', 'group_code', 'data'], 'default', 'value'=>null],
 
@@ -187,7 +190,7 @@ abstract class AbstractItem extends ActiveRecord
 	public function attributeLabels()
 	{
 		return [
-			'name'        => UserManagementModule::t('back', 'Name'),
+			'name'        => UserManagementModule::t('back', 'Code'),
 			'description' => UserManagementModule::t('back', 'Description'),
 			'rule_name'   => UserManagementModule::t('back', 'Rule'),
 			'group_code'  => UserManagementModule::t('back', 'Group'),
@@ -197,6 +200,7 @@ abstract class AbstractItem extends ActiveRecord
 			'updated_at'  => UserManagementModule::t('back', 'Updated'),
 		];
 	}
+
 	/**
 	 * @return \yii\db\ActiveQuery
 	 */
