@@ -23,9 +23,30 @@ class AuthItemGroupController extends AdminDefaultController
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\AuthItemGroupSearch';
 
 	/**
-	* @var string
-	*/
-	public $layout = '//back';
+	 * Set layout from config
+	 *
+	 * @inheritdoc
+	 */
+	public function beforeAction($action)
+	{
+		if ( parent::beforeAction($action) )
+		{
+			$layouts = @$this->module->layouts[$this->id];
+
+			if ( isset($layouts[$action->id]) )
+			{
+				$this->layout = $layouts[$action->id];
+			}
+			elseif ( isset($layouts['*']) )
+			{
+				$this->layout = $layouts['*'];
+			}
+
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Define redirect page after update, create, delete, etc

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<?= GhostHtml::a(
 							'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
 							['/user-management/user/create'],
-							['class' => 'btn btn-sm btn-success']
+							['class' => 'btn btn-success']
 						) ?>
 					</p>
 				</div>
@@ -64,14 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'superadmin',
-						'toggleUrl'=>Url::to(['toggle-attribute', 'attribute'=>'superadmin', 'id'=>'_id_']),
 						'visible'=>Yii::$app->user->isSuperadmin,
 					],
 
 					[
 						'attribute'=>'username',
 						'value'=>function(User $model){
-								return Html::a($model->username,['update', 'id'=>$model->id],['data-pjax'=>0]);
+								return Html::a($model->username,['view', 'id'=>$model->id],['data-pjax'=>0]);
 							},
 						'format'=>'raw',
 					],
@@ -112,9 +111,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'status',
-						'toggleUrl'=>User::canRoute('/user-management/user-permission/toggle-attribute') ?
-								Url::to(['toggle-attribute', 'attribute'=>'status', 'id'=>'_id_'])
-								: false,
 						'optionsArray'=>[
 							[User::STATUS_ACTIVE, UserManagementModule::t('back', 'Active'), 'success'],
 							[User::STATUS_INACTIVE, UserManagementModule::t('back', 'Inactive'), 'danger'],

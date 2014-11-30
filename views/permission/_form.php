@@ -14,11 +14,12 @@ use yii\helpers\Html;
 <?php $form = ActiveForm::begin([
 	'id'      => 'role-form',
 	'layout'=>'horizontal',
+	'validateOnBlur' => false,
 ]) ?>
 
-	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
+	<?= $form->field($model, 'description')->textInput(['maxlength' => 255, 'autofocus'=>$model->isNewRecord ? true:false]) ?>
 
-	<?= $form->field($model, 'description') ?>
+	<?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
 
 	<?= $form->field($model, 'group_code')
 		->dropDownList(ArrayHelper::map(AuthItemGroup::find()->asArray()->all(), 'code', 'name'), ['prompt'=>'']) ?>

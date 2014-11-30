@@ -4,6 +4,7 @@ namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
 use yii\web\NotFoundHttpException;
@@ -20,7 +21,7 @@ class UserPermissionController extends BaseController
 	{
 		if ( parent::beforeAction($action) )
 		{
-			$layouts = $this->module->layouts[$this->id];
+			$layouts = @$this->module->layouts[$this->id];
 
 			if ( isset($layouts[$action->id]) )
 			{
@@ -52,7 +53,20 @@ class UserPermissionController extends BaseController
 			throw new NotFoundHttpException('User not found');
 		}
 
-		return $this->renderIsAjax('set', compact('user'));
+		$permissionsByGroup = [];
+		$permissions = Permission::find()
+			->andWhere([
+				'auth_item.name'=>array_keys(Permission::getUserPermissions($user->id))
+			])
+			->joinWith('group')
+			->all();
+
+		foreach ($permissions as $permission)
+		{
+			$permissionsByGroup[@$permission->group->name][] = $permission;
+		}
+
+		return $this->renderIsAjax('set', compact('user', 'permissionsByGroup'));
 	}
 
 	/**
@@ -77,8 +91,6 @@ class UserPermissionController extends BaseController
 		{
 			User::assignRole($id, $role);
 		}
-
-		AuthHelper::invalidatePermissions();
 
 		$this->redirect(['set', 'id'=>$id]);
 	}

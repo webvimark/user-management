@@ -4,22 +4,24 @@
  * @var yii\widgets\ActiveForm $form
  * @var array $routes
  * @var array $childRoutes
- * @var array $permissions
+ * @var array $permissionsByGroup
  * @var array $childPermissions
  * @var yii\rbac\Permission $item
  */
+
+use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-$this->title = $item->name;
+$this->title = UserManagementModule::t('back', 'Settings for permission:') . ': ' . $item->description;
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<h2><?= UserManagementModule::t('back', 'Settings for permission:') ?> <b><?= $this->title ?></b></h2>
-<br/>
-
+<p>
+	<?= GhostHtml::a(UserManagementModule::t('back', 'Edit'), ['update', 'id' => $item->name], ['class' => 'btn btn-sm btn-primary']) ?>
+	<?= GhostHtml::a(UserManagementModule::t('back', 'Create'), ['create'], ['class' => 'btn btn-sm btn-success']) ?>
+</p>
 
 <div class="row">
 	<div class="col-sm-6">
@@ -33,12 +35,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<?= Html::beginForm(['set-child-permissions', 'id'=>$item->name]) ?>
 
-				<?= Html::checkboxList(
-					'child_permissions',
-					ArrayHelper::map($childPermissions, 'name', 'name'),
-					ArrayHelper::map($permissions, 'name', 'description'),
-					['separator'=>'<br>']
-				) ?>
+				<div class="row">
+					<?php foreach ($permissionsByGroup as $groupName => $permissions): ?>
+						<div class="col-sm-6">
+							<fieldset>
+								<legend><?= $groupName ?></legend>
+
+								<?= Html::checkboxList(
+									'child_permissions',
+									ArrayHelper::map($childPermissions, 'name', 'name'),
+									ArrayHelper::map($permissions, 'name', 'description'),
+									['separator'=>'<br>']
+								) ?>
+							</fieldset>
+							<br/>
+						</div>
+
+
+					<?php endforeach ?>
+				</div>
+
 
 				<hr/>
 				<?= Html::submitButton(

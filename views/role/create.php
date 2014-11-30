@@ -12,11 +12,6 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Ro
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<strong>
-			<span class="glyphicon glyphicon-th"></span> <?= $this->title ?>
-		</strong>
-	</div>
 	<div class="panel-body">
 		<?= $this->render('_form', [
 			'model'=>$model,

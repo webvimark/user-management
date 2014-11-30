@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You could not login from this IP' => 'Вы не можете входить с этого IP',
+    'Registration' => 'Регистрация',
     'Authorization' => 'Авторизация',
     'Check your E-mail for further instructions' => 'Проверьте Ваш E-mail для дальнейших инструкций',
     'Don\'t have account ?' => 'Нет аккаунта ?',
@@ -28,6 +28,6 @@ return [
     'Password recovery' => 'Восстановление пароля',
     'Recover' => 'Восстановить',
     'Register' => 'Регистрация',
-    'Registration ' => 'Регистрация',
     'Remember me' => 'Запомнить меня',
+    'You could not login from this IP' => 'Вы не можете входить с этого IP',
 ];
