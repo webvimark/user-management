@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m141123_161018_create_auth_item_group_table extends Migration
+class m140808_073114_create_auth_item_group_table extends Migration
 {
 	public function safeUp()
 	{
