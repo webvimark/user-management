@@ -17,10 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Registration' => 'Регистрация',
+    'Captcha' => 'Каптча',
+    'E-mail is invalid' => 'Неверный E-mail',
+    'Login has been taken' => 'Логин уже занят',
+    'Repeat password' => 'Повторите пароль',
+    'This E-mail already exists' => '',
+    'Too many attempts' => 'Лимит попыток превышен',
     'Authorization' => 'Авторизация',
     'Check your E-mail for further instructions' => 'Проверьте Ваш E-mail для дальнейших инструкций',
-    'Don\'t have account ?' => 'Нет аккаунта ?',
     'Forgot password ?' => 'Забыли пароль ?',
     'Incorrect username or password.' => 'Неверный логин или пароль',
     'Login' => 'Логин',
@@ -28,6 +32,7 @@ return [
     'Password recovery' => 'Восстановление пароля',
     'Recover' => 'Восстановить',
     'Register' => 'Регистрация',
+    'Registration' => 'Регистрация',
     'Remember me' => 'Запомнить меня',
     'You could not login from this IP' => 'Вы не можете входить с этого IP',
 ];
