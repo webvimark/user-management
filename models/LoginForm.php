@@ -43,6 +43,13 @@ class LoginForm extends Model
 	 */
 	public function validatePassword()
 	{
+		if ( !Yii::$app->getModule('user-management')->checkAttempts() )
+		{
+			$this->addError('password', UserManagementModule::t('front', 'Too many attempts'));
+
+			return false;
+		}
+
 		if ( !$this->hasErrors() )
 		{
 			$user = $this->getUser();

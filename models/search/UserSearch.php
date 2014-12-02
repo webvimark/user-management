@@ -16,7 +16,7 @@ class UserSearch extends User
 	{
 		return [
 			[['id', 'superadmin', 'status', 'created_at', 'updated_at'], 'integer'],
-			[['username', 'gridRoleSearch'], 'string'],
+			[['username', 'gridRoleSearch', 'registration_ip'], 'string'],
 		];
 	}
 
@@ -63,6 +63,7 @@ class UserSearch extends User
 			'superadmin' => $this->superadmin,
 			'status' => $this->status,
 			'auth_item.name' => $this->gridRoleSearch,
+			'registration_ip' => $this->registration_ip,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 		]);

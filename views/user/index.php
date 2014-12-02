@@ -76,12 +76,19 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					[
 						'attribute'=>'gridRoleSearch',
-						'filter'=>Role::getAvailableRoles(Yii::$app->user->isSuperAdmin, true),
+						'filter'=>ArrayHelper::map(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin),'name', 'description'),
 						'value'=>function(User $model){
-								return implode(', ', ArrayHelper::map($model->roles, 'name', 'name'));
+								return implode(', ', ArrayHelper::map($model->roles, 'name', 'description'));
 							},
 						'format'=>'raw',
 					],
+					array(
+						'attribute'=>'registration_ip',
+						'value'=>function(User $model){
+								return Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]);
+							},
+						'format'=>'raw',
+					),
 					[
 						'value'=>function(User $model){
 								return Html::a(

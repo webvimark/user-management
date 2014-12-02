@@ -21,6 +21,7 @@ use yii\helpers\Html;
 					<?php $form = ActiveForm::begin([
 						'id'      => 'login-form',
 						'options'=>['autocomplete'=>'off'],
+						'validateOnBlur'=>false,
 						'fieldConfig' => [
 							'template'=>"{input}\n{error}",
 						],
@@ -32,23 +33,30 @@ use yii\helpers\Html;
 					<?= $form->field($model, 'password')
 						->passwordInput(['placeholder'=>$model->getAttributeLabel('password'), 'autocomplete'=>'off']) ?>
 
+					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
 
 					<?= Html::submitButton(
 						UserManagementModule::t('front', 'Login'),
 						['class' => 'btn btn-lg btn-primary btn-block']
 					) ?>
 
-					<?= GhostHtml::a(
-						UserManagementModule::t('front', "Don't have account ?"),
-						['/user-management/auth/registration'],
-						['class' => 'btn btn-lg btn-success btn-block registration-btn']
-					) ?>
+					<div class="row registration-block">
+						<div class="col-sm-6">
+							<?= GhostHtml::a(
+								UserManagementModule::t('front', "Registration"),
+								['/user-management/auth/registration']
+							) ?>
+						</div>
+						<div class="col-sm-6 text-right">
+							<?= GhostHtml::a(
+								UserManagementModule::t('front', "Forgot password ?"),
+								['/user-management/auth/password-recovery']
+							) ?>
+						</div>
+					</div>
 
-					<?= GhostHtml::a(
-						UserManagementModule::t('front', "Forgot password ?"),
-						['/user-management/auth/password-recovery'],
-						['class' => 'btn btn-sm btn-default btn-block']
-					) ?>
+
+
 
 					<?php ActiveForm::end() ?>
 				</div>
@@ -71,8 +79,8 @@ html, body {
 	position: relative;
 	top: 30%;
 }
-#login-wrapper a.registration-btn {
-	margin-top: 30px;
+#login-wrapper .registration-block {
+	margin-top: 15px;
 }
 CSS;
 

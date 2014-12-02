@@ -6,6 +6,9 @@ use Yii;
 
 class UserManagementModule extends \yii\base\Module
 {
+	const SESSION_LAST_ATTEMPT = '_um_last_attempt';
+	const SESSION_ATTEMPT_COUNT = '_um_attempt_count';
+
 	/**
 	 * Permission that will be assigned automatically for everyone, so you can assign
 	 * routes like "site/index" to this permission and those routes will be available for everyone
@@ -48,8 +51,9 @@ class UserManagementModule extends \yii\base\Module
 			'*'=>'//main.php',
 		],
 		'auth'=>[
-			'*'=>'@app/views/layouts/main.php',
-			'login'=>'loginLayout.php',
+			'*'=> '@app/views/layouts/main.php',
+			'login' => 'loginLayout.php',
+			'change-own-password' => '//main.php',
 		],
 	];
 
@@ -75,6 +79,20 @@ class UserManagementModule extends \yii\base\Module
 	 * @var string
 	 */
 	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
+
+	/**
+	 * How much attempts user can made to login or recover password in $attemptsTimeout seconds
+	 *
+	 * @var int
+	 */
+	public $maxAttempts = 5;
+
+	/**
+	 * Number of seconds after attempt counter to login or recover password will reset
+	 *
+	 * @var int
+	 */
+	public $attemptsTimeout = 60;
 
 	/**
 	 * Helps to check if translations have been registered already
@@ -129,5 +147,42 @@ class UserManagementModule extends \yii\base\Module
 		}
 
 		return Yii::t('modules/user-management/' . $category, $message, $params, $language);
+	}
+
+	/**
+	 * Check how much attempts user has been made in X seconds
+	 *
+	 * @return bool
+	 */
+	public function checkAttempts()
+	{
+		$lastAttempt = Yii::$app->session->get(static::SESSION_LAST_ATTEMPT);
+
+		if ( $lastAttempt )
+		{
+			$attemptsCount = Yii::$app->session->get(static::SESSION_ATTEMPT_COUNT, 0);
+
+			Yii::$app->session->set(static::SESSION_ATTEMPT_COUNT, ++$attemptsCount);
+
+			// If last attempt was made more than X seconds ago then reset counters
+			if ( ( $lastAttempt + $this->attemptsTimeout ) < time() )
+			{
+				Yii::$app->session->set(static::SESSION_LAST_ATTEMPT, time());
+				Yii::$app->session->set(static::SESSION_ATTEMPT_COUNT, 1);
+
+				return true;
+			}
+			elseif ( $attemptsCount > $this->maxAttempts )
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		Yii::$app->session->set(static::SESSION_LAST_ATTEMPT, time());
+		Yii::$app->session->set(static::SESSION_ATTEMPT_COUNT, 1);
+
+		return true;
 	}
 }

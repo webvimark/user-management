@@ -45,6 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
 						'value'=>User::getStatusValue($model->status),
 					],
 					'username',
+					array(
+						'attribute'=>'registration_ip',
+						'value'=>Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]),
+						'format'=>'raw',
+					),
 					'created_at:datetime',
 					'updated_at:datetime',
 				],

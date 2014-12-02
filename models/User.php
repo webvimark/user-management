@@ -17,6 +17,8 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $id
  * @property string $username
+ * @property string $email
+ * @property integer $email_confirmed
  * @property string $auth_key
  * @property string $password_hash
  * @property string $confirmation_token
@@ -36,13 +38,6 @@ class User extends UserIdentity
 	 * @var string
 	 */
 	public $gridRoleSearch;
-
-	/**
-	 * Used when user want to change his own password
-	 *
-	 * @var string
-	 */
-	public $current_password;
 
 	/**
 	 * @var string
@@ -258,36 +253,41 @@ class User extends UserIdentity
 			['username', 'required'],
 			['username', 'unique'],
 			['username', 'trim'],
-			['username', 'string', 'max'=>50, 'on'=>'registration'],
-			['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp, 'on'=>'registration'],
-			['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp, 'on'=>'registration'],
 
-			['status', 'integer'],
+			[['status', 'email_confirmed'], 'integer'],
+
+			['email', 'email'],
+			['email', 'validateConfirmedUnique'],
 
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
 			['bind_to_ip', 'string', 'max' => 255],
 
-			['password', 'required', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
-			['password', 'string', 'max' => 255, 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
-			['password', 'trim', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword', 'login']],
+			['password', 'required', 'on'=>['newUser', 'changePassword']],
+			['password', 'string', 'max' => 255, 'on'=>['newUser', 'changePassword']],
+			['password', 'trim', 'on'=>['newUser', 'changePassword']],
 
-			['repeat_password', 'required', 'on'=>['registration', 'newUser', 'changePassword', 'changeOwnPassword']],
+			['repeat_password', 'required', 'on'=>['newUser', 'changePassword']],
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
-
-			['current_password', 'required', 'on'=>'changeOwnPassword'],
-			['current_password', 'validateCurrentPassword', 'on'=>'changeOwnPassword'],
 		];
 	}
 
 	/**
-	 * Validates current password
+	 * Check that there is no such confirmed E-mail in the system
 	 */
-	public function validateCurrentPassword()
+	public function validateConfirmedUnique()
 	{
-		if ( !Yii::$app->security->validatePassword($this->current_password, $this->password_hash) )
+		if ( $this->email )
 		{
-			$this->addError('current_password', UserManagementModule::t('back', "Wrong password"));
+			$exists = User::findOne([
+				'email'=>$this->email,
+				'email_confirmed'=>1,
+			]);
+
+			if ( $exists )
+			{
+				$this->addError('email', UserManagementModule::t('front', 'This E-mail already exists'));
+			}
 		}
 	}
 
@@ -320,13 +320,15 @@ class User extends UserIdentity
 			'username'           => UserManagementModule::t('back', 'Login'),
 			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
 			'confirmation_token' => 'Confirmation Token',
+			'registration_ip'    => UserManagementModule::t('back', 'Registration IP'),
 			'status'             => UserManagementModule::t('back', 'Status'),
 			'gridRoleSearch'     => UserManagementModule::t('back', 'Roles'),
 			'created_at'         => UserManagementModule::t('back', 'Created'),
 			'updated_at'         => UserManagementModule::t('back', 'Updated'),
 			'password'           => UserManagementModule::t('back', 'Password'),
 			'repeat_password'    => UserManagementModule::t('back', 'Repeat password'),
-			'current_password'   => UserManagementModule::t('back', 'Current password'),
+			'email_confirmed'    => UserManagementModule::t('back', 'E-mail confirmed'),
+			'email'              => 'E-mail',
 		];
 	}
 

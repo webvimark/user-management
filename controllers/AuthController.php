@@ -3,15 +3,35 @@
 namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
+use webvimark\modules\UserManagement\models\ChangeOwnPasswordForm;
 use webvimark\modules\UserManagement\models\LoginForm;
+use webvimark\modules\UserManagement\models\PasswordRecoveryForm;
+use webvimark\modules\UserManagement\models\RegistrationForm;
 use webvimark\modules\UserManagement\models\User;
 use Yii;
-use yii\base\DynamicModel;
 use yii\web\ForbiddenHttpException;
 
 class AuthController extends BaseController
 {
+	/**
+	 * @var array
+	 */
 	public $freeAccessActions = ['login', 'logout'];
+
+	/**
+	 * @return array
+	 */
+	public function actions()
+	{
+		return [
+			'captcha' => [
+				'class' => 'yii\captcha\CaptchaAction',
+				'minLength'=>3,
+				'maxLength'=>4,
+				'offset'=>5
+			],
+		];
+	}
 
 	/**
 	 * Set layout from config
@@ -68,7 +88,7 @@ class AuthController extends BaseController
 	{
 		Yii::$app->user->logout();
 
-		$this->redirect(Yii::$app->homeUrl);
+		return $this->redirect(Yii::$app->homeUrl);
 	}
 
 	/**
@@ -84,15 +104,16 @@ class AuthController extends BaseController
 			$this->goHome();
 		}
 
-		$model = User::getCurrentUser();
-		$model->scenario = 'changeOwnPassword';
+		$user = User::getCurrentUser();
 
-		if ( $model->status != User::STATUS_ACTIVE )
+		if ( $user->status != User::STATUS_ACTIVE )
 		{
 			throw new ForbiddenHttpException();
 		}
 
-		if ( $model->load(Yii::$app->request->post()) AND $model->save() )
+		$model = new ChangeOwnPasswordForm(['user'=>$user]);
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->changePassword() )
 		{
 			return $this->renderIsAjax('changeOwnPasswordSuccess');
 		}
@@ -112,20 +133,25 @@ class AuthController extends BaseController
 			$this->goHome();
 		}
 
-		$model = new User(['scenario'=>'registration']);
+		$model = new RegistrationForm();
 
-		if ( $model->load(Yii::$app->request->post()) AND $model->save() )
+		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
-			$roles = (array)$this->module->rolesAfterRegistration;
+			$user = $model->registerUser(false);
 
-			foreach ($roles as $role)
+			if ( $user )
 			{
-				User::assignRole($model->id, $role);
+				$roles = (array)$this->module->rolesAfterRegistration;
+
+				foreach ($roles as $role)
+				{
+					User::assignRole($user->id, $role);
+				}
+
+				Yii::$app->user->login($user);
+
+				return $this->redirect(Yii::$app->user->returnUrl);
 			}
-
-			Yii::$app->user->login($model);
-
-			$this->redirect(Yii::$app->user->returnUrl);
 		}
 
 		return $this->renderIsAjax('registration', compact('model'));
@@ -143,14 +169,9 @@ class AuthController extends BaseController
 			$this->goHome();
 		}
 
-		$model = (new DynamicModel(['email']))->addRule(['email'], 'required')
-			->addRule('email', 'email')
-			->addRule('email', 'exist', [
-				'targetClass'     => 'webvimark\modules\UserManagement\models\User',
-				'targetAttribute' => 'email',
-			]);
+		$model = new PasswordRecoveryForm();
 
-		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
+		if ( $model->load(Yii::$app->request->post()) AND $model->sendEmail() )
 		{
 			// TODO send mail
 			return $this->renderIsAjax('passwordRecoverySuccess');

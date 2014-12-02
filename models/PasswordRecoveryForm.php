@@ -1,0 +1,95 @@
+<?php
+namespace webvimark\modules\UserManagement\models;
+
+use webvimark\helpers\LittleBigHelper;
+use webvimark\modules\UserManagement\UserManagementModule;
+use yii\base\Model;
+use Yii;
+
+class PasswordRecoveryForm extends Model
+{
+	/**
+	 * @var User
+	 */
+	protected $user;
+
+	/**
+	 * @var string
+	 */
+	public $email;
+
+	/**
+	 * @var string
+	 */
+	public $captcha;
+
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+			['captcha', 'captcha', 'captchaAction'=>'/user-management/auth/captcha'],
+
+			[['email', 'captcha'], 'required'],
+			['email', 'trim'],
+			['email', 'email'],
+
+			['email', 'validateEmailConfirmedAndUserActive'],
+		];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function validateEmailConfirmedAndUserActive()
+	{
+		if ( !Yii::$app->getModule('user-management')->checkAttempts() )
+		{
+			$this->addError('email', UserManagementModule::t('front', 'Too many attempts'));
+
+			return false;
+		}
+
+		$user = User::findOne([
+			'email'           => $this->email,
+			'email_confirmed' => 1,
+			'status'          => User::STATUS_ACTIVE,
+		]);
+
+		if ( $user )
+		{
+			$this->user = $user;
+		}
+		else
+		{
+			$this->addError('email', UserManagementModule::t('front', 'E-mail is invalid'));
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function attributeLabels()
+	{
+		return [
+			'email' => 'E-mail',
+			'captcha' => UserManagementModule::t('front', 'Captcha'),
+		];
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function sendEmail()
+	{
+		if ( $this->validate() AND $this->user )
+		{
+			return Yii::$app->mailer->compose()
+				->setHtmlBody('')
+				->send();
+		}
+
+		return false;
+	}
+}

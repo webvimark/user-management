@@ -40,6 +40,11 @@ class AccessController extends Controller
 	 */
 	public function beforeControllerAction($action)
 	{
+		if ( $action->id == 'captcha' )
+		{
+			return true;
+		}
+
 		$route = '/' . $action->uniqueId;
 
 		if ( Route::isFreeAccess($route, $action) )
