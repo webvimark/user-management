@@ -19,6 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 
+<h2 class="user-management-title"><?= $this->title ?></h2>
+
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
