@@ -9,7 +9,7 @@ Perks
 * Registration, authorization, password recovery and so on
 * Visit log
 * Optimised (zero DB queries during usual user workflow)
-* Nice widgets like Menu or Html::a where elements are visible only if user has access to route where they point
+* Nice widgets like GhostMenu or GhostHtml::a where elements are visible only if user has access to route where they point
 
 
 Installation
