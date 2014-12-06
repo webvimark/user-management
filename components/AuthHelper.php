@@ -17,6 +17,37 @@ class AuthHelper
 	const SESSION_PREFIX_PERMISSIONS         = '__userPermissions';
 	const SESSION_PREFIX_ROUTES              = '__userRoutes';
 
+
+	/**
+	 * Example how to handle layouts from config file
+	 *
+	 * 'on beforeAction'=>['webvimark\modules\UserManagement\components\AuthHelper', 'layoutHandler'],
+	 *
+	 * @param \yii\base\ActionEvent $event
+	 */
+	public static function layoutHandler($event)
+	{
+		if ( $event->action->uniqueId == 'user-management/auth/login' )
+		{
+			$event->action->controller->layout = 'loginLayout.php';
+		}
+		elseif (
+			$event->action->controller->id == 'auth'
+			AND in_array($event->action->id, [
+				'registration',
+				'password-recovery-request',
+				'password-recovery-change',
+			])
+		)
+		{
+			$event->action->controller->layout = '//main.php';
+		}
+		else
+		{
+			$event->action->controller->layout = '//back.php';
+		}
+	}
+
 	/**
 	 * Gather all user permissions and roles and store them in the session
 	 *
@@ -148,10 +179,9 @@ class AuthHelper
 			}
 		}
 
-//		sort($routes);
-
 		return (object)compact('routes', 'permissions');
 	}
+
 
 	/**
 	 * @return array

@@ -73,6 +73,8 @@ To learn about events check:
 * http://www.yiiframework.com/doc-2.0/guide-concept-events.html
 * http://www.yiiframework.com/doc-2.0/guide-concept-configurations.html#configuration-format )
 
+Layout handler example in *AuthHelper::layoutHandler*
+
 To see full list of options check *UserManagementModule* file
 
 Run migrations

@@ -27,37 +27,6 @@ class UserManagementModule extends \yii\base\Module
 	public $confirmationTokenExpire = 3600; // 1 hour
 
 	/**
-	 * Layouts for controller => action in this module
-	 *
-	 * @var array
-	 */
-	public $layouts = [
-		'user'=>[
-			'*'=>'//main.php',
-		],
-		'permission'=>[
-			'*'=>'//main.php',
-		],
-		'role'=>[
-			'*'=>'//main.php',
-		],
-		'user-visit-log'=>[
-			'*'=>'//main.php',
-		],
-		'user-permission'=>[
-			'*'=>'//main.php',
-		],
-		'auth-item-group'=>[
-			'*'=>'//main.php',
-		],
-		'auth'=>[
-			'*'=> '@app/views/layouts/main.php',
-			'login' => 'loginLayout.php',
-			'change-own-password' => '//main.php',
-		],
-	];
-
-	/**
 	 * Roles that will be assigned to user registered via user-management/auth/registration
 	 *
 	 * @var array
