@@ -54,4 +54,4 @@ class UserConfig extends User
 		parent::afterLogin($identity, $cookieBased, $duration);
 	}
 
-} 
+}

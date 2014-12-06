@@ -2,13 +2,10 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
-use webvimark\modules\UserManagement\models\UserForm;
 use webvimark\components\AdminDefaultController;
 use Yii;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\models\search\UserSearch;
-use webvimark\components\BaseController;
-use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -25,32 +22,6 @@ class UserController extends AdminDefaultController
 	 * @var UserSearch
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\search\UserSearch';
-
-	/**
-	 * Set layout from config
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		if ( parent::beforeAction($action) )
-		{
-			$layouts = @$this->module->layouts[$this->id];
-
-			if ( isset($layouts[$action->id]) )
-			{
-				$this->layout = $layouts[$action->id];
-			}
-			elseif ( isset($layouts['*']) )
-			{
-				$this->layout = $layouts['*'];
-			}
-
-			return true;
-		}
-
-		return false;
-	}
 
 	/**
 	 * @return mixed|string|\yii\web\Response

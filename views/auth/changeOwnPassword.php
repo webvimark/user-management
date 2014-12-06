@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\ChangeOwnPasswordForm $model
+ * @var webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm $model
  */
 
 $this->title = UserManagementModule::t('back', 'Change own password');

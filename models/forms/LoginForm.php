@@ -1,7 +1,8 @@
 <?php
-namespace webvimark\modules\UserManagement\models;
+namespace webvimark\modules\UserManagement\models\forms;
 
 use webvimark\helpers\LittleBigHelper;
+use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
 use Yii;

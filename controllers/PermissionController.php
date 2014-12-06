@@ -9,8 +9,6 @@ use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
 use webvimark\components\AdminDefaultController;
 use yii\db\Query;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
 use Yii;
 use yii\rbac\DbManager;
 
@@ -25,32 +23,6 @@ class PermissionController extends AdminDefaultController
 	 * @var PermissionSearch
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch';
-
-	/**
-	 * Set layout from config
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		if ( parent::beforeAction($action) )
-		{
-			$layouts = @$this->module->layouts[$this->id];
-
-			if ( isset($layouts[$action->id]) )
-			{
-				$this->layout = $layouts[$action->id];
-			}
-			elseif ( isset($layouts['*']) )
-			{
-				$this->layout = $layouts['*'];
-			}
-
-			return true;
-		}
-
-		return false;
-	}
 
 	/**
 	 * @param string $id
@@ -177,7 +149,7 @@ class PermissionController extends AdminDefaultController
 	 */
 	public function actionCreate()
 	{
-		$model = new $this->modelClass;
+		$model = new Permission();
 		$model->scenario = 'webInput';
 
 		if ( $model->load(Yii::$app->request->post()) && $model->save() )

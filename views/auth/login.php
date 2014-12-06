@@ -1,8 +1,9 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $model webvimark\modules\UserManagement\models\LoginForm
+ * @var $model webvimark\modules\UserManagement\models\forms\LoginForm
  */
+
 use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
@@ -50,7 +51,7 @@ use yii\helpers\Html;
 						<div class="col-sm-6 text-right">
 							<?= GhostHtml::a(
 								UserManagementModule::t('front', "Forgot password ?"),
-								['/user-management/auth/password-recovery']
+								['/user-management/auth/password-recovery-request']
 							) ?>
 						</div>
 					</div>

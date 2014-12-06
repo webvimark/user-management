@@ -1,7 +1,7 @@
 <?php
-namespace webvimark\modules\UserManagement\models;
+namespace webvimark\modules\UserManagement\models\forms;
 
-use webvimark\helpers\LittleBigHelper;
+use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
 use Yii;
@@ -79,17 +79,23 @@ class PasswordRecoveryForm extends Model
 	}
 
 	/**
+	 * @param bool $performValidation
+	 *
 	 * @return bool
 	 */
-	public function sendEmail()
+	public function sendEmail($performValidation = true)
 	{
-		if ( $this->validate() AND $this->user )
+		if ( $performValidation AND !$this->validate() )
 		{
-			return Yii::$app->mailer->compose()
-				->setHtmlBody('')
-				->send();
+			return false;
 		}
 
-		return false;
+		//$this->user->generateConfirmationToken();
+
+		return Yii::$app->mailer->compose('passwordResetToken', ['user' => $this->user])
+			->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+			->setTo($this->email)
+			->setSubject(UserManagementModule::t('front', 'Password reset for') . ' ' . Yii::$app->name)
+			->send();
 	}
 }

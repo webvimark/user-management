@@ -1,11 +1,16 @@
 User management module for Yii 2
 =====
-Provide:
-* usage of relations in views and search
-* image, sorter, status columns
-* better views
-* integrations with other my extensions
-* autocompletion
+
+Perks
+---
+
+* User management
+* RBAC (roles, permissions and stuff) with web interface
+* Registration, authorization, password recovery and so on
+* Visit log
+* Optimised (zero DB queries during usual user workflow)
+* Nice widgets like Menu or Html::a where elements are visible only if user has access to route where they point
+
 
 Installation
 ------------
@@ -26,31 +31,55 @@ or add
 
 to the require section of your `composer.json` file.
 
-Configuration
--------------
+Installation and configuration
+---
 
 In your config/web.php
 
 ```php
 
-	'components'=>[
-		'user' => [
-			'class' => 'webvimark\modules\UserManagement\components\UserConfig',
+'components'=>[
+	'user' => [
+		'class' => 'webvimark\modules\UserManagement\components\UserConfig',
 
-			// Uncomment this if you want to record user logins
-			/**
-        		'on afterLogin' => function($event) {
-        				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
-        			}
-        		*/
-		],
+		// Uncomment this if you want to record user logins
+		/**
+		'on afterLogin' => function($event) {
+				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
+			}
+		*/
 	],
+],
 
-	'modules'=>[
-		'user-management' => [
-        		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
-        	],
+'modules'=>[
+	'user-management' => [
+		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+
+		// Here you can set your handler to change layout for any controller or action
+		// Tip: you can use this event in any module
+		'on beforeAction'=>function(ActionEvent $event) {
+				if ( $event->action->uniqueId == 'user-management/auth/login' )
+				{
+					$event->action->controller->layout = 'loginLayout.php';
+				};
+			},
 	],
+],
+
+```
+
+To learn about events check:
+
+* http://www.yiiframework.com/doc-2.0/guide-concept-events.html
+* http://www.yiiframework.com/doc-2.0/guide-concept-configurations.html#configuration-format )
+
+To see full list of options check *UserManagementModule* file
+
+Run migrations
+
+```
+./yii migrate vendor/webvimark/module-user-management/migrations/
+
 ```
 
 Usage
@@ -62,4 +91,28 @@ Roles - http://site.com/user-management/role/index
 
 Permissions - http://site.com/user-management/permission/index
 
+Permission groups - http://site.com/user-management/auth-item-group/index
+
 Visit log - http://site.com/user-management/user-visit-log/index
+
+
+Events
+------
+
+Events can be handled via config file like following
+
+```php
+
+'modules'=>[
+	'user-management' => [
+		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+		'on afterRegistration' => function(UserAuthEvent $event) {
+			// Here you can do your own stuff like assign roles, send emails and so on
+		},
+	],
+],
+
+```
+
+List of supported events can be found in *UserAuthEvent* class
+

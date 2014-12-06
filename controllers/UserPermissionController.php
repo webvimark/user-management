@@ -3,7 +3,6 @@
 namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
-use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
@@ -12,31 +11,6 @@ use Yii;
 
 class UserPermissionController extends BaseController
 {
-	/**
-	 * Set layout from config
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		if ( parent::beforeAction($action) )
-		{
-			$layouts = @$this->module->layouts[$this->id];
-
-			if ( isset($layouts[$action->id]) )
-			{
-				$this->layout = $layouts[$action->id];
-			}
-			elseif ( isset($layouts['*']) )
-			{
-				$this->layout = $layouts['*'];
-			}
-
-			return true;
-		}
-
-		return false;
-	}
 
 	/**
 	 * @param int $id User ID

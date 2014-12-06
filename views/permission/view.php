@@ -14,7 +14,7 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-$this->title = UserManagementModule::t('back', 'Settings for permission:') . ': ' . $item->description;
+$this->title = UserManagementModule::t('back', 'Settings for permission') . ': ' . $item->description;
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

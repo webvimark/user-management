@@ -7,7 +7,6 @@ use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch;
 use webvimark\components\AdminDefaultController;
-use yii\filters\VerbFilter;
 use Yii;
 use yii\rbac\DbManager;
 
@@ -22,32 +21,6 @@ class RoleController extends AdminDefaultController
 	 * @var RoleSearch
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch';
-
-	/**
-	 * Set layout from config
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		if ( parent::beforeAction($action) )
-		{
-			$layouts = @$this->module->layouts[$this->id];
-
-			if ( isset($layouts[$action->id]) )
-			{
-				$this->layout = $layouts[$action->id];
-			}
-			elseif ( isset($layouts['*']) )
-			{
-				$this->layout = $layouts['*'];
-			}
-
-			return true;
-		}
-
-		return false;
-	}
 
 	/**
 	 * @param string $id
@@ -94,11 +67,19 @@ class RoleController extends AdminDefaultController
 	{
 		$role = $this->findModel($id);
 
-		$authManager = new DbManager();
-
 		$newChildRoles = Yii::$app->request->post('child_roles', []);
 
-		$oldChildRoles = array_keys($authManager->getChildren($role->name));
+		$children = (new DbManager())->getChildren($role->name);
+
+		$oldChildRoles = [];
+
+		foreach ($children as $child)
+		{
+			if ( $child->type == Role::TYPE_ROLE )
+			{
+				$oldChildRoles[$child->name] = $child->name;
+			}
+		}
 
 		$toRemove = array_diff($oldChildRoles, $newChildRoles);
 		$toAdd = array_diff($newChildRoles, $oldChildRoles);
@@ -118,11 +99,9 @@ class RoleController extends AdminDefaultController
 	{
 		$role = $this->findModel($id);
 
-		$authManager = new DbManager();
-
 		$newChildPermissions = Yii::$app->request->post('child_permissions', []);
 
-		$oldChildPermissions = array_keys($authManager->getPermissionsByRole($role->name));
+		$oldChildPermissions = array_keys((new DbManager())->getPermissionsByRole($role->name));
 
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
@@ -140,7 +119,7 @@ class RoleController extends AdminDefaultController
 	 */
 	public function actionCreate()
 	{
-		$model = new $this->modelClass;
+		$model = new Role;
 		$model->scenario = 'webInput';
 
 		if ( $model->load(Yii::$app->request->post()) && $model->save() )

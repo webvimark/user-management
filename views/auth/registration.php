@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\RegistrationForm $model
+ * @var webvimark\modules\UserManagement\models\forms\RegistrationForm $model
  */
 
 $this->title = UserManagementModule::t('front', 'Registration');
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'validateOnBlur'=>false,
 	]); ?>
 
-	<?= $form->field($model, 'username')->textInput(['maxlength' => 255, 'autocomplete'=>'off', 'autofocus'=>true]) ?>
+	<?= $form->field($model, 'username')->textInput(['maxlength' => 50, 'autocomplete'=>'off', 'autofocus'=>true]) ?>
 
 	<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 

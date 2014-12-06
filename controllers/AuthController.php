@@ -3,13 +3,16 @@
 namespace webvimark\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
-use webvimark\modules\UserManagement\models\ChangeOwnPasswordForm;
-use webvimark\modules\UserManagement\models\LoginForm;
-use webvimark\modules\UserManagement\models\PasswordRecoveryForm;
-use webvimark\modules\UserManagement\models\RegistrationForm;
+use webvimark\modules\UserManagement\components\UserAuthEvent;
+use webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
+use webvimark\modules\UserManagement\models\forms\LoginForm;
+use webvimark\modules\UserManagement\models\forms\PasswordRecoveryForm;
+use webvimark\modules\UserManagement\models\forms\RegistrationForm;
 use webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class AuthController extends BaseController
 {
@@ -31,32 +34,6 @@ class AuthController extends BaseController
 				'offset'=>5
 			],
 		];
-	}
-
-	/**
-	 * Set layout from config
-	 *
-	 * @inheritdoc
-	 */
-	public function beforeAction($action)
-	{
-		if ( parent::beforeAction($action) )
-		{
-			$layouts = @$this->module->layouts[$this->id];
-
-			if ( isset($layouts[$action->id]) )
-			{
-				$this->layout = $layouts[$action->id];
-			}
-			elseif ( isset($layouts['*']) )
-			{
-				$this->layout = $layouts['*'];
-			}
-
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -137,21 +114,30 @@ class AuthController extends BaseController
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
-			$user = $model->registerUser(false);
-
-			if ( $user )
+			// Trigger event "before registration" and checks if it's valid
+			if ( $this->triggerModuleEvent(UserAuthEvent::BEFORE_REGISTRATION, ['model'=>$model]) )
 			{
-				$roles = (array)$this->module->rolesAfterRegistration;
+				$user = $model->registerUser(false);
 
-				foreach ($roles as $role)
+				// Trigger event "after registration" and checks if it's valid
+				if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_REGISTRATION, ['model'=>$model, 'user'=>$user]) )
 				{
-					User::assignRole($user->id, $role);
+					if ( $user )
+					{
+						$roles = (array)$this->module->rolesAfterRegistration;
+
+						foreach ($roles as $role)
+						{
+							User::assignRole($user->id, $role);
+						}
+
+						Yii::$app->user->login($user);
+
+						return $this->redirect(Yii::$app->user->returnUrl);
+					}
 				}
-
-				Yii::$app->user->login($user);
-
-				return $this->redirect(Yii::$app->user->returnUrl);
 			}
+
 		}
 
 		return $this->renderIsAjax('registration', compact('model'));
@@ -162,7 +148,7 @@ class AuthController extends BaseController
 	 *
 	 * @return string|\yii\web\Response
 	 */
-	public function actionPasswordRecovery()
+	public function actionPasswordRecoveryRequest()
 	{
 		if ( !Yii::$app->user->isGuest )
 		{
@@ -171,12 +157,89 @@ class AuthController extends BaseController
 
 		$model = new PasswordRecoveryForm();
 
-		if ( $model->load(Yii::$app->request->post()) AND $model->sendEmail() )
+		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
-			// TODO send mail
-			return $this->renderIsAjax('passwordRecoverySuccess');
+			if ( $this->triggerModuleEvent(UserAuthEvent::BEFORE_PASSWORD_RECOVERY_REQUEST, ['model'=>$model]) )
+			{
+				if ( $model->sendEmail(false) )
+				{
+					if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_PASSWORD_RECOVERY_REQUEST, ['model'=>$model]) )
+					{
+						return $this->renderIsAjax('passwordRecoverySuccess');
+					}
+				}
+				else
+				{
+					Yii::$app->session->setFlash('error', UserManagementModule::t('front', "Unable to send message for email provided"));
+				}
+			}
 		}
 
 		return $this->renderIsAjax('passwordRecovery', compact('model'));
+	}
+
+	/**
+	 * Form to recover password
+	 *
+	 * @param string $token
+	 *
+	 * @throws \yii\web\NotFoundHttpException
+	 * @return string|\yii\web\Response
+	 */
+	public function actionPasswordRecoveryChange($token)
+	{
+		if ( !Yii::$app->user->isGuest )
+		{
+			$this->goHome();
+		}
+
+		$user = User::findByConfirmationToken($token);
+
+		if ( !$user )
+		{
+			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired. Try reset password once more'));
+		}
+
+		$model = new ChangeOwnPasswordForm([
+			'scenario'=>'restoreViaEmail',
+			'user'=>$user,
+		]);
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
+		{
+			if ( $this->triggerModuleEvent(UserAuthEvent::BEFORE_PASSWORD_RECOVERY_COMPLETE, ['model'=>$model]) )
+			{
+				$model->changePassword();
+
+				if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_PASSWORD_RECOVERY_COMPLETE, ['model'=>$model]) )
+				{
+					return $this->renderIsAjax('changeOwnPasswordSuccess');
+				}
+			}
+		}
+
+		return $this->renderIsAjax('changeOwnPassword', compact('model'));
+	}
+
+	public function actionConfirmEmailRequest()
+	{
+		return $this->renderIsAjax('confirmEmailRequest');
+	}
+
+	/**
+	 * Universal method for triggering events like "before registration", "after registration" and so on
+	 *
+	 * @param string $eventName
+	 * @param array  $data
+	 *
+	 * @return bool
+	 */
+	protected function triggerModuleEvent($eventName, $data = [])
+	{
+		$event = new UserAuthEvent($data);
+
+		$this->module->trigger($eventName, $event);
+
+		return $event->isValid;
 	}
 }
