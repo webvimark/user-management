@@ -42,12 +42,10 @@ In your config/web.php
 	'user' => [
 		'class' => 'webvimark\modules\UserManagement\components\UserConfig',
 
-		// Uncomment this if you want to record user logins
-		/**
+		// Comment this if you don't want to record user logins
 		'on afterLogin' => function($event) {
 				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
 			}
-		*/
 	],
 ],
 
