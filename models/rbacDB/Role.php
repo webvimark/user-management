@@ -62,15 +62,16 @@ class Role extends AbstractItem
 	 * Assign route to role via permission and create permission or route if it don't exists
 	 * Helper mainly for migrations
 	 *
-	 * @param string $roleName
-	 * @param string $permissionName
-	 * @param array $routes
-	 * @param null   $permissionDescription
+	 * @param string      $roleName
+	 * @param string      $permissionName
+	 * @param array       $routes
+	 * @param null|string $permissionDescription
+	 * @param null|string $groupCode
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return true|static|string
 	 */
-	public static function assignRoutesViaPermission($roleName, $permissionName, $routes, $permissionDescription = null)
+	public static function assignRoutesViaPermission($roleName, $permissionName, $routes, $permissionDescription = null, $groupCode = null)
 	{
 		$role = static::findOne(['name' => $roleName]);
 
@@ -82,7 +83,7 @@ class Role extends AbstractItem
 
 		if ( !$permission )
 		{
-			$permission = Permission::create($permissionName, $permissionDescription);
+			$permission = Permission::create($permissionName, $permissionDescription, $groupCode);
 
 			if ( $permission->hasErrors() )
 				return $permission;

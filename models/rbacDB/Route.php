@@ -130,6 +130,40 @@ class Route extends AbstractItem
 		}
 	}
 
+	/**
+	 * Checks if route is in array of allowed routes
+	 *
+	 * @param string $route
+	 * @param array  $allowedRoutes
+	 *
+	 * @return boolean
+	 */
+	public static function isRouteAllowed($route, $allowedRoutes)
+	{
+		if ( in_array($route, $allowedRoutes) )
+		{
+			return true;
+		}
+
+		foreach ($allowedRoutes as $allowedRoute)
+		{
+			// If some controller fully allowed (wildcard)
+			if (substr($allowedRoute, -1) == '*')
+			{
+				$routeArray = explode('/', $route);
+				array_splice($routeArray, -1);
+
+				$allowedRouteArray = explode('/', $allowedRoute);
+				array_splice($allowedRouteArray, -1);
+
+				if (array_diff($routeArray, $allowedRouteArray) === array())
+					return true;
+			}
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * Check if controller has $freeAccess = true or $action in $freeAccessActions

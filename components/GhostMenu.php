@@ -32,7 +32,7 @@ class GhostMenu extends Menu
 
 		foreach ($items as &$item)
 		{
-			if ( isset( $item['url'] ) AND ( $item['url'] != '#' ) AND !isset( $item['visible'] ) )
+			if ( isset( $item['url'] ) AND !in_array($item['url'], ['', '#']) AND !isset( $item['visible'] ) )
 			{
 				$item['visible'] = User::canRoute($item['url']);
 			}

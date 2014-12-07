@@ -24,11 +24,11 @@ class GhostHtml extends Html
 	 */
 	public static function a($text, $url = null, $options = [])
 	{
-		if ( $url === null OR User::canRoute($url) )
+		if ( in_array($url, [null, '', '#']) )
 		{
 			return parent::a($text, $url, $options);
 		}
 
-		return '';
+		return User::canRoute($url) ? parent::a($text, $url, $options) : '';
 	}
 }

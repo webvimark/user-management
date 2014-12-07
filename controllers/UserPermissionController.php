@@ -6,6 +6,7 @@ use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\web\NotFoundHttpException;
 use Yii;
 
@@ -45,9 +46,17 @@ class UserPermissionController extends BaseController
 
 	/**
 	 * @param int $id - User ID
+	 *
+	 * @return \yii\web\Response
 	 */
 	public function actionSetRoles($id)
 	{
+		if ( !Yii::$app->user->isSuperadmin AND Yii::$app->user->id == $id )
+		{
+			Yii::$app->session->setFlash('error', UserManagementModule::t('back', 'You can not change own permissions'));
+			return $this->redirect(['set', 'id'=>$id]);
+		}
+
 		$oldAssignments = array_keys(Role::getUserRoles($id));
 
 		// To be sure that user didn't attempt to assign himself some unavailable roles
@@ -66,6 +75,6 @@ class UserPermissionController extends BaseController
 			User::assignRole($id, $role);
 		}
 
-		$this->redirect(['set', 'id'=>$id]);
+		return $this->redirect(['set', 'id'=>$id]);
 	}
 }

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Editing');
 ?>
 <div class="user-update">
 
-	<h2 class="user-management-title"><?= $this->title ?></h2>
+	<h2 class="lte-hide-title"><?= $this->title ?></h2>
 
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -35,6 +35,13 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Editing');
 
 				<?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
 
+
+				<?php if ( User::hasPermission('editUserEmail') ): ?>
+
+					<?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+					<?= $form->field($model, 'email_confirmed')->checkbox() ?>
+
+				<?php endif; ?>
 
 				<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-9">

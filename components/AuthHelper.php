@@ -8,6 +8,7 @@ use webvimark\modules\UserManagement\models\rbacDB\Route;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\Inflector;
+use yii\helpers\Url;
 
 class AuthHelper
 {
@@ -31,16 +32,16 @@ class AuthHelper
 		{
 			$event->action->controller->layout = 'loginLayout.php';
 		}
-		elseif (
-			$event->action->controller->id == 'auth'
-			AND in_array($event->action->id, [
-				'registration',
-				'password-recovery-request',
-				'password-recovery-change',
-			])
-		)
+		elseif ( $event->action->controller->id == 'auth' )
 		{
-			$event->action->controller->layout = '//main.php';
+			if ( in_array($event->action->id, ['change-own-password', 'confirm-email']) )
+			{
+				$event->action->controller->layout = '//back.php';
+			}
+			else
+			{
+				$event->action->controller->layout = '//main.php';
+			}
 		}
 		else
 		{
@@ -122,6 +123,12 @@ class AuthHelper
 	 */
 	public static function unifyRoute($route)
 	{
+		// If its like Html::a('Create', ['create'])
+		if ( is_array($route) AND strpos($route[0], '/') === false )
+		{
+			$route = Url::toRoute($route);
+		}
+
 		if ( Yii::$app->getUrlManager()->showScriptName === true )
 		{
 			$baseUrl = Yii::$app->getRequest()->scriptUrl;
@@ -147,6 +154,14 @@ class AuthHelper
 			{
 				$routeAsString = substr_replace($routeAsString, '', 0, strlen($baseUrl));
 			}
+		}
+
+		$languagePrefix = '/' . Yii::$app->language . '/';
+
+		// Remove language prefix
+		if ( strpos($routeAsString, $languagePrefix) === 0 )
+		{
+			$routeAsString = substr_replace($routeAsString, '', 0, strlen($languagePrefix));
 		}
 
 		return '/' . ltrim($routeAsString, '/');

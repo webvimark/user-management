@@ -64,7 +64,7 @@ return [
     'Rule' => '',
     'Save' => '',
     'Search' => '',
-    'Settings for permission:' => '',
+    'Settings for permission' => '',
     'Status' => '',
     'Superadmin' => '',
     'Too many attempts' => '',
@@ -78,6 +78,8 @@ return [
     'Visit log' => '',
     'Wrong format. Enter valid IPs separated by comma' => '',
     'Wrong password' => '',
+    'You can not change own permissions' => '',
     'Browser And Os' => '@@@@',
     'Permissions for user: ' => '@@@@',
+    'Settings for permission:' => '@@@@',
 ];

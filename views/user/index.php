@@ -5,7 +5,6 @@ use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
 use webvimark\extensions\GridBulkActions\GridBulkActions;
@@ -23,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
-	<h2 class="user-management-title"><?= $this->title ?></h2>
+	<h2 class="lte-hide-title"><?= $this->title ?></h2>
 
 	<div class="panel panel-default">
 		<div class="panel-body">
@@ -77,23 +76,35 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 					],
 					[
+						'attribute'=>'email',
+						'format'=>'raw',
+						'visible'=>User::hasPermission('viewUserEmail'),
+					],
+					[
+						'class'=>'webvimark\components\StatusColumn',
+						'attribute'=>'email_confirmed',
+						'visible'=>User::hasPermission('viewUserEmail'),
+					],
+					[
 						'attribute'=>'gridRoleSearch',
 						'filter'=>ArrayHelper::map(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin),'name', 'description'),
 						'value'=>function(User $model){
 								return implode(', ', ArrayHelper::map($model->roles, 'name', 'description'));
 							},
 						'format'=>'raw',
+						'visible'=>User::hasPermission('viewUserRoles'),
 					],
-					array(
+					[
 						'attribute'=>'registration_ip',
 						'value'=>function(User $model){
 								return Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]);
 							},
 						'format'=>'raw',
-					),
+						'visible'=>User::hasPermission('viewRegistrationIp'),
+					],
 					[
 						'value'=>function(User $model){
-								return Html::a(
+								return GhostHtml::a(
 									UserManagementModule::t('back', 'Roles and permissions'),
 									['/user-management/user-permission/set', 'id'=>$model->id],
 									['class'=>'btn btn-sm btn-primary', 'data-pjax'=>0]);
@@ -106,13 +117,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					[
 						'value'=>function(User $model){
-								return Html::a(
+								return GhostHtml::a(
 									UserManagementModule::t('back', 'Change password'),
 									['change-password', 'id'=>$model->id],
 									['class'=>'btn btn-sm btn-default', 'data-pjax'=>0]);
 							},
 						'format'=>'raw',
-						'visible'=>User::canRoute('/user-management/user-permission/change-password'),
 						'options'=>[
 							'width'=>'10px',
 						],

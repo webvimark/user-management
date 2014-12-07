@@ -34,7 +34,7 @@ to the require section of your `composer.json` file.
 Installation and configuration
 ---
 
-In your config/web.php
+1 In your config/web.php
 
 ```php
 
@@ -75,7 +75,7 @@ Layout handler example in *AuthHelper::layoutHandler*
 
 To see full list of options check *UserManagementModule* file
 
-Run migrations
+2 Run migrations
 
 ```
 ./yii migrate vendor/webvimark/module-user-management/migrations/

@@ -40,12 +40,13 @@ abstract class AbstractItem extends ActiveRecord
 	 *
 	 * @param string      $name
 	 * @param null|string $description
+	 * @param null|string $groupCode
 	 * @param null|string $ruleName
 	 * @param null|string $data
 	 *
 	 * @return static
 	 */
-	public static function create($name, $description = null, $ruleName = null, $data = null)
+	public static function create($name, $description = null, $groupCode = null, $ruleName = null, $data = null)
 	{
 		$item = new static;
 
@@ -53,6 +54,7 @@ abstract class AbstractItem extends ActiveRecord
 		$item->name = $name;
 		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? $name : $description;
 		$item->rule_name = $ruleName;
+		$item->group_code = $groupCode;
 		$item->data = $data;
 
 		$item->save();

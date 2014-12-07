@@ -51,7 +51,7 @@ use yii\helpers\Html;
 						<div class="col-sm-6 text-right">
 							<?= GhostHtml::a(
 								UserManagementModule::t('front', "Forgot password ?"),
-								['/user-management/auth/password-recovery-request']
+								['/user-management/auth/password-recovery']
 							) ?>
 						</div>
 					</div>

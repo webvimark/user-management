@@ -17,9 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'E-mail confirmed' => 'E-mail подтверждён',
-    'Registration IP' => 'IP регистрации',
-    'Too many attempts' => 'Лимит попыток превышен',
+    'You can not change own permissions' => 'Вы не можете менять свои права',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
     'Browser' => 'Браузер',
@@ -37,6 +35,7 @@ return [
     'Data' => 'Данные',
     'Delete' => 'Удалить',
     'Description' => 'Описание',
+    'E-mail confirmed' => 'E-mail подтверждён',
     'Edit' => 'Редактировать',
     'Editing' => 'Редактирование',
     'Editing permission group' => 'Редактирование группы прав',
@@ -56,6 +55,7 @@ return [
     'Permissions' => 'Права',
     'Permissions for role - "{role}"' => 'Права для роли - "{role}"',
     'Permissions for role:' => 'Права для роли:',
+    'Registration IP' => 'IP регистрации',
     'Repeat password' => 'Повторите пароль',
     'Reset' => 'Сбросить',
     'Role creation' => 'Создание роли',
@@ -65,9 +65,10 @@ return [
     'Rule' => 'Правило',
     'Save' => 'Сохранить',
     'Search' => 'Поиск',
-    'Settings for permission:' => 'Настройки для права',
+    'Settings for permission' => 'Настройки для права',
     'Status' => 'Статус',
     'Superadmin' => 'Суперадмин',
+    'Too many attempts' => 'Лимит попыток превышен',
     'Type' => 'Тип',
     'Updated' => 'Обновлено',
     'User' => 'Пользователь',

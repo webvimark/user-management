@@ -26,19 +26,20 @@ class Permission extends AbstractItem
 	 *
 	 * @param string       $permissionName
 	 * @param array|string $routes
-	 * @param null         $permissionDescription
+	 * @param null|string  $permissionDescription
+	 * @param null|string  $groupCode
 	 *
 	 * @throws \InvalidArgumentException
 	 * @return true|static|string
 	 */
-	public static function assignRoutes($permissionName, $routes, $permissionDescription = null)
+	public static function assignRoutes($permissionName, $routes, $permissionDescription = null, $groupCode = null)
 	{
 		$permission = static::findOne(['name' => $permissionName]);
 		$routes = (array)$routes;
 
 		if ( !$permission )
 		{
-			$permission = static::create($permissionName, $permissionDescription);
+			$permission = static::create($permissionName, $permissionDescription, $groupCode);
 
 			if ( $permission->hasErrors() )
 			{

@@ -197,7 +197,7 @@ class User extends UserIdentity
 
 		AuthHelper::ensurePermissionsUpToDate();
 
-		return in_array($baseRoute, Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROUTES,[]));
+		return Route::isRouteAllowed($baseRoute, Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROUTES,[]));
 	}
 
 	/**
@@ -257,7 +257,7 @@ class User extends UserIdentity
 			[['status', 'email_confirmed'], 'integer'],
 
 			['email', 'email'],
-			['email', 'validateConfirmedUnique'],
+			['email', 'validateEmailConfirmedUnique'],
 
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
@@ -275,16 +275,16 @@ class User extends UserIdentity
 	/**
 	 * Check that there is no such confirmed E-mail in the system
 	 */
-	public function validateConfirmedUnique()
+	public function validateEmailConfirmedUnique()
 	{
 		if ( $this->email )
 		{
 			$exists = User::findOne([
-				'email'=>$this->email,
-				'email_confirmed'=>1,
+				'email'           => $this->email,
+				'email_confirmed' => 1,
 			]);
 
-			if ( $exists )
+			if ( $exists AND $exists->id != $this->id )
 			{
 				$this->addError('email', UserManagementModule::t('front', 'This E-mail already exists'));
 			}

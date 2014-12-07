@@ -30,6 +30,12 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model, 'repeat_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 
+	<?php if ( User::hasPermission('editUserEmail') ): ?>
+
+		<?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+		<?= $form->field($model, 'email_confirmed')->checkbox() ?>
+
+	<?php endif; ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">

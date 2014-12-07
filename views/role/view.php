@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Ro
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2 class="user-management-title"><?= $this->title ?></h2>
+<h2 class="lte-hide-title"><?= $this->title ?></h2>
 
 <p>
 	<?= GhostHtml::a(UserManagementModule::t('back', 'Edit'), ['update', 'id' => $role->name], ['class' => 'btn btn-sm btn-primary']) ?>

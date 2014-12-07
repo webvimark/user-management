@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Us
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<h2 class="user-management-title"><?= $this->title ?></h2>
+<h2 class="lte-hide-title"><?= $this->title ?></h2>
 
 <div class="row">
 	<div class="col-sm-4">
@@ -69,10 +69,18 @@ $this->params['breadcrumbs'][] = $this->title;
 				) ?>
 				<br/>
 
-				<?= Html::submitButton(
-					'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
-					['class'=>'btn btn-primary btn-sm']
-				) ?>
+				<?php if ( Yii::$app->user->isSuperadmin OR Yii::$app->user->id != $user->id ): ?>
+
+					<?= Html::submitButton(
+						'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
+						['class'=>'btn btn-primary btn-sm']
+					) ?>
+				<?php else: ?>
+					<div class="alert alert-warning well-sm text-center">
+						<?= UserManagementModule::t('back', 'You can not change own permissions') ?>
+					</div>
+				<?php endif; ?>
+
 
 				<?= Html::endForm() ?>
 			</div>

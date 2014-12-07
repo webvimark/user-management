@@ -53,7 +53,7 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	 * Finds user by confirmation token
 	 *
 	 * @param  string      $token confirmation token
-	 * @return static|null
+	 * @return static|null|User
 	 */
 	public static function findByConfirmationToken($token)
 	{

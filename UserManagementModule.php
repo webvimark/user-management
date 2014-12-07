@@ -20,6 +20,16 @@ class UserManagementModule extends \yii\base\Module
 	public $commonPermissionName = 'commonPermission';
 
 	/**
+	 * You can define your own registration form class here.
+	 * Together with theming registration view file you can ultimately customize registration process.
+	 *
+	 * See AuthController::actionRegistration() and RegistrationForm how they work together
+	 *
+	 * @var string
+	 */
+	public $registrationFormClass = 'webvimark\modules\UserManagement\models\forms\RegistrationForm';
+
+	/**
 	 * After how many seconds confirmation token will be invalid
 	 *
 	 * @var int
@@ -50,7 +60,7 @@ class UserManagementModule extends \yii\base\Module
 	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
 
 	/**
-	 * How much attempts user can made to login or recover password in $attemptsTimeout seconds
+	 * How much attempts user can made to login or recover password in $attemptsTimeout seconds interval
 	 *
 	 * @var int
 	 */
@@ -62,6 +72,18 @@ class UserManagementModule extends \yii\base\Module
 	 * @var int
 	 */
 	public $attemptsTimeout = 60;
+
+	/**
+	 * Options for registration and password recovery captcha
+	 *
+	 * @var array
+	 */
+	public $captchaOptions = [
+		'class'     => 'yii\captcha\CaptchaAction',
+		'minLength' => 3,
+		'maxLength' => 4,
+		'offset'    => 5
+	];
 
 	/**
 	 * Helps to check if translations have been registered already

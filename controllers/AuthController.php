@@ -5,9 +5,9 @@ namespace webvimark\modules\UserManagement\controllers;
 use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\components\UserAuthEvent;
 use webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
+use webvimark\modules\UserManagement\models\forms\ConfirmEmailForm;
 use webvimark\modules\UserManagement\models\forms\LoginForm;
 use webvimark\modules\UserManagement\models\forms\PasswordRecoveryForm;
-use webvimark\modules\UserManagement\models\forms\RegistrationForm;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
@@ -27,12 +27,7 @@ class AuthController extends BaseController
 	public function actions()
 	{
 		return [
-			'captcha' => [
-				'class' => 'yii\captcha\CaptchaAction',
-				'minLength'=>3,
-				'maxLength'=>4,
-				'offset'=>5
-			],
+			'captcha' => $this->module->captchaOptions,
 		];
 	}
 
@@ -45,14 +40,14 @@ class AuthController extends BaseController
 	{
 		if ( !Yii::$app->user->isGuest )
 		{
-			$this->goHome();
+			return $this->goHome();
 		}
 		
 		$model = new LoginForm();
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->login() )
 		{
-			$this->goBack();
+			return $this->goBack();
 		}
 
 		return $this->renderIsAjax('login', compact('model'));
@@ -78,7 +73,7 @@ class AuthController extends BaseController
 	{
 		if ( Yii::$app->user->isGuest )
 		{
-			$this->goHome();
+			return $this->goHome();
 		}
 
 		$user = User::getCurrentUser();
@@ -107,10 +102,10 @@ class AuthController extends BaseController
 	{
 		if ( !Yii::$app->user->isGuest )
 		{
-			$this->goHome();
+			return $this->goHome();
 		}
 
-		$model = new RegistrationForm();
+		$model = new $this->module->registrationFormClass;
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
@@ -148,11 +143,11 @@ class AuthController extends BaseController
 	 *
 	 * @return string|\yii\web\Response
 	 */
-	public function actionPasswordRecoveryRequest()
+	public function actionPasswordRecovery()
 	{
 		if ( !Yii::$app->user->isGuest )
 		{
-			$this->goHome();
+			return $this->goHome();
 		}
 
 		$model = new PasswordRecoveryForm();
@@ -179,18 +174,18 @@ class AuthController extends BaseController
 	}
 
 	/**
-	 * Form to recover password
+	 * Receive token, find user by it and show form to change password
 	 *
 	 * @param string $token
 	 *
 	 * @throws \yii\web\NotFoundHttpException
 	 * @return string|\yii\web\Response
 	 */
-	public function actionPasswordRecoveryChange($token)
+	public function actionPasswordRecoveryReceive($token)
 	{
 		if ( !Yii::$app->user->isGuest )
 		{
-			$this->goHome();
+			return $this->goHome();
 		}
 
 		$user = User::findByConfirmationToken($token);
@@ -209,7 +204,7 @@ class AuthController extends BaseController
 		{
 			if ( $this->triggerModuleEvent(UserAuthEvent::BEFORE_PASSWORD_RECOVERY_COMPLETE, ['model'=>$model]) )
 			{
-				$model->changePassword();
+				$model->changePassword(false);
 
 				if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_PASSWORD_RECOVERY_COMPLETE, ['model'=>$model]) )
 				{
@@ -221,9 +216,71 @@ class AuthController extends BaseController
 		return $this->renderIsAjax('changeOwnPassword', compact('model'));
 	}
 
-	public function actionConfirmEmailRequest()
+	/**
+	 * @return string|\yii\web\Response
+	 */
+	public function actionConfirmEmail()
 	{
-		return $this->renderIsAjax('confirmEmailRequest');
+		if ( Yii::$app->user->isGuest )
+		{
+			return $this->goHome();
+		}
+
+		$user = User::getCurrentUser();
+
+		if ( $user->email_confirmed == 1 )
+		{
+			return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
+		}
+
+		$model = new ConfirmEmailForm([
+			'email'=>$user->email,
+			'user'=>$user,
+		]);
+
+		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
+		{
+			if ( $this->triggerModuleEvent(UserAuthEvent::BEFORE_EMAIL_CONFIRMATION_REQUEST, ['model'=>$model]) )
+			{
+				if ( $model->sendEmail(false) )
+				{
+					if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_EMAIL_CONFIRMATION_REQUEST, ['model'=>$model]) )
+					{
+						return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
+					}
+				}
+				else
+				{
+					Yii::$app->session->setFlash('error', UserManagementModule::t('front', "Unable to send message for email provided"));
+				}
+			}
+		}
+
+		return $this->renderIsAjax('confirmEmail', compact('model'));
+	}
+
+	/**
+	 * Receive token, find user by it and confirm email
+	 *
+	 * @param string $token
+	 *
+	 * @throws \yii\web\NotFoundHttpException
+	 * @return string|\yii\web\Response
+	 */
+	public function actionConfirmEmailReceive($token)
+	{
+		$user = User::findByConfirmationToken($token);
+
+		if ( !$user )
+		{
+			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired. Try reset password once more'));
+		}
+		
+		$user->email_confirmed = 1;
+		$user->removeConfirmationToken();
+		$user->save(false);
+
+		return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
 	}
 
 	/**

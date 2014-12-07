@@ -32,6 +32,12 @@ class UserVisitLogSearch extends UserVisitLog
 
 		$query->joinWith(['user']);
 
+		// Don't let non-superadmin view superadmin activity
+		if ( !Yii::$app->user->isSuperadmin )
+		{
+			$query->andWhere(['user.superadmin'=>0]);
+		}
+
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'pagination' => [
