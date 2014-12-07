@@ -34,7 +34,7 @@ to the require section of your `composer.json` file.
 Installation and configuration
 ---
 
-1 In your config/web.php
+1) In your config/web.php
 
 ```php
 
@@ -75,7 +75,7 @@ Layout handler example in *AuthHelper::layoutHandler*
 
 To see full list of options check *UserManagementModule* file
 
-2 Run migrations
+2) Run migrations
 
 ```
 ./yii migrate vendor/webvimark/module-user-management/migrations/
@@ -85,15 +85,38 @@ To see full list of options check *UserManagementModule* file
 Usage
 -----
 
-Users - http://site.com/user-management/user/index
+You can login as *superadmin/superadmin*
 
-Roles - http://site.com/user-management/role/index
+```php
 
-Permissions - http://site.com/user-management/permission/index
+<?php
+use webvimark\modules\UserManagement\components\GhostMenu;
+use webvimark\modules\UserManagement\UserManagementModule;
 
-Permission groups - http://site.com/user-management/auth-item-group/index
+echo GhostMenu::widget([
+	'encodeLabels'=>false,
+	'activateParents'=>true,
+	'items' => [
+		[
+			'label' => 'Backend routes',
+			'items'=>UserManagementModule::menuItems()
+		],
+		[
+			'label' => 'Frontend routes',
+			'items'=>[
+				['label'=>'Login', 'url'=>['/user-management/auth/login']],
+				['label'=>'Logout', 'url'=>['/user-management/auth/logout']],
+				['label'=>'Registration', 'url'=>['/user-management/auth/registration']],
+				['label'=>'Change own password', 'url'=>['/user-management/auth/change-own-password']],
+				['label'=>'Password recovery', 'url'=>['/user-management/auth/password-recovery']],
+				['label'=>'E-mail confirmation', 'url'=>['/user-management/auth/confirm-email']],
+			],
+		],
+	],
+]);
+?>
 
-Visit log - http://site.com/user-management/user-visit-log/index
+```
 
 
 Events

@@ -74,7 +74,8 @@ class ConfirmEmailForm extends Model
 			return false;
 		}
 
-		//$this->user->generateConfirmationToken();
+		$this->user->generateConfirmationToken();
+		$this->user->save(false);
 
 		return Yii::$app->mailer->compose('emailConfirmation', ['user' => $this->user])
 			->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])

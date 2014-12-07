@@ -47,7 +47,8 @@ class m141207_001649_create_basic_user_permissions extends Migration
 			'/user-management/user-permission/set-roles',
 		], 'Assign roles to users', $group->code);
 
-		Role::assignRoutesViaPermission('Admin','viewVisitLog', [
+
+		Permission::assignRoutes('viewVisitLog', [
 			'/user-management/user-visit-log/index',
 			'/user-management/user-visit-log/grid-page-size',
 			'/user-management/user-visit-log/view',
