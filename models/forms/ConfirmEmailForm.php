@@ -19,12 +19,23 @@ class ConfirmEmailForm extends Model
 	public $email;
 
 	/**
+	 * Remove confirmation token if it's expiration date is over
+	 */
+	public function init()
+	{
+		if ( $this->user->confirmation_token !== null AND $this->getTokenTimeLeft() == 0 )
+		{
+			$this->user->removeConfirmationToken();
+			$this->user->save(false);
+		}
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function rules()
 	{
 		return [
-
 			['email', 'required'],
 			['email', 'trim'],
 			['email', 'email'],
@@ -63,6 +74,35 @@ class ConfirmEmailForm extends Model
 	}
 
 	/**
+	 *
+	 *
+	 * @param bool $inMinutes
+	 *
+	 * @return int
+	 */
+	public function getTokenTimeLeft($inMinutes = false)
+	{
+		if ( $this->user AND $this->user->confirmation_token )
+		{
+			$expire    = Yii::$app->getModule('user-management')->confirmationTokenExpire;
+
+			$parts     = explode('_', $this->user->confirmation_token);
+			$timestamp = (int)end($parts);
+
+			$timeLeft = $timestamp + $expire - time();
+
+			if ( $timeLeft < 0 )
+			{
+				return 0;
+			}
+
+			return $inMinutes ? round($timeLeft / 60) : $timeLeft;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * @param bool $performValidation
 	 *
 	 * @return bool
@@ -74,11 +114,12 @@ class ConfirmEmailForm extends Model
 			return false;
 		}
 
+		$this->user->email = $this->email;
 		$this->user->generateConfirmationToken();
 		$this->user->save(false);
 
-		return Yii::$app->mailer->compose('emailConfirmation', ['user' => $this->user])
-			->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+		return Yii::$app->mailer->compose('/mail/emailConfirmationMail', ['user' => $this->user])
+			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
 			->setTo($this->email)
 			->setSubject(UserManagementModule::t('front', 'E-mail confirmation for') . ' ' . Yii::$app->name)
 			->send();

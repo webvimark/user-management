@@ -22,5 +22,5 @@ class UserVisitLogController extends AdminDefaultController
 	 */
 	public $modelSearchClass = 'webvimark\modules\UserManagement\models\search\UserVisitLogSearch';
 
-	protected $baseActions = ['index', 'view', 'gridPageSize'];
+	public $enableOnlyActions = ['index', 'view', 'grid-page-size'];
 }

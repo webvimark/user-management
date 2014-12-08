@@ -21,29 +21,41 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-body">
 
 			<?php if ( Yii::$app->session->hasFlash('error') ): ?>
-				<div class="alert-alert-warning text-center">
+				<div class="alert alert-warning text-center">
 					<?= Yii::$app->session->getFlash('error') ?>
 				</div>
 			<?php endif; ?>
 
-			<?php $form = ActiveForm::begin([
-				'id'=>'user',
-				'layout'=>'horizontal',
-				'validateOnBlur'=>false,
-			]); ?>
+			<?php if ( $model->user->confirmation_token === null ): ?>
 
-			<?= $form->field($model, 'email')->textInput(['maxlength' => 255, 'autofocus'=>true]) ?>
+				<?php $form = ActiveForm::begin([
+					'id'=>'user',
+					'layout'=>'horizontal',
+					'validateOnBlur'=>false,
+				]); ?>
 
-			<div class="form-group">
-				<div class="col-sm-offset-3 col-sm-9">
-					<?= Html::submitButton(
-						'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('front', 'Confirm'),
-						['class' => 'btn btn-primary']
-					) ?>
+				<?= $form->field($model, 'email')->textInput(['maxlength' => 255, 'autofocus'=>true]) ?>
+
+				<div class="form-group">
+					<div class="col-sm-offset-3 col-sm-9">
+						<?= Html::submitButton(
+							'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('front', 'Confirm'),
+							['class' => 'btn btn-primary']
+						) ?>
+					</div>
 				</div>
-			</div>
 
-			<?php ActiveForm::end(); ?>
+				<?php ActiveForm::end(); ?>
+			<?php else: ?>
+
+				<div class="alert alert-info text-center">
+					<?= UserManagementModule::t('back', 'E-mail with activation link has been sent to <b>{email}</b>. This link will expire in {minutes} min.', [
+						'email'=>$model->user->email,
+						'minutes'=>$model->getTokenTimeLeft(true),
+					]) ?>
+				</div>
+			<?php endif; ?>
+
 
 		</div>
 	</div>

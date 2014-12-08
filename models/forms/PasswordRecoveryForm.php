@@ -93,8 +93,8 @@ class PasswordRecoveryForm extends Model
 		$this->user->generateConfirmationToken();
 		$this->user->save(false);
 
-		return Yii::$app->mailer->compose('passwordResetToken', ['user' => $this->user])
-			->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+		return Yii::$app->mailer->compose('/mail/passwordRecoveryMail', ['user' => $this->user])
+			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
 			->setTo($this->email)
 			->setSubject(UserManagementModule::t('front', 'Password reset for') . ' ' . Yii::$app->name)
 			->send();

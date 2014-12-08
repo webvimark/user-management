@@ -246,7 +246,7 @@ class AuthController extends BaseController
 				{
 					if ( $this->triggerModuleEvent(UserAuthEvent::AFTER_EMAIL_CONFIRMATION_REQUEST, ['model'=>$model]) )
 					{
-						return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
+						return $this->refresh();
 					}
 				}
 				else
@@ -273,7 +273,7 @@ class AuthController extends BaseController
 
 		if ( !$user )
 		{
-			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired. Try reset password once more'));
+			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired'));
 		}
 		
 		$user->email_confirmed = 1;
