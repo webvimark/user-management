@@ -19,6 +19,7 @@
 return [
     'Active' => '',
     'Are you sure you want to delete this user?' => '',
+    'Bind to IP' => '',
     'Browser' => '',
     'Change own password' => '',
     'Change password' => '',
@@ -35,6 +36,7 @@ return [
     'Delete' => '',
     'Description' => '',
     'E-mail confirmed' => '',
+    'E-mail with activation link has been sent to <b>{email}</b>. This link will expire in {minutes} min.' => '',
     'Edit' => '',
     'Editing' => '',
     'Editing permission group' => '',

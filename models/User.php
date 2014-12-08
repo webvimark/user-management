@@ -262,6 +262,7 @@ class User extends UserIdentity
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
 			['bind_to_ip', 'string', 'max' => 255],
+			[['bind_to_ip', 'email'], 'default'],
 
 			['password', 'required', 'on'=>['newUser', 'changePassword']],
 			['password', 'string', 'max' => 255, 'on'=>['newUser', 'changePassword']],
@@ -320,6 +321,7 @@ class User extends UserIdentity
 			'username'           => UserManagementModule::t('back', 'Login'),
 			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
 			'confirmation_token' => 'Confirmation Token',
+			'bind_to_ip'         => UserManagementModule::t('back', 'Bind to IP'),
 			'registration_ip'    => UserManagementModule::t('back', 'Registration IP'),
 			'status'             => UserManagementModule::t('back', 'Status'),
 			'gridRoleSearch'     => UserManagementModule::t('back', 'Roles'),

@@ -38,6 +38,7 @@ return [
     'Remember me' => '',
     'Repeat password' => '',
     'This E-mail already exists' => '',
+    'Token not found. It may be expired' => '',
     'Token not found. It may be expired. Try reset password once more' => '',
     'Too many attempts' => '',
     'Unable to send message for email provided' => '',

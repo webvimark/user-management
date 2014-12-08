@@ -59,6 +59,7 @@ class m141207_001649_create_basic_user_permissions extends Migration
 		Permission::create('viewRegistrationIp', 'View registration IP', $group->code);
 		Permission::create('viewUserEmail', 'View user email', $group->code);
 		Permission::create('editUserEmail', 'Edit user email', $group->code);
+		Permission::create('bindUserToIp', 'Bind user to IP', $group->code);
 
 
 		Permission::addChildren('assignRolesToUsers', ['viewUsers', 'viewUserRoles']);
@@ -92,6 +93,7 @@ class m141207_001649_create_basic_user_permissions extends Migration
 			'viewRegistrationIp',
 			'viewUserEmail',
 			'editUserEmail',
+			'bindUserToIp',
 		]]);
 
 		Permission::deleteAll(['name'=>[

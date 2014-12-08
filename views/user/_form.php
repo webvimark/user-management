@@ -26,9 +26,19 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?= $form->field($model, 'username')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 
-	<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+	<?php if ( $model->isNewRecord ): ?>
 
-	<?= $form->field($model, 'repeat_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+		<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+
+		<?= $form->field($model, 'repeat_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+	<?php endif; ?>
+
+
+	<?php if ( User::hasPermission('bindUserToIp') ): ?>
+
+		<?= $form->field($model, 'bind_to_ip')->textInput(['maxlength' => 255]) ?>
+
+	<?php endif; ?>
 
 	<?php if ( User::hasPermission('editUserEmail') ): ?>
 
@@ -36,6 +46,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 		<?= $form->field($model, 'email_confirmed')->checkbox() ?>
 
 	<?php endif; ?>
+
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">

@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'You can not change own permissions' => 'Вы не можете менять свои права',
+    'Bind to IP' => 'Привязать к IP',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
     'Browser' => 'Браузер',
@@ -36,6 +36,7 @@ return [
     'Delete' => 'Удалить',
     'Description' => 'Описание',
     'E-mail confirmed' => 'E-mail подтверждён',
+    'E-mail with activation link has been sent to <b>{email}</b>. This link will expire in {minutes} min.' => 'Ссылка активации была отправлена на <b>{email}></b>. Срок действия ссылки {minutes} мин.',
     'Edit' => 'Редактировать',
     'Editing' => 'Редактирование',
     'Editing permission group' => 'Редактирование группы прав',
@@ -79,4 +80,5 @@ return [
     'Visit log' => 'История посещений',
     'Wrong format. Enter valid IPs separated by comma' => 'Неверный формат. Введите список IP разделённых запятой',
     'Wrong password' => 'Неверный пароль',
+    'You can not change own permissions' => 'Вы не можете менять свои права',
 ];

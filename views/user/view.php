@@ -68,6 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
 						'visible'=>User::hasPermission('viewUserRoles'),
 						'format'=>'raw',
 					],
+					[
+						'attribute'=>'bind_to_ip',
+						'visible'=>User::hasPermission('bindUserToIp'),
+					],
 					array(
 						'attribute'=>'registration_ip',
 						'value'=>Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]),

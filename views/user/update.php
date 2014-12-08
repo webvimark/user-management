@@ -23,47 +23,7 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Editing');
 	<div class="panel panel-default">
 		<div class="panel-body">
 
-			<div class="user-form">
-
-				<?php $form = ActiveForm::begin([
-					'id'=>'user',
-					'layout'=>'horizontal',
-				]); ?>
-
-				<?= $form->field($model->loadDefaultValues(), 'status')
-					->dropDownList(User::getStatusList()) ?>
-
-				<?= $form->field($model, 'username')->textInput(['maxlength' => 255]) ?>
-
-
-				<?php if ( User::hasPermission('editUserEmail') ): ?>
-
-					<?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
-					<?= $form->field($model, 'email_confirmed')->checkbox() ?>
-
-				<?php endif; ?>
-
-				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-9">
-						<?php if ( $model->isNewRecord ): ?>
-							<?= Html::submitButton(
-								'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
-								['class' => 'btn btn-success']
-							) ?>
-						<?php else: ?>
-							<?= Html::submitButton(
-								'<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', 'Save'),
-								['class' => 'btn btn-primary']
-							) ?>
-						<?php endif; ?>
-					</div>
-				</div>
-
-				<?php ActiveForm::end(); ?>
-
-			</div>
-
-			<?php BootstrapSwitch::widget() ?>
+			<?= $this->render('_form', compact('model')) ?>
 		</div>
 	</div>
 
