@@ -78,7 +78,7 @@ To see full list of options check *UserManagementModule* file
 2) Run migrations
 
 ```
-./yii migrate vendor/webvimark/module-user-management/migrations/
+./yii migrate --migrationPath=vendor/webvimark/module-user-management/migrations/
 
 ```
 
