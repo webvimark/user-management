@@ -7,6 +7,7 @@ use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch;
 use webvimark\components\AdminDefaultController;
+use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\rbac\DbManager;
 
@@ -89,6 +90,8 @@ class RoleController extends AdminDefaultController
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
 
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+
 		return $this->redirect(['view', 'id'=>$id]);
 	}
 
@@ -112,6 +115,8 @@ class RoleController extends AdminDefaultController
 
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
+
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}

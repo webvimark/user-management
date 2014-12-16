@@ -55,7 +55,7 @@ Installation and configuration
 
 		// Here you can set your handler to change layout for any controller or action
 		// Tip: you can use this event in any module
-		'on beforeAction'=>function(ActionEvent $event) {
+		'on beforeAction'=>function(yii\base\ActionEvent $event) {
 				if ( $event->action->uniqueId == 'user-management/auth/login' )
 				{
 					$event->action->controller->layout = 'loginLayout.php';
@@ -90,12 +90,28 @@ To see full list of options check *UserManagementModule* file
 
 3) Run migrations
 
-```
+```php
+
 ./yii migrate --migrationPath=vendor/webvimark/module-user-management/migrations/
 
 ```
 
-Usage
+4) In you base controller
+
+```php
+
+public function behaviors()
+{
+	return [
+		'ghost-access'=> [
+			'class' => GhostAccessControl::className(),
+		],
+	];
+}
+
+```
+
+Where you can go
 -----
 
 ```php
@@ -126,6 +142,69 @@ echo GhostMenu::widget([
 	],
 ]);
 ?>
+
+```
+
+First steps
+---
+
+From the menu above at first you'll se only 2 element: "Login" and "Logout" because you have no permission to visit other urls
+and to render menu we using **GhostMenu::widget()**. It's render only element that active user can visit.
+
+Also same functionality has **GhostNav::widget()** and **GhostHtml:a()**
+
+1) Login as superadmin/superadmin
+
+2) Go to "Permissions" play there
+
+3) Go to "Roles" play there
+
+4) Go to "User" play there
+
+5) Relax
+
+
+Usage
+---
+
+You controllers may have two properties that will make whole controller or selected action accessible to everyone
+
+```php
+
+public $freeAccess = true;
+
+```
+
+Or
+
+```php
+
+public $freeAccessActions = ['first-action', 'another-action'];
+
+```
+
+Here are list of the useful helpers. For detailed explanation look in the corresponding functions.
+
+```php
+
+User::hasRole($roles, $superAdminAllowed = true)
+User::hasPermission($permission, $superAdminAllowed = true)
+User::canRoute($route, $superAdminAllowed = true)
+
+User::assignRole($userId, $roleName)
+User::revokeRole($userId, $roleName)
+
+User::getCurrentUser($fromSingleton = true)
+
+```
+
+Role, Permission and Route all have following methods
+
+```php
+
+Role::create($name, $description = null, $groupCode = null, $ruleName = null, $data = null)
+Role::addChildren($parentName, $childrenNames, $throwException = false)
+Role::removeChildren($parentName, $childrenNames)
 
 ```
 

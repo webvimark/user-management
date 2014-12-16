@@ -66,6 +66,7 @@ return [
     'Roles and permissions for user:' => '',
     'Rule' => '',
     'Save' => '',
+    'Saved' => '',
     'Search' => '',
     'Settings for permission' => '',
     'Status' => '',

@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'For example: 123.34.56.78, 168.111.192.12' => 'Напрмиер: 123.34.56.78, 168.111.192.12',
+    'Saved' => 'Сохранено',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
     'Bind to IP' => 'Привязать к IP',
@@ -44,6 +44,7 @@ return [
     'Editing permission: ' => 'Редактирование права: ',
     'Editing role: ' => 'Редактирование роли: ',
     'Editing user: ' => 'Редактирование пользователя: ',
+    'For example: 123.34.56.78, 168.111.192.12' => 'Напрмиер: 123.34.56.78, 168.111.192.12',
     'Group' => 'Группа',
     'Inactive' => 'Неактивен',
     'Language' => 'Язык',

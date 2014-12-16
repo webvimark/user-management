@@ -6,26 +6,25 @@ use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\models\User;
 use yii\base\Action;
 use Yii;
+use yii\base\ActionFilter;
 use yii\web\ForbiddenHttpException;
-use yii\web\Controller;
 
-class AccessController extends Controller
+class GhostAccessControl extends ActionFilter
 {
-	public $freeAccess = false;
-	public $freeAccessActions = [];
-
 	/**
-	 * @inheritdoc
+	 * @var callable a callback that will be called if the access should be denied
+	 * to the current user. If not set, [[denyAccess()]] will be called.
+	 *
+	 * The signature of the callback should be as follows:
+	 *
+	 * ~~~
+	 * function ($rule, $action)
+	 * ~~~
+	 *
+	 * where `$rule` is the rule that denies the user, and `$action` is the current [[Action|action]] object.
+	 * `$rule` can be `null` if access is denied because none of the rules matched.
 	 */
-	public function beforeAction($action)
-	{
-		if ( !$this->beforeControllerAction($action) )
-		{
-			return false;
-		}
-
-		return parent::beforeAction($action);
-	}
+	public $denyCallback;
 
 	/**
 	 * Check if user has access to current route
@@ -34,7 +33,7 @@ class AccessController extends Controller
 	 *
 	 * @return boolean whether the action should continue to be executed.
 	 */
-	public function beforeControllerAction($action)
+	public function beforeAction($action)
 	{
 		if ( $action->id == 'captcha' )
 		{
@@ -77,7 +76,16 @@ class AccessController extends Controller
 			return true;
 		}
 
-		$this->denyAccess();
+		if ( isset($this->denyCallback) )
+		{
+			call_user_func($this->denyCallback, null, $action);
+		}
+		else
+		{
+			$this->denyAccess();
+		}
+
+		return false;
 	}
 
 

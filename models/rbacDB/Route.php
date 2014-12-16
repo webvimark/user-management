@@ -185,7 +185,7 @@ class Route extends AbstractItem
 				return true;
 			}
 
-			if ( $controller->hasProperty('freeAccessActions') AND isset($controller->freeAccessActions[$action->id]) )
+			if ( $controller->hasProperty('freeAccessActions') AND in_array($action->id, $controller->freeAccessActions) )
 			{
 				return true;
 			}

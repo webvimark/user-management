@@ -9,6 +9,7 @@ use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
 use webvimark\components\AdminDefaultController;
+use webvimark\modules\UserManagement\UserManagementModule;
 use yii\db\Query;
 use Yii;
 use yii\rbac\DbManager;
@@ -74,6 +75,8 @@ class PermissionController extends AdminDefaultController
 		Permission::addChildren($item->name, $toAdd);
 		Permission::removeChildren($item->name, $toRemove);
 
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+
 		return $this->redirect(['view', 'id'=>$id]);
 	}
 
@@ -104,6 +107,8 @@ class PermissionController extends AdminDefaultController
 		}
 
 		AuthHelper::invalidatePermissions();
+
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}

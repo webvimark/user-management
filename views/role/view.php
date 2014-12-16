@@ -23,6 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h2 class="lte-hide-title"><?= $this->title ?></h2>
 
+<?php if ( Yii::$app->session->hasFlash('success') ): ?>
+	<div class="alert alert-success text-center">
+		<?= Yii::$app->session->getFlash('success') ?>
+	</div>
+<?php endif; ?>
+
 <p>
 	<?= GhostHtml::a(UserManagementModule::t('back', 'Edit'), ['update', 'id' => $role->name], ['class' => 'btn btn-sm btn-primary']) ?>
 	<?= GhostHtml::a(UserManagementModule::t('back', 'Create'), ['create'], ['class' => 'btn btn-sm btn-success']) ?>
