@@ -71,14 +71,27 @@ To learn about events check:
 * http://www.yiiframework.com/doc-2.0/guide-concept-events.html
 * http://www.yiiframework.com/doc-2.0/guide-concept-configurations.html#configuration-format
 
-Layout handler example in *AuthHelper::layoutHandler*
+Layout handler example in *AuthHelper::layoutHandler()*
 
 To see full list of options check *UserManagementModule* file
 
-2) Run migrations
+
+2) In your config/console.php (this is needed for migrations and working with console)
+
+```php
+
+'modules'=>[
+	'user-management' => [
+		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+	],
+],
 
 ```
-./yii migrate vendor/webvimark/module-user-management/migrations/
+
+3) Run migrations
+
+```
+./yii migrate --migrationPath=vendor/webvimark/module-user-management/migrations/
 
 ```
 
@@ -136,4 +149,22 @@ Events can be handled via config file like following
 ```
 
 List of supported events can be found in *UserAuthEvent* class
+
+FAQ
+---
+
+**Question**: I want to have profile for user with avatar, birthday and stuff. What should I do ?
+
+**Answer**: Profiles are to project-specific, so you'll have to implement them yourself. Here is how to do it without modifying this module
+
+1) Create table and model for profile, that have user_id (connect with "user" table)
+
+2) Check AuthController::actionRegistration() how it works (*you can skip this part*)
+
+3) Define you view file for registration. Check example in *AuthHelper::layoutHandler()*
+
+4) Define your own UserManagementModule::$registrationFormClass. In this class you can do whatever you want like validating custom forms and saving profiles
+
+5) Create your controller where user can view profiles
+
 
