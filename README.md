@@ -155,11 +155,11 @@ Also same functionality has **GhostNav::widget()** and **GhostHtml:a()**
 
 1) Login as superadmin/superadmin
 
-2) Go to "Permissions" play there
+2) Go to "Permissions" and play there
 
-3) Go to "Roles" play there
+3) Go to "Roles" play and there
 
-4) Go to "User" play there
+4) Go to "User" play and there
 
 5) Relax
 
@@ -170,7 +170,6 @@ Usage
 You controllers may have two properties that will make whole controller or selected action accessible to everyone
 
 ```php
-
 public $freeAccess = true;
 
 ```
@@ -178,7 +177,6 @@ public $freeAccess = true;
 Or
 
 ```php
-
 public $freeAccessActions = ['first-action', 'another-action'];
 
 ```
