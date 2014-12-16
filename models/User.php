@@ -129,11 +129,10 @@ class User extends UserIdentity
 	/**
 	 * @param string|array $roles
 	 * @param bool         $superAdminAllowed
-	 * @param bool         $searchInChildRoles
 	 *
 	 * @return bool
 	 */
-	public static function hasRole($roles, $superAdminAllowed = true, $searchInChildRoles = false)
+	public static function hasRole($roles, $superAdminAllowed = true)
 	{
 		if ( $superAdminAllowed AND Yii::$app->user->isSuperadmin )
 		{
@@ -143,10 +142,7 @@ class User extends UserIdentity
 
 		AuthHelper::ensurePermissionsUpToDate();
 
-		$cachedRoles = $searchInChildRoles ? Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES_WITH_CHILDREN,[])
-			: Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES,[]);
-
-		return array_intersect($roles, $cachedRoles) !== [];
+		return array_intersect($roles, Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES,[])) !== [];
 	}
 
 	/**

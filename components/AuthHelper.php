@@ -16,7 +16,6 @@ class AuthHelper
 {
 	const SESSION_PREFIX_LAST_UPDATE         = '__auth_last_update';
 	const SESSION_PREFIX_ROLES               = '__userRoles';
-	const SESSION_PREFIX_ROLES_WITH_CHILDREN = '__userRolesWithChildren';
 	const SESSION_PREFIX_PERMISSIONS         = '__userPermissions';
 	const SESSION_PREFIX_ROUTES              = '__userRoutes';
 
@@ -62,7 +61,6 @@ class AuthHelper
 
 		// Clear data first in case we want to refresh permissions
 		$session->remove(self::SESSION_PREFIX_ROLES);
-		$session->remove(self::SESSION_PREFIX_ROLES_WITH_CHILDREN);
 		$session->remove(self::SESSION_PREFIX_PERMISSIONS);
 		$session->remove(self::SESSION_PREFIX_ROUTES);
 
@@ -71,7 +69,6 @@ class AuthHelper
 
 		// Save roles, permissions and routes in session
 		$session->set(self::SESSION_PREFIX_ROLES, array_keys(Role::getUserRoles($identity->id)));
-		$session->set(self::SESSION_PREFIX_ROLES_WITH_CHILDREN, array_keys(Role::getUserRoles($identity->id, true)));
 		$session->set(self::SESSION_PREFIX_PERMISSIONS, array_keys(Permission::getUserPermissions($identity->id)));
 		$session->set(self::SESSION_PREFIX_ROUTES, Route::getUserRoutes($identity->id));
 	}
@@ -244,6 +241,7 @@ class AuthHelper
 	}
 
 
+	// ================= Credits to mdm/admin module =================
 	/**
 	 * @return array
 	 */

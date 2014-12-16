@@ -13,11 +13,10 @@ class Role extends AbstractItem
 
 	/**
 	 * @param int     $userId
-	 * @param bool $withChildren
 	 *
 	 * @return array|\yii\rbac\Role[]
 	 */
-	public static function getUserRoles($userId, $withChildren = false)
+	public static function getUserRoles($userId)
 	{
 		return (new DbManager())->getRolesByUser($userId);
 	}
