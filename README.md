@@ -31,7 +31,7 @@ or add
 
 to the require section of your `composer.json` file.
 
-Installation and configuration
+Configuration
 ---
 
 1) In your config/web.php
