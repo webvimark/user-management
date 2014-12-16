@@ -31,13 +31,13 @@ class Route extends AbstractItem
 
 		$routes = (new Query)
 			->select(['name'])
-			->from('auth_item')
-			->innerJoin('auth_item_child', '(auth_item_child.child = auth_item.name AND auth_item.type = :type)')
+			->from(Yii::$app->getModule('user-management')->auth_item_table)
+			->innerJoin(Yii::$app->getModule('user-management')->auth_item_child_table, '(auth_item_child.child = auth_item.name AND auth_item.type = :type)')
 			->params([
 				':type'=>self::TYPE_ROUTE,
 			])
 			->where([
-				'auth_item_child.parent' => $permissions,
+				Yii::$app->getModule('user-management')->auth_item_child_table . '.parent' => $permissions,
 			])
 			->column();
 
@@ -225,7 +225,7 @@ class Route extends AbstractItem
 		{
 			$commonRoutesDB = (new Query())
 				->select('child')
-				->from('auth_item_child')
+				->from(Yii::$app->getModule('user-management')->auth_item_child_table)
 				->where(['parent'=>Yii::$app->getModule('user-management')->commonPermissionName])
 				->column();
 

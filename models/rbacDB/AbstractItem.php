@@ -3,11 +3,11 @@ namespace webvimark\modules\UserManagement\models\rbacDB;
 
 use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
-use yii\base\InvalidCallException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use Yii;
+use yii\helpers\Inflector;
 use yii\rbac\DbManager;
 
 
@@ -37,6 +37,7 @@ abstract class AbstractItem extends ActiveRecord
 
 	/**
 	 * Useful helper for migrations and other stuff
+	 * If description is null than it will be transformed like "editUserEmail" => "Edit user email"
 	 *
 	 * @param string      $name
 	 * @param null|string $description
@@ -52,7 +53,7 @@ abstract class AbstractItem extends ActiveRecord
 
 		$item->type = static::ITEM_TYPE;
 		$item->name = $name;
-		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? $name : $description;
+		$item->description = ( $description === null AND static::ITEM_TYPE != static::TYPE_ROUTE ) ? Inflector::titleize($name) : $description;
 		$item->rule_name = $ruleName;
 		$item->group_code = $groupCode;
 		$item->data = $data;
@@ -111,7 +112,7 @@ abstract class AbstractItem extends ActiveRecord
 		foreach ($childrenNames as $childName)
 		{
 			Yii::$app->db->createCommand()
-				->delete('auth_item_child', ['parent' => $parentName, 'child' => $childName])
+				->delete(Yii::$app->getModule('user-management')->auth_item_child_table, ['parent' => $parentName, 'child' => $childName])
 				->execute();
 		}
 
@@ -152,7 +153,7 @@ abstract class AbstractItem extends ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return 'auth_item';
+		return Yii::$app->getModule('user-management')->auth_item_table;
 	}
 
 	/**
@@ -183,7 +184,7 @@ abstract class AbstractItem extends ActiveRecord
 	 */
 	public static function find()
 	{
-		return parent::find()->andWhere(['auth_item.type'=>static::ITEM_TYPE]);
+		return parent::find()->andWhere([Yii::$app->getModule('user-management')->auth_item_table . '.type'=>static::ITEM_TYPE]);
 	}
 
 	/**

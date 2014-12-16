@@ -39,7 +39,7 @@ class RoleController extends AdminDefaultController
 			->all();
 
 		$permissions = Permission::find()
-			->andWhere('auth_item.name != :commonPermissionName', [':commonPermissionName'=>Yii::$app->getModule('user-management')->commonPermissionName])
+			->andWhere(Yii::$app->getModule('user-management')->auth_item_table . '.name != :commonPermissionName', [':commonPermissionName'=>Yii::$app->getModule('user-management')->commonPermissionName])
 			->joinWith('group')
 			->all();
 
@@ -55,13 +55,15 @@ class RoleController extends AdminDefaultController
 
 		$currentPermissions = $currentRoutesAndPermissions->permissions;
 
-		return $this->render('view', compact('role', 'allRoles', 'childRoles', 'currentPermissions', 'permissionsByGroup'));
+		return $this->renderIsAjax('view', compact('role', 'allRoles', 'childRoles', 'currentPermissions', 'permissionsByGroup'));
 	}
 
 	/**
 	 * Add or remove child roles and return back to view
 	 *
 	 * @param string $id
+	 *
+	 * @return \yii\web\Response
 	 */
 	public function actionSetChildRoles($id)
 	{
@@ -87,13 +89,15 @@ class RoleController extends AdminDefaultController
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
 
-		$this->redirect(['view', 'id'=>$id]);
+		return $this->redirect(['view', 'id'=>$id]);
 	}
 
 	/**
 	 * Add or remove child permissions (including routes) and return back to view
 	 *
 	 * @param string $id
+	 *
+	 * @return \yii\web\Response
 	 */
 	public function actionSetChildPermissions($id)
 	{
@@ -109,7 +113,7 @@ class RoleController extends AdminDefaultController
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
 
-		$this->redirect(['view', 'id'=>$id]);
+		return $this->redirect(['view', 'id'=>$id]);
 	}
 
 	/**

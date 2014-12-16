@@ -12,7 +12,7 @@ class m140808_073114_create_auth_item_group_table extends Migration
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 
-		$this->createTable('auth_item_group', [
+		$this->createTable(Yii::$app->getModule('user-management')->auth_item_group_table, [
 			'code' => 'varchar(64) NOT NULL',
 			'name' => 'varchar(255) NOT NULL',
 
@@ -22,8 +22,8 @@ class m140808_073114_create_auth_item_group_table extends Migration
 
 		], $tableOptions);
 
-		$this->addColumn('auth_item', 'group_code', 'varchar(64)');
-		$this->addForeignKey('fk_auth_item_group_code', 'auth_item', 'group_code', 'auth_item_group', 'code', 'SET NULL', 'CASCADE');
+		$this->addColumn(Yii::$app->getModule('user-management')->auth_item_table, 'group_code', 'varchar(64)');
+		$this->addForeignKey('fk_auth_item_group_code', Yii::$app->getModule('user-management')->auth_item_table, 'group_code', Yii::$app->getModule('user-management')->auth_item_group_table, 'code', 'SET NULL', 'CASCADE');
 
 		Yii::$app->cache->flush();
 
@@ -31,10 +31,10 @@ class m140808_073114_create_auth_item_group_table extends Migration
 
 	public function safeDown()
 	{
-		$this->dropForeignKey('fk_auth_item_group_code', 'auth_item');
-		$this->dropColumn('auth_item', 'group_code');
+		$this->dropForeignKey('fk_auth_item_group_code', Yii::$app->getModule('user-management')->auth_item_table);
+		$this->dropColumn(Yii::$app->getModule('user-management')->auth_item_table, 'group_code');
 
-		$this->dropTable('auth_item_group');
+		$this->dropTable(Yii::$app->getModule('user-management')->auth_item_group_table);
 
 		Yii::$app->cache->flush();
 	}

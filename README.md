@@ -85,8 +85,6 @@ To see full list of options check *UserManagementModule* file
 Usage
 -----
 
-You can login as *superadmin/superadmin*
-
 ```php
 
 <?php

@@ -86,6 +86,19 @@ class UserManagementModule extends \yii\base\Module
 	];
 
 	/**
+	 * Table aliases
+	 *
+	 * @var string
+	 */
+	public $user_table = '{{%user}}';
+	public $user_visit_log_table = '{{%user_visit_log}}';
+	public $auth_item_table = '{{%auth_item}}';
+	public $auth_item_child_table = '{{%auth_item_child}}';
+	public $auth_item_group_table = '{{%auth_item_group}}';
+	public $auth_assignment_table = '{{%auth_assignment}}';
+	public $auth_rule_table = '{{%auth_rule}}';
+
+	/**
 	 * Helps to check if translations have been registered already
 	 *
 	 * @var bool

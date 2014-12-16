@@ -88,7 +88,7 @@ class User extends UserIdentity
 		try
 		{
 			Yii::$app->db->createCommand()
-				->insert('auth_assignment', [
+				->insert(Yii::$app->getModule('user-management')->auth_assignment_table, [
 					'user_id' => $userId,
 					'item_name' => $roleName,
 					'created_at' => time(),
@@ -115,7 +115,7 @@ class User extends UserIdentity
 	public static function revokeRole($userId, $roleName)
 	{
 		$result = Yii::$app->db->createCommand()
-			->delete('auth_assignment', ['user_id' => $userId, 'item_name' => $roleName])
+			->delete(Yii::$app->getModule('user-management')->auth_assignment_table, ['user_id' => $userId, 'item_name' => $roleName])
 			->execute() > 0;
 
 		if ( $result )
@@ -231,7 +231,7 @@ class User extends UserIdentity
 	*/
 	public static function tableName()
 	{
-		return 'user';
+		return Yii::$app->getModule('user-management')->user_table;
 	}
 
 	/**
@@ -262,7 +262,6 @@ class User extends UserIdentity
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
 			['bind_to_ip', 'string', 'max' => 255],
-			[['bind_to_ip', 'email'], 'default'],
 
 			['password', 'required', 'on'=>['newUser', 'changePassword']],
 			['password', 'string', 'max' => 255, 'on'=>['newUser', 'changePassword']],
@@ -321,8 +320,8 @@ class User extends UserIdentity
 			'username'           => UserManagementModule::t('back', 'Login'),
 			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
 			'confirmation_token' => 'Confirmation Token',
-			'bind_to_ip'         => UserManagementModule::t('back', 'Bind to IP'),
 			'registration_ip'    => UserManagementModule::t('back', 'Registration IP'),
+			'bind_to_ip'         => UserManagementModule::t('back', 'Bind to IP'),
 			'status'             => UserManagementModule::t('back', 'Status'),
 			'gridRoleSearch'     => UserManagementModule::t('back', 'Roles'),
 			'created_at'         => UserManagementModule::t('back', 'Created'),
@@ -340,7 +339,7 @@ class User extends UserIdentity
 	public function getRoles()
 	{
 		return $this->hasMany(Role::className(), ['name' => 'item_name'])
-			->viaTable('auth_assignment', ['user_id'=>'id']);
+			->viaTable(Yii::$app->getModule('user-management')->auth_assignment_table, ['user_id'=>'id']);
 	}
 
 

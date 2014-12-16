@@ -31,7 +31,7 @@ class UserPermissionController extends BaseController
 		$permissionsByGroup = [];
 		$permissions = Permission::find()
 			->andWhere([
-				'auth_item.name'=>array_keys(Permission::getUserPermissions($user->id))
+				Yii::$app->getModule('user-management')->auth_item_table . '.name'=>array_keys(Permission::getUserPermissions($user->id))
 			])
 			->joinWith('group')
 			->all();

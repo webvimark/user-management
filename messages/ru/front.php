@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Token not found. It may be expired' => '',
+    'Token not found. It may be expired' => 'Токен не найден или устарел',
     'Authorization' => 'Авторизация',
     'Captcha' => 'Каптча',
     'Check your E-mail for further instructions' => 'Проверьте Ваш E-mail для дальнейших инструкций',

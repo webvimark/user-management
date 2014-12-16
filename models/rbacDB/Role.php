@@ -92,7 +92,7 @@ class Role extends AbstractItem
 		try
 		{
 			Yii::$app->db->createCommand()
-				->insert('auth_item_child', [
+				->insert(Yii::$app->getModule('user-management')->auth_item_child_table, [
 					'parent' => $role->name,
 					'child'  => $permission->name,
 				])->execute();
@@ -113,7 +113,7 @@ class Role extends AbstractItem
 			try
 			{
 				Yii::$app->db->createCommand()
-					->insert('auth_item_child', [
+					->insert(Yii::$app->getModule('user-management')->auth_item_child_table, [
 						'parent' => $permission->name,
 						'child'  => $route,
 					])->execute();

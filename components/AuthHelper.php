@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\components;
 
+use webvimark\modules\UserManagement\models\rbacDB\AbstractItem;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\rbacDB\Route;
@@ -9,6 +10,7 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\Inflector;
 use yii\helpers\Url;
+use yii\rbac\DbManager;
 
 class AuthHelper
 {
@@ -167,6 +169,30 @@ class AuthHelper
 		return '/' . ltrim($routeAsString, '/');
 	}
 
+	/**
+	 * Get child routes, permissions or roles
+	 *
+	 * @param string $itemName
+	 * @param integer $childType
+	 *
+	 * @return array
+	 */
+	public static function getChildrenByType($itemName, $childType)
+	{
+		$children = (new DbManager())->getChildren($itemName);
+
+		$result = [];
+
+		foreach ($children as $id => $item)
+		{
+			if ( $item->type == $childType )
+			{
+				$result[$id] = $item;
+			}
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Select items that has "/" in permissions
@@ -184,13 +210,15 @@ class AuthHelper
 
 		foreach ($arrayOfPermissions as $id => $item)
 		{
-			if ( strpos($item->name, '/') !== false )
+			if ( $item->type == AbstractItem::TYPE_ROUTE )
 			{
 				$routes[$id] = $item;
+
 			}
 			else
 			{
 				$permissions[$id] = $item;
+
 			}
 		}
 

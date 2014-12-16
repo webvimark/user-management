@@ -43,6 +43,4 @@ return [
     'Too many attempts' => '',
     'Unable to send message for email provided' => '',
     'You could not login from this IP' => '',
-    'Don\'t have account ?' => '@@@@',
-    'Registration ' => '@@@@',
 ];

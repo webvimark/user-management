@@ -4,6 +4,7 @@ namespace webvimark\modules\UserManagement\controllers;
 
 
 use webvimark\modules\UserManagement\components\AuthHelper;
+use webvimark\modules\UserManagement\models\rbacDB\AbstractItem;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
@@ -36,7 +37,7 @@ class PermissionController extends AdminDefaultController
 		$routes = Route::find()->asArray()->all();
 
 		$permissions = Permission::find()
-			->andWhere(['not in', 'auth_item.name', [Yii::$app->getModule('user-management')->commonPermissionName, $id]])
+			->andWhere(['not in', Yii::$app->getModule('user-management')->auth_item_table . '.name', [Yii::$app->getModule('user-management')->commonPermissionName, $id]])
 			->joinWith('group')
 			->all();
 
@@ -46,30 +47,26 @@ class PermissionController extends AdminDefaultController
 			$permissionsByGroup[@$permission->group->name][] = $permission;
 		}
 
-		$authManager = new DbManager();
+		$childRoutes = AuthHelper::getChildrenByType($item->name, AbstractItem::TYPE_ROUTE);
+		$childPermissions = AuthHelper::getChildrenByType($item->name, AbstractItem::TYPE_PERMISSION);
 
-		$currentRoutesAndPermissions = AuthHelper::separateRoutesAndPermissions($authManager->getChildren($item->name));
-
-		$childRoutes = $currentRoutesAndPermissions->routes;
-		$childPermissions = $currentRoutesAndPermissions->permissions;
-
-		return $this->render('view', compact('item', 'childPermissions', 'routes', 'permissionsByGroup', 'childRoutes'));
+		return $this->renderIsAjax('view', compact('item', 'childPermissions', 'routes', 'permissionsByGroup', 'childRoutes'));
 	}
 
 	/**
 	 * Add or remove child permissions (including routes) and return back to view
 	 *
 	 * @param string $id
+	 *
+	 * @return string|\yii\web\Response
 	 */
 	public function actionSetChildPermissions($id)
 	{
 		$item = $this->findModel($id);
 
-		$authManager = new DbManager();
-
 		$newChildPermissions = Yii::$app->request->post('child_permissions', []);
 
-		$oldChildPermissions = array_keys($authManager->getChildren($item->name));
+		$oldChildPermissions = array_keys(AuthHelper::getChildrenByType($item->name, AbstractItem::TYPE_PERMISSION));
 
 		$toRemove = array_diff($oldChildPermissions, $newChildPermissions);
 		$toAdd = array_diff($newChildPermissions, $oldChildPermissions);
@@ -77,13 +74,15 @@ class PermissionController extends AdminDefaultController
 		Permission::addChildren($item->name, $toAdd);
 		Permission::removeChildren($item->name, $toRemove);
 
-		$this->redirect(['view', 'id'=>$id]);
+		return $this->redirect(['view', 'id'=>$id]);
 	}
 
 	/**
 	 * Add or remove routes for this permission
 	 *
 	 * @param string $id
+	 *
+	 * @return \yii\web\Response
 	 */
 	public function actionSetChildRoutes($id)
 	{
@@ -91,33 +90,13 @@ class PermissionController extends AdminDefaultController
 
 		$newRoutes = Yii::$app->request->post('child_routes', []);
 
-		$oldRoutes = (new Query())
-			->select(['child'])
-			->from('auth_item_child')
-			->where(['parent'=>$id])
-			->column();
+		$oldRoutes = array_keys(AuthHelper::getChildrenByType($item->name, AbstractItem::TYPE_ROUTE));
 
 		$toAdd = array_diff($newRoutes, $oldRoutes);
 		$toRemove = array_diff($oldRoutes, $newRoutes);
 
-		foreach ($toAdd as $addItem)
-		{
-			Yii::$app->db->createCommand()
-				->insert('auth_item_child', [
-					'parent'=>$id,
-					'child'=>$addItem,
-				])->execute();
-		}
-
-		foreach ($toRemove as $removeItem)
-		{
-			Yii::$app->db->createCommand()
-				->delete('auth_item_child', [
-					'parent'=>$id,
-					'child'=>$removeItem,
-				])->execute();
-		}
-
+		Permission::addChildren($id, $toAdd);
+		Permission::removeChildren($id, $toRemove);
 
 		if ( ( $toAdd OR $toRemove ) AND ( $id == Yii::$app->getModule('user-management')->commonPermissionName ) )
 		{
@@ -126,19 +105,21 @@ class PermissionController extends AdminDefaultController
 
 		AuthHelper::invalidatePermissions();
 
-		$this->redirect(['view', 'id'=>$id]);
+		return $this->redirect(['view', 'id'=>$id]);
 	}
 
 	/**
 	 * Add new routes and remove unused (for example if module or controller was deleted)
 	 *
 	 * @param string $id
+	 *
+	 * @return \yii\web\Response
 	 */
 	public function actionRefreshRoutes($id)
 	{
 		Route::refreshRoutes();
 
-		$this->redirect(['view', 'id'=>$id]);
+		return $this->redirect(['view', 'id'=>$id]);
 	}
 
 

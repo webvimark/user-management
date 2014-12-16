@@ -43,6 +43,7 @@ return [
     'Editing permission: ' => '',
     'Editing role: ' => '',
     'Editing user: ' => '',
+    'For example: 123.34.56.78, 168.111.192.12' => '',
     'Group' => '',
     'Inactive' => '',
     'Language' => '',
@@ -81,7 +82,4 @@ return [
     'Wrong format. Enter valid IPs separated by comma' => '',
     'Wrong password' => '',
     'You can not change own permissions' => '',
-    'Browser And Os' => '@@@@',
-    'Permissions for user: ' => '@@@@',
-    'Settings for permission:' => '@@@@',
 ];

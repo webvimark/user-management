@@ -17,9 +17,10 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Bind to IP' => 'Привязать к IP',
+    'For example: 123.34.56.78, 168.111.192.12' => 'Напрмиер: 123.34.56.78, 168.111.192.12',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
+    'Bind to IP' => 'Привязать к IP',
     'Browser' => 'Браузер',
     'Change own password' => 'Смена пароля',
     'Change password' => 'Сменить пароль',
