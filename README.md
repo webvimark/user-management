@@ -157,9 +157,9 @@ Also same functionality has **GhostNav::widget()** and **GhostHtml:a()**
 
 2) Go to "Permissions" and play there
 
-3) Go to "Roles" play and there
+3) Go to "Roles" and play there
 
-4) Go to "User" play and there
+4) Go to "User" and play there
 
 5) Relax
 
