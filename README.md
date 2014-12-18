@@ -104,7 +104,7 @@ public function behaviors()
 {
 	return [
 		'ghost-access'=> [
-			'class' => GhostAccessControl::className(),
+			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
 		],
 	];
 }
