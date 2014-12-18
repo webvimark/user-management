@@ -238,7 +238,7 @@ FAQ
 
 2) Check AuthController::actionRegistration() how it works (*you can skip this part*)
 
-3) Define you view file for registration. Check example in *AuthHelper::layoutHandler()*
+3) Define your layout for registration. Check example in *AuthHelper::layoutHandler()*. Now use theming to change registraion.php file
 
 4) Define your own UserManagementModule::$registrationFormClass. In this class you can do whatever you want like validating custom forms and saving profiles
 
