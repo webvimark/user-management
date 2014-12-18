@@ -24,7 +24,7 @@ return [
     'Confirm E-mail' => 'E-Mail bestätigen',
     'E-mail confirmation for' => 'E-Mail-Bestätigung für',
     'E-mail confirmed' => 'E-Mail bestätigt',
-    'E-mail is invalid' => 'E-Mail ist gültig',
+    'E-mail is invalid' => 'E-Mail ist ungültig',
     'Forgot password ?' => 'Passwort vergessen?',
     'Incorrect username or password.' => 'Falscher Benutzername oder Passwort.',
     'Login' => '',
