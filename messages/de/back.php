@@ -47,7 +47,7 @@ return [
     'Group' => 'Gruppe',
     'Inactive' => 'Inaktiv',
     'Language' => 'Sprache',
-    'Login' => '',
+    'Login' => 'Anmelden',
     'Name' => '',
     'OS' => 'Betriebssystem',
     'Password' => 'Passwort',
