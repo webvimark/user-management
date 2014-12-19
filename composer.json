@@ -8,6 +8,7 @@
 	},
 	"require": {
 		"webvimark/components": "dev-master",
+		"webvimark/bootstrap-switch": "dev-master",
 		"ikimea/browser": "dev-master",
 		"webvimark/date-range-picker": "dev-master",
 		"webvimark/helpers": "dev-master",
