@@ -98,13 +98,6 @@ class UserManagementModule extends \yii\base\Module
 	public $auth_assignment_table = '{{%auth_assignment}}';
 	public $auth_rule_table = '{{%auth_rule}}';
 
-	/**
-	 * Helps to check if translations have been registered already
-	 *
-	 * @var bool
-	 */
-	protected static $_translationsRegistered = false;
-
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 
 	/**
@@ -135,7 +128,7 @@ class UserManagementModule extends \yii\base\Module
 	 */
 	public static function t($category, $message, $params = [], $language = null)
 	{
-		if ( !static::$_translationsRegistered )
+		if ( !isset(Yii::$app->i18n->translations['modules/user-management/*']) )
 		{
 			Yii::$app->i18n->translations['modules/user-management/*'] = [
 				'class'          => 'yii\i18n\PhpMessageSource',
@@ -146,8 +139,6 @@ class UserManagementModule extends \yii\base\Module
 					'modules/user-management/front' => 'front.php',
 				],
 			];
-
-			static::$_translationsRegistered = true;
 		}
 
 		return Yii::t('modules/user-management/' . $category, $message, $params, $language);
