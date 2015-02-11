@@ -46,10 +46,9 @@ abstract class AbstractItemSearch extends AbstractItem
 			return $dataProvider;
 		}
 
-
-        	$query->andFilterWhere(['like', 'auth_item.name', $this->name])
-			->andFilterWhere(['like', 'auth_item.description', $this->description])
-			->andFilterWhere(['auth_item.group_code'=>$this->group_code]);
+        	$query->andFilterWhere(['like', Yii::$app->getModule('user-management')->auth_item_table.'.name', $this->name])
+			->andFilterWhere(['like', Yii::$app->getModule('user-management')->auth_item_table.'.description', $this->description])
+			->andFilterWhere([Yii::$app->getModule('user-management')->auth_item_table.'.group_code'=>$this->group_code]);
 
 		return $dataProvider;
 	}
