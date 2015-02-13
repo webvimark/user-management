@@ -13,6 +13,8 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class AuthController extends BaseController
 {
@@ -44,6 +46,12 @@ class AuthController extends BaseController
 		}
 		
 		$model = new LoginForm();
+
+		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
+		{
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->login() )
 		{
@@ -85,6 +93,13 @@ class AuthController extends BaseController
 
 		$model = new ChangeOwnPasswordForm(['user'=>$user]);
 
+
+		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
+		{
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
+
 		if ( $model->load(Yii::$app->request->post()) AND $model->changePassword() )
 		{
 			return $this->renderIsAjax('changeOwnPasswordSuccess');
@@ -106,6 +121,12 @@ class AuthController extends BaseController
 		}
 
 		$model = new $this->module->registrationFormClass;
+
+		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
+		{
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
@@ -151,6 +172,12 @@ class AuthController extends BaseController
 		}
 
 		$model = new PasswordRecoveryForm();
+
+		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
+		{
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
@@ -237,6 +264,12 @@ class AuthController extends BaseController
 			'email'=>$user->email,
 			'user'=>$user,
 		]);
+
+		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
+		{
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
 		{
