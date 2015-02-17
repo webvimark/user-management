@@ -122,10 +122,18 @@ class AuthController extends BaseController
 
 		$model = new $this->module->registrationFormClass;
 
+
 		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
 		{
+
 			Yii::$app->response->format = Response::FORMAT_JSON;
-			return ActiveForm::validate($model);
+
+			// Ajax validation breaks captcha. See https://github.com/yiisoft/yii2/issues/6115
+			// Thanks to TomskDiver
+			$validateAttributes = $model->attributes;
+			unset($validateAttributes['captcha']);
+
+			return ActiveForm::validate($model, $validateAttributes);
 		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
@@ -176,7 +184,13 @@ class AuthController extends BaseController
 		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
 		{
 			Yii::$app->response->format = Response::FORMAT_JSON;
-			return ActiveForm::validate($model);
+
+			// Ajax validation breaks captcha. See https://github.com/yiisoft/yii2/issues/6115
+			// Thanks to TomskDiver
+			$validateAttributes = $model->attributes;
+			unset($validateAttributes['captcha']);
+
+			return ActiveForm::validate($model, $validateAttributes);
 		}
 
 		if ( $model->load(Yii::$app->request->post()) AND $model->validate() )
