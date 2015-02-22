@@ -132,7 +132,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute'=>'status',
 						'optionsArray'=>[
 							[User::STATUS_ACTIVE, UserManagementModule::t('back', 'Active'), 'success'],
-							[User::STATUS_INACTIVE, UserManagementModule::t('back', 'Inactive'), 'danger'],
+							[User::STATUS_INACTIVE, UserManagementModule::t('back', 'Inactive'), 'warning'],
+							[User::STATUS_BANNED, UserManagementModule::t('back', 'Banned'), 'danger'],
 						],
 					],
 					['class' => 'yii\grid\CheckboxColumn', 'options'=>['style'=>'width:10px'] ],
