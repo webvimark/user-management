@@ -17,7 +17,9 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Token not found. It may be expired' => 'Токен не найден или устарел',
+    'Check your e-mail {email} for instructions to activate account' => 'Проверьте Ваш e-mail {email} для активации аккаунта',
+    'Could not send confirmation email' => 'Не удалось отправить e-mail для активации аккаунта',
+    'Registration - confirm your e-mail' => 'Регистрация - подтверждение аккаунта',
     'Authorization' => 'Авторизация',
     'Captcha' => 'Каптча',
     'Check your E-mail for further instructions' => 'Проверьте Ваш E-mail для дальнейших инструкций',
@@ -39,6 +41,7 @@ return [
     'Remember me' => 'Запомнить меня',
     'Repeat password' => 'Повторите пароль',
     'This E-mail already exists' => 'Такой E-mail уже существыет',
+    'Token not found. It may be expired' => 'Токен не найден или устарел',
     'Token not found. It may be expired. Try reset password once more' => 'Токен не найдет. Возможно его срок действия истёк. Попробуйте сбросить пароль ещё раз',
     'Too many attempts' => 'Лимит попыток превышен',
     'Unable to send message for email provided' => 'Не удалось отправить письмо на указанный email',

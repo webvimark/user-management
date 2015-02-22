@@ -21,7 +21,7 @@ class AuthController extends BaseController
 	/**
 	 * @var array
 	 */
-	public $freeAccessActions = ['login', 'logout'];
+	public $freeAccessActions = ['login', 'logout', 'confirm-registration-email'];
 
 	/**
 	 * @return array
@@ -44,7 +44,7 @@ class AuthController extends BaseController
 		{
 			return $this->goHome();
 		}
-		
+
 		$model = new LoginForm();
 
 		if ( Yii::$app->request->isAjax AND $model->load(Yii::$app->request->post()) )
@@ -148,16 +148,24 @@ class AuthController extends BaseController
 				{
 					if ( $user )
 					{
-						$roles = (array)$this->module->rolesAfterRegistration;
-
-						foreach ($roles as $role)
+						if ( Yii::$app->getModule('user-management')->useEmailAsLogin AND Yii::$app->getModule('user-management')->emailConfirmationRequired )
 						{
-							User::assignRole($user->id, $role);
+							return $this->renderIsAjax('registrationWaitForEmailConfirmation', compact('user'));
+						}
+						else
+						{
+							$roles = (array)$this->module->rolesAfterRegistration;
+
+							foreach ($roles as $role)
+							{
+								User::assignRole($user->id, $role);
+							}
+
+							Yii::$app->user->login($user);
+
+							return $this->redirect(Yii::$app->user->returnUrl);
 						}
 
-						Yii::$app->user->login($user);
-
-						return $this->redirect(Yii::$app->user->returnUrl);
 					}
 				}
 			}
@@ -166,6 +174,33 @@ class AuthController extends BaseController
 
 		return $this->renderIsAjax('registration', compact('model'));
 	}
+
+
+	/**
+	 * Receive token after registration, find user by it and confirm email
+	 *
+	 * @param string $token
+	 *
+	 * @throws \yii\web\NotFoundHttpException
+	 * @return string|\yii\web\Response
+	 */
+	public function actionConfirmRegistrationEmail($token)
+	{
+		if ( Yii::$app->getModule('user-management')->useEmailAsLogin AND Yii::$app->getModule('user-management')->emailConfirmationRequired )
+		{
+			$model = new $this->module->registrationFormClass;
+
+			$user = $model->checkConfirmationToken($token);
+
+			if ( $user )
+			{
+				return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
+			}
+
+			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired'));
+		}
+	}
+
 
 	/**
 	 * Form to recover password

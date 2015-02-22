@@ -18,31 +18,44 @@ class RegistrationForm extends Model
 	 */
 	public function rules()
 	{
-		return [
+		$rules = [
 			['captcha', 'captcha', 'captchaAction'=>'/user-management/auth/captcha'],
 
 			[['username', 'password', 'repeat_password', 'captcha'], 'required'],
 			[['username', 'password', 'repeat_password'], 'trim'],
 
-			['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp],
-			['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp],
-
-			['!username', 'exist',
+			['username', 'unique',
 				'targetClass'     => 'webvimark\modules\UserManagement\models\User',
 				'targetAttribute' => 'username',
 			],
 
-			['username', 'string', 'max' => 50],
 			['password', 'string', 'max' => 255],
 
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
 		];
+
+		if ( Yii::$app->getModule('user-management')->useEmailAsLogin )
+		{
+			$rules[] = ['username', 'email'];
+		}
+		else
+		{
+			$rules[] = ['username', 'string', 'max' => 50];
+
+			$rules[] = ['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp];
+			$rules[] = ['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp];
+		}
+
+		return $rules;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function attributeLabels()
 	{
 		return [
-			'username'        => UserManagementModule::t('front', 'Login'),
+			'username'        => Yii::$app->getModule('user-management')->useEmailAsLogin ? 'E-mail' : UserManagementModule::t('front', 'Login'),
 			'password'        => UserManagementModule::t('front', 'Password'),
 			'repeat_password' => UserManagementModule::t('front', 'Repeat password'),
 			'captcha'         => UserManagementModule::t('front', 'Captcha'),
@@ -62,8 +75,39 @@ class RegistrationForm extends Model
 		}
 
 		$user = new User();
-		$user->username = $this->username;
 		$user->password = $this->password;
+
+		if ( Yii::$app->getModule('user-management')->useEmailAsLogin )
+		{
+			$user->email = $this->username;
+
+			// If email confirmation required then we save user with "inactive" status
+			// and without username (username will be filled with email value after confirmation)
+			if ( Yii::$app->getModule('user-management')->emailConfirmationRequired )
+			{
+				$user->status = User::STATUS_INACTIVE;
+				$user->generateConfirmationToken();
+				$user->save(false);
+
+				if ( $this->sendConfirmationEmail($user) )
+				{
+					return $user;
+				}
+				else
+				{
+					$this->addError('username', UserManagementModule::t('front', 'Could not send confirmation email'));
+				}
+			}
+			else
+			{
+				$user->username = $this->username;
+			}
+		}
+		else
+		{
+			$user->username = $this->username;
+		}
+
 
 		if ( $user->save() )
 		{
@@ -73,5 +117,54 @@ class RegistrationForm extends Model
 		{
 			$this->addError('username', UserManagementModule::t('front', 'Login has been taken'));
 		}
+	}
+
+
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
+	public function sendConfirmationEmail($user)
+	{
+		return Yii::$app->mailer->compose('/mail/registrationEmailConfirmation', ['user' => $user])
+			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
+			->setTo($user->email)
+			->setSubject(UserManagementModule::t('front', 'E-mail confirmation for') . ' ' . Yii::$app->name)
+			->send();
+	}
+
+	/**
+	 * Check received confirmation token and if user found - activate it, set username, roles and log him in
+	 *
+	 * @param string $token
+	 *
+	 * @return bool|User
+	 */
+	public function checkConfirmationToken($token)
+	{
+		$user = User::findInactiveByConfirmationToken($token);
+
+		if ( $user )
+		{
+			$user->username = $user->email;
+			$user->status = User::STATUS_ACTIVE;
+			$user->email_confirmed = 1;
+			$user->removeConfirmationToken();
+			$user->save(false);
+
+			$roles = (array)Yii::$app->getModule('user-management')->rolesAfterRegistration;
+
+			foreach ($roles as $role)
+			{
+				User::assignRole($user->id, $role);
+			}
+
+			Yii::$app->user->login($user);
+
+			return $user;
+		}
+
+		return false;
 	}
 }
