@@ -230,6 +230,10 @@ List of supported events can be found in *UserAuthEvent* class
 FAQ
 ---
 
+**Question**: I want users to register and login with they e-mails! Mmmmm... And they should confirm it too!
+
+**Answer**: See configuration properties *$useEmailAsLogin* and *$emailConfirmationRequired*
+
 **Question**: I want to have profile for user with avatar, birthday and stuff. What should I do ?
 
 **Answer**: Profiles are to project-specific, so you'll have to implement them yourself. Here is how to do it without modifying this module
