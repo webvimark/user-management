@@ -10,6 +10,24 @@ class UserManagementModule extends \yii\base\Module
 	const SESSION_ATTEMPT_COUNT = '_um_attempt_count';
 
 	/**
+	 * If set true, then on registration username will be validated as email
+	 *
+	 * @var bool
+	 */
+	public $useEmailAsLogin = false;
+
+	/**
+	 * Works only if $useEmailAsLogin = true
+	 *
+	 * If set true, then on after registration message with activation code will be sent
+	 * to user email and after confirmation user status will be "active"
+	 *
+	 * @var bool
+	 * @see $useEmailAsLogin
+	 */
+	public $emailConfirmationRequired = false;
+
+	/**
 	 * Permission that will be assigned automatically for everyone, so you can assign
 	 * routes like "site/index" to this permission and those routes will be available for everyone
 	 *
@@ -47,6 +65,8 @@ class UserManagementModule extends \yii\base\Module
 	 * Pattern that will be applied for names on registration.
 	 * Default pattern allows user enter only numbers and letters.
 	 *
+	 * This will not be used if $useEmailAsLogin set as true !
+	 *
 	 * @var string
 	 */
 	public $registrationRegexp = '/^(\w|\d)+$/';
@@ -54,6 +74,8 @@ class UserManagementModule extends \yii\base\Module
 	/**
 	 * Pattern that will be applied for names on registration. It contain regexp that should NOT be in username
 	 * Default pattern doesn't allow anything having "admin"
+	 *
+	 * This will not be used if $useEmailAsLogin set as true !
 	 *
 	 * @var string
 	 */

@@ -75,6 +75,31 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	}
 
 	/**
+	 * Finds user by confirmation token
+	 *
+	 * @param  string      $token confirmation token
+	 * @return static|null|User
+	 */
+	public static function findInactiveByConfirmationToken($token)
+	{
+		$expire    = Yii::$app->getModule('user-management')->confirmationTokenExpire;
+
+		$parts     = explode('_', $token);
+		$timestamp = (int)end($parts);
+
+		if ( $timestamp + $expire < time() )
+		{
+			// token expired
+			return null;
+		}
+
+		return static::findOne([
+			'confirmation_token' => $token,
+			'status'             => User::STATUS_INACTIVE,
+		]);
+	}
+
+	/**
 	 * @inheritdoc
 	 */
 	public function getId()

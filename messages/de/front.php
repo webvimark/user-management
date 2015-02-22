@@ -17,8 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Authorization' => 'Authorisierung',
     'Captcha' => '',
+    'Check your e-mail {email} for instructions to activate account' => '',
+    'Could not send confirmation email' => '',
+    'Login' => '',
+    'Registration - confirm your e-mail' => '',
+    'Authorization' => 'Authorisierung',
     'Check your E-mail for further instructions' => 'Überprüfen Sie Ihre E-Mail-Adresse für weitere Anweisungen',
     'Confirm' => 'Bestätigen',
     'Confirm E-mail' => 'E-Mail bestätigen',
@@ -27,7 +31,6 @@ return [
     'E-mail is invalid' => 'E-Mail ist ungültig',
     'Forgot password ?' => 'Passwort vergessen?',
     'Incorrect username or password.' => 'Falscher Benutzername oder Passwort.',
-    'Login' => '',
     'Login has been taken' => 'Dieser Login existiert bereits',
     'Password' => 'Passwort',
     'Password recovery' => 'Passwort wiederherstellen',
