@@ -236,7 +236,7 @@ FAQ
 
 **Question**: I want to have profile for user with avatar, birthday and stuff. What should I do ?
 
-**Answer**: Profiles are to project-specific, so you'll have to implement them yourself. Here is how to do it without modifying this module
+**Answer**: Profiles are to project-specific, so you'll have to implement them yourself (but you can find example here - https://github.com/webvimark/user-management/wiki/Profile-and-custom-registration). Here is how to do it without modifying this module
 
 1) Create table and model for profile, that have user_id (connect with "user" table)
 
