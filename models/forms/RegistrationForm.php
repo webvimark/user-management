@@ -5,6 +5,7 @@ use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
 use Yii;
+use yii\helpers\Html;
 
 class RegistrationForm extends Model
 {
@@ -29,6 +30,8 @@ class RegistrationForm extends Model
 				'targetAttribute' => 'username',
 			],
 
+			['username', 'purgeXSS'],
+
 			['password', 'string', 'max' => 255],
 
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
@@ -47,6 +50,16 @@ class RegistrationForm extends Model
 		}
 
 		return $rules;
+	}
+
+	/**
+	 * Remove possible XSS stuff
+	 *
+	 * @param $attribute
+	 */
+	public function purgeXSS($attribute)
+	{
+		$this->$attribute = Html::encode($this->$attribute);
 	}
 
 	/**
@@ -89,6 +102,8 @@ class RegistrationForm extends Model
 				$user->generateConfirmationToken();
 				$user->save(false);
 
+				$this->saveProfile($user);
+
 				if ( $this->sendConfirmationEmail($user) )
 				{
 					return $user;
@@ -111,6 +126,8 @@ class RegistrationForm extends Model
 
 		if ( $user->save() )
 		{
+			$this->saveProfile($user);
+
 			return $user;
 		}
 		else
@@ -119,13 +136,22 @@ class RegistrationForm extends Model
 		}
 	}
 
+	/**
+	 * Implement your own logic if you have user profile and save some there after registration
+	 *
+	 * @param User $user
+	 */
+	protected function saveProfile($user)
+	{
+	}
+
 
 	/**
 	 * @param User $user
 	 *
 	 * @return bool
 	 */
-	public function sendConfirmationEmail($user)
+	protected function sendConfirmationEmail($user)
 	{
 		return Yii::$app->mailer->compose('/mail/registrationEmailConfirmation', ['user' => $user])
 			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
@@ -141,7 +167,7 @@ class RegistrationForm extends Model
 	 *
 	 * @return bool|User
 	 */
-	public function checkConfirmationToken($token)
+	protected function checkConfirmationToken($token)
 	{
 		$user = User::findInactiveByConfirmationToken($token);
 
