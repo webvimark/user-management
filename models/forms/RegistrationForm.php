@@ -167,7 +167,7 @@ class RegistrationForm extends Model
 	 *
 	 * @return bool|User
 	 */
-	protected function checkConfirmationToken($token)
+	public function checkConfirmationToken($token)
 	{
 		$user = User::findInactiveByConfirmationToken($token);
 
