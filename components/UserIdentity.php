@@ -3,6 +3,7 @@ namespace webvimark\modules\UserManagement\components;
 
 use webvimark\modules\UserManagement\models\User;
 use yii\base\NotSupportedException;
+use yii\base\Security;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use Yii;
@@ -141,7 +142,15 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	 */
 	public function setPassword($password)
 	{
-		$this->password_hash = Yii::$app->security->generatePasswordHash($password);
+		if ( php_sapi_name() == 'cli' )
+		{
+			$security = new Security();
+			$this->password_hash = $security->generatePasswordHash($password);
+		}
+		else
+		{
+			$this->password_hash = Yii::$app->security->generatePasswordHash($password);
+		}
 	}
 
 	/**
@@ -149,7 +158,15 @@ abstract class UserIdentity extends ActiveRecord implements IdentityInterface
 	 */
 	public function generateAuthKey()
 	{
-		$this->auth_key = Yii::$app->security->generateRandomString();
+		if ( php_sapi_name() == 'cli' )
+		{
+			$security = new Security();
+			$this->auth_key = $security->generateRandomString();
+		}
+		else
+		{
+			$this->auth_key = Yii::$app->security->generateRandomString();
+		}
 	}
 
 	/**

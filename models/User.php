@@ -351,12 +351,8 @@ class User extends UserIdentity
 	{
 		if ( $insert )
 		{
-			if ( php_sapi_name() != 'cli' )
-			{
-				$this->registration_ip = LittleBigHelper::getRealIp();
-				$this->generateAuthKey();
-			}
-
+			$this->registration_ip = LittleBigHelper::getRealIp();
+			$this->generateAuthKey();
 		}
 		else
 		{
