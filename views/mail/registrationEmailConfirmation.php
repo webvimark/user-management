@@ -12,6 +12,7 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/user-management/auth/
 
 Hello, you have been registered on <?= Yii::$app->urlManager->hostInfo ?>
 
-Follow this link To confirm your E-mail and  activate account:
+<br/><br/>
+Follow this link to confirm your E-mail and activate account:
 
-<?= Html::a('Confirm E-mail', $confirmLink) ?>
+<?= Html::a('confirm E-mail', $confirmLink) ?>
