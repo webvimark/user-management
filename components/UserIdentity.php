@@ -2,7 +2,6 @@
 namespace webvimark\modules\UserManagement\components;
 
 use webvimark\modules\UserManagement\models\User;
-use yii\base\NotSupportedException;
 use yii\base\Security;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;

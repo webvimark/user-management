@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					[
 						'attribute'=>'user_id',
 						'value'=>function($model){
-								return Html::a($model->user->username, ['view', 'id'=>$model->id], ['data-pjax'=>0]);
+								return Html::a(@$model->user->username, ['view', 'id'=>$model->id], ['data-pjax'=>0]);
 							},
 						'format'=>'raw',
 					],
