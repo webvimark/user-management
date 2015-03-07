@@ -32,7 +32,7 @@ class GhostNav extends Nav
 
 		foreach ($items as &$item)
 		{
-			if ( isset( $item['url'] ) AND !isset( $item['visible'] ) )
+			if ( isset( $item['url'] ) AND !isset( $item['visible'] ) AND !in_array($item['url'], ['', '#']))
 			{
 				$item['visible'] = User::canRoute($item['url']);
 			}
