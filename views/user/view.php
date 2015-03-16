@@ -4,6 +4,7 @@ use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					[
 						'label'=>UserManagementModule::t('back', 'Roles'),
-						'value'=>implode('<br>', Role::getAvailableRoles(Yii::$app->user->isSuperAdmin, true)),
+						'value'=>implode('<br>', ArrayHelper::map(Role::getUserRoles($model->id), 'name', 'description')),
 						'visible'=>User::hasPermission('viewUserRoles'),
 						'format'=>'raw',
 					],
