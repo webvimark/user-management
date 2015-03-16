@@ -34,7 +34,7 @@ use yii\helpers\Html;
 					<?= $form->field($model, 'password')
 						->passwordInput(['placeholder'=>$model->getAttributeLabel('password'), 'autocomplete'=>'off']) ?>
 
-					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>false]) ?>
+					<?= $form->field($model, 'rememberMe')->checkbox(['value'=>true]) ?>
 
 					<?= Html::submitButton(
 						UserManagementModule::t('front', 'Login'),
