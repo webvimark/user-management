@@ -3,6 +3,7 @@
 namespace webvimark\modules\UserManagement;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class UserManagementModule extends \yii\base\Module
 {
@@ -26,6 +27,28 @@ class UserManagementModule extends \yii\base\Module
 	 * @see $useEmailAsLogin
 	 */
 	public $emailConfirmationRequired = false;
+
+	/**
+	 * Params for mailer
+	 * They will be merged with $_defaultMailerOptions
+	 *
+	 * @var array
+	 * @see $_defaultMailerOptions
+	 */
+	public $mailerOptions = [];
+
+	/**
+	 * Default options for mailer
+	 *
+	 * @var array
+	 */
+	protected $_defaultMailerOptions = [
+		'from'=>'', // If empty it will be - [Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot']
+
+		'registrationFormViewFile'     => '/mail/registrationEmailConfirmation',
+		'passwordRecoveryFormViewFile' => '/mail/passwordRecoveryMail',
+		'confirmEmailFormViewFile'     => '/mail/emailConfirmationMail',
+	];
 
 	/**
 	 * Permission that will be assigned automatically for everyone, so you can assign
@@ -123,6 +146,16 @@ class UserManagementModule extends \yii\base\Module
 	public $controllerNamespace = 'webvimark\modules\UserManagement\controllers';
 
 	/**
+	 * @p
+	 */
+	public function init()
+	{
+		parent::init();
+
+		$this->prepareMailerOptions();
+	}
+
+	/**
 	 * For Menu
 	 *
 	 * @return array
@@ -201,5 +234,18 @@ class UserManagementModule extends \yii\base\Module
 		Yii::$app->session->set(static::SESSION_ATTEMPT_COUNT, 1);
 
 		return true;
+	}
+
+	/**
+	 * Merge given mailer options with default
+	 */
+	protected function prepareMailerOptions()
+	{
+		if ( !isset($this->mailerOptions['from']) )
+		{
+			$this->mailerOptions['from'] = [Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'];
+		}
+
+		$this->mailerOptions = ArrayHelper::merge($this->_defaultMailerOptions, $this->mailerOptions);
 	}
 }

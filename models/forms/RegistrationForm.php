@@ -153,8 +153,8 @@ class RegistrationForm extends Model
 	 */
 	protected function sendConfirmationEmail($user)
 	{
-		return Yii::$app->mailer->compose('/mail/registrationEmailConfirmation', ['user' => $user])
-			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
+		return Yii::$app->mailer->compose(Yii::$app->getModule('user-management')->mailerOptions['registrationFormViewFile'], ['user' => $user])
+			->setFrom(Yii::$app->getModule('user-management')->mailerOptions['from'])
 			->setTo($user->email)
 			->setSubject(UserManagementModule::t('front', 'E-mail confirmation for') . ' ' . Yii::$app->name)
 			->send();

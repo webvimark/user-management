@@ -118,8 +118,8 @@ class ConfirmEmailForm extends Model
 		$this->user->generateConfirmationToken();
 		$this->user->save(false);
 
-		return Yii::$app->mailer->compose('/mail/emailConfirmationMail', ['user' => $this->user])
-			->setFrom([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'])
+		return Yii::$app->mailer->compose(Yii::$app->getModule('user-management')->mailerOptions['confirmEmailFormViewFile'], ['user' => $this->user])
+			->setFrom(Yii::$app->getModule('user-management')->mailerOptions['from'])
 			->setTo($this->email)
 			->setSubject(UserManagementModule::t('front', 'E-mail confirmation for') . ' ' . Yii::$app->name)
 			->send();
