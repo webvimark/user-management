@@ -168,7 +168,7 @@ abstract class AbstractItem extends ActiveRecord
 			['description', 'string', 'max' => 255],
 
 			['name', 'required'],
-			['name', 'unique'],
+			['name', 'validateUniqueName'],
 			[['name', 'rule_name', 'group_code'], 'string', 'max' => 64],
 
 			[['rule_name', 'description', 'group_code', 'data'], 'default', 'value'=>null],
@@ -176,6 +176,20 @@ abstract class AbstractItem extends ActiveRecord
 			['type', 'integer'],
 			['type', 'in', 'range'=>[static::TYPE_ROLE, static::TYPE_PERMISSION, static::TYPE_ROUTE]],
 		];
+	}
+
+	/**
+	 * Default unique validator search only within specific class (Role, Route or Permission) because of the overwritten find() method
+	 */
+	public function validateUniqueName($attribute)
+	{
+		if ( Role::find()->where(['name'=>$this->name])->exists() )
+		{
+			$this->addError('name', Yii::t('yii', '{attribute} "{value}" has already been taken.', [
+				'attribute' => $this->getAttributeLabel($attribute),
+				'value'     => $this->$attribute,
+			]));
+		}
 	}
 
 	/**
