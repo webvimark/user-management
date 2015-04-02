@@ -35,7 +35,7 @@ class UserVisitLogSearch extends UserVisitLog
 		// Don't let non-superadmin view superadmin activity
 		if ( !Yii::$app->user->isSuperadmin )
 		{
-			$query->andWhere(['user.superadmin'=>0]);
+			$query->andWhere([Yii::$app->getModule('user-management')->user_table . '.superadmin'=>0]);
 		}
 
 		$dataProvider = new ActiveDataProvider([
@@ -57,19 +57,19 @@ class UserVisitLogSearch extends UserVisitLog
 			$tmp = explode(' - ', $this->visit_time);
 			if ( isset($tmp[0], $tmp[1]) )
 			{
-				$query->andFilterWhere(['between','user_visit_log.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
+				$query->andFilterWhere(['between', $this->tableName() . '.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
 			}
 		}
 
 		$query->andFilterWhere([
-			'user_visit_log.id' => $this->id,
+			$this->tableName() . '.id' => $this->id,
 		]);
 
-        	$query->andFilterWhere(['like', 'user.username', $this->user_id])
-			->andFilterWhere(['like', 'user_visit_log.ip', $this->ip])
-			->andFilterWhere(['like', 'user_visit_log.os', $this->os])
-			->andFilterWhere(['like', 'user_visit_log.browser', $this->browser])
-			->andFilterWhere(['like', 'user_visit_log.language', $this->language]);
+        	$query->andFilterWhere(['like', Yii::$app->getModule('user-management')->user_table . '.username', $this->user_id])
+			->andFilterWhere(['like', $this->tableName() . '.ip', $this->ip])
+			->andFilterWhere(['like', $this->tableName() . '.os', $this->os])
+			->andFilterWhere(['like', $this->tableName() . '.browser', $this->browser])
+			->andFilterWhere(['like', $this->tableName() . '.language', $this->language]);
 
 		return $dataProvider;
 	}
