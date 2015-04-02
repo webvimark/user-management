@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\models\search;
 
+use webvimark\modules\UserManagement\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -35,7 +36,7 @@ class UserVisitLogSearch extends UserVisitLog
 		// Don't let non-superadmin view superadmin activity
 		if ( !Yii::$app->user->isSuperadmin )
 		{
-			$query->andWhere([Yii::$app->getModule('user-management')->user_table . '.superadmin'=>0]);
+			$query->andWhere([User::tableName() . '.superadmin'=>0]);
 		}
 
 		$dataProvider = new ActiveDataProvider([
@@ -57,7 +58,7 @@ class UserVisitLogSearch extends UserVisitLog
 			$tmp = explode(' - ', $this->visit_time);
 			if ( isset($tmp[0], $tmp[1]) )
 			{
-				$query->andFilterWhere(['between', $this->tableName() . '.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
+				$query->andFilterWhere(['between', static::tableName() . '.visit_time', strtotime($tmp[0]), strtotime($tmp[1])]);
 			}
 		}
 
@@ -65,11 +66,11 @@ class UserVisitLogSearch extends UserVisitLog
 			$this->tableName() . '.id' => $this->id,
 		]);
 
-        	$query->andFilterWhere(['like', Yii::$app->getModule('user-management')->user_table . '.username', $this->user_id])
-			->andFilterWhere(['like', $this->tableName() . '.ip', $this->ip])
-			->andFilterWhere(['like', $this->tableName() . '.os', $this->os])
-			->andFilterWhere(['like', $this->tableName() . '.browser', $this->browser])
-			->andFilterWhere(['like', $this->tableName() . '.language', $this->language]);
+        	$query->andFilterWhere(['like', User::tableName() . '.username', $this->user_id])
+			->andFilterWhere(['like', static::tableName() . '.ip', $this->ip])
+			->andFilterWhere(['like', static::tableName() . '.os', $this->os])
+			->andFilterWhere(['like', static::tableName() . '.browser', $this->browser])
+			->andFilterWhere(['like', static::tableName() . '.language', $this->language]);
 
 		return $dataProvider;
 	}
