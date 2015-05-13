@@ -18,10 +18,10 @@
  */
 return [
     'Captcha' => '',
-    'Check your e-mail {email} for instructions to activate account' => '',
-    'Could not send confirmation email' => '',
-    'Login' => '',
-    'Registration - confirm your e-mail' => '',
+    'Check your e-mail {email} for instructions to activate account' => 'Verifique seu e-mail {mail} para obter instruções para ativar a conta',
+    'Could not send confirmation email' => 'Não foi possível enviar email de confirmação',
+    'Login' => 'Usuário',
+    'Registration - confirm your e-mail' => 'Registro - Confirmar seu e-mail',
     'Authorization' => 'Autorização',
     'Check your E-mail for further instructions' => 'Verifique seu e-mail para maiores instruções',
     'Confirm' => 'Confirmar',
