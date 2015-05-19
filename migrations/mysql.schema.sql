@@ -275,13 +275,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password_hash` varchar(255) NOT NULL,
   `confirmation_token` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
-  `superadmin` tinyint(1) DEFAULT '0',
+  `superadmin` smallint(1) DEFAULT '0',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `registration_ip` varchar(15) DEFAULT NULL,
   `bind_to_ip` varchar(255) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
-  `email_confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `email_confirmed` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 

@@ -20,7 +20,7 @@ class m140608_173539_create_user_table extends Migration
 			'password_hash'      => 'string not null',
 			'confirmation_token' => 'string',
 			'status'             => 'int not null default 1',
-			'superadmin'         => 'tinyint(1) default 0',
+			'superadmin'         => 'smallint default 0',
 			'created_at'         => 'int not null',
 			'updated_at'         => 'int not null',
 		), $tableOptions);
