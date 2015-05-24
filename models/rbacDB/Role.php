@@ -107,6 +107,8 @@ class Role extends AbstractItem
 
 		foreach ($routes as $route)
 		{
+			$route = '/'. ltrim($route, '/');
+
 			Route::create($route);
 
 			try
