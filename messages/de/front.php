@@ -18,11 +18,11 @@
  */
 return [
     'Captcha' => '',
-    'Check your e-mail {email} for instructions to activate account' => '',
-    'Could not send confirmation email' => '',
+    'Check your e-mail {email} for instructions to activate account' => 'Überprüfen Sie Ihre E-Mail-Adresse {email} für weitere Anweisungen zur Kontoaktivierung',
+    'Could not send confirmation email' => 'E-Mail zur Kontoaktivierung konnte nicht versandt werden',
     'Login' => '',
-    'Registration - confirm your e-mail' => '',
-    'Authorization' => 'Authorisierung',
+    'Registration - confirm your e-mail' => 'Registrierung - bestätigen Sie Ihre E-Mail-Adresse',
+    'Authorization' => 'Autorisierung',
     'Check your E-mail for further instructions' => 'Überprüfen Sie Ihre E-Mail-Adresse für weitere Anweisungen',
     'Confirm' => 'Bestätigen',
     'Confirm E-mail' => 'E-Mail bestätigen',
