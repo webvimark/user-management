@@ -12,7 +12,6 @@ class m140611_133903_init_rbac extends \yii\db\Migration
 			$tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 		}
 		
-		
 	        // Check if auth_rule_table Table exist
 	        $auth_rule_table_name = \Yii::$app->getModule('user-management')->auth_rule_table;
 	        if (\Yii::$app->db->schema->getTableSchema($auth_rule_table_name) === null)
