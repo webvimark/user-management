@@ -23,6 +23,7 @@ return [
     'Check your e-mail {email} for instructions to activate account' => '',
     'Confirm' => '',
     'Confirm E-mail' => '',
+    'Continue' => '',
     'Could not send confirmation email' => '',
     'E-mail confirmation for' => '',
     'E-mail confirmed' => '',

@@ -19,6 +19,7 @@
 return [
     'Active' => '',
     'Are you sure you want to delete this user?' => '',
+    'Banned' => '',
     'Bind to IP' => '',
     'Browser' => '',
     'Change own password' => '',

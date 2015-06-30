@@ -17,6 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Banned' => '',
+    'Superadmin' => '',
     'Active' => 'Ativo',
     'Are you sure you want to delete this user?' => 'Você tem certeza de que deseja excluir este usuário?',
     'Bind to IP' => 'Vincular a IP',
@@ -36,7 +38,7 @@ return [
     'Delete' => 'Excluir',
     'Description' => 'Descrição',
     'E-mail confirmed' => 'E-mail confirmado',
-    'E-mail with activation link has been sent to <b>{email}</b>. This link will expire in {minutes} min.' =>'Um e-mail com o link de ativação foi enviado para <b>{email}</b>. Este link irá expirar em {minutes} minutos.',
+    'E-mail with activation link has been sent to <b>{email}</b>. This link will expire in {minutes} min.' => 'Um e-mail com o link de ativação foi enviado para <b>{email}</b>. Este link irá expirar em {minutes} minutos.',
     'Edit' => 'Editar',
     'Editing' => 'Editando',
     'Editing permission group' => 'Editando grupo de permissões',
@@ -70,7 +72,6 @@ return [
     'Search' => 'Buscar',
     'Settings for permission' => 'Configurações de permissões',
     'Status' => 'Status',
-    'Superadmin' => '',
     'Too many attempts' => 'Muitas tentativas',
     'Type' => 'Tipo',
     'Updated' => 'Atualizado',

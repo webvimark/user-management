@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Saved' => 'Сохранено',
+    'Banned' => '',
     'Active' => 'Активен',
     'Are you sure you want to delete this user?' => 'Вы уверены, что хотите удалить этого пользователя ?',
     'Bind to IP' => 'Привязать к IP',
@@ -67,6 +67,7 @@ return [
     'Roles and permissions for user:' => 'Роли и права для пользователя',
     'Rule' => 'Правило',
     'Save' => 'Сохранить',
+    'Saved' => 'Сохранено',
     'Search' => 'Поиск',
     'Settings for permission' => 'Настройки для права',
     'Status' => 'Статус',
