@@ -17,12 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Captcha' => '',
-    'Check your e-mail {email} for instructions to activate account' => '',
-    'Could not send confirmation email' => '',
-    'Login' => '',
-    'Registration - confirm your e-mail' => '',
-    'Authorization' => 'Authorisierung',
+    'Captcha' => '보안 문자',
+    'Check your e-mail {email} for instructions to activate account' => '계정을 활성화 하기위한 지침은 전자 메일 { 이메일을 확인 }',
+    'Continue' => '계속',
+    'Could not send confirmation email' => '확인 이메일을 보낼 수 없습니다',
+    'Login' => '로그인',
+    'Registration - confirm your e-mail' => '등록 - 귀하의 E-mail 확인',
+    'Authorization' => '권한 부여',
     'Check your E-mail for further instructions' => '다음에 따라 이메일을 체크해주세요',
     'Confirm' => '확인',
     'Confirm E-mail' => 'E-Mail 확인',

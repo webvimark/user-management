@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Check your e-mail {email} for instructions to activate account' => 'Проверьте Ваш e-mail {email} для активации аккаунта',
-    'Could not send confirmation email' => 'Не удалось отправить e-mail для активации аккаунта',
-    'Registration - confirm your e-mail' => 'Регистрация - подтверждение аккаунта',
+    'Continue' => 'Продолжить',
     'Authorization' => 'Авторизация',
     'Captcha' => 'Каптча',
     'Check your E-mail for further instructions' => 'Проверьте Ваш E-mail для дальнейших инструкций',
+    'Check your e-mail {email} for instructions to activate account' => 'Проверьте Ваш e-mail {email} для активации аккаунта',
     'Confirm' => 'Подтвердить',
     'Confirm E-mail' => 'Подтвердить E-mail',
+    'Could not send confirmation email' => 'Не удалось отправить e-mail для активации аккаунта',
     'E-mail confirmation for' => 'Подтверждение E-mail для',
     'E-mail confirmed' => 'E-mail подтверждён',
     'E-mail is invalid' => 'Неверный E-mail',
@@ -38,6 +38,7 @@ return [
     'Recover' => 'Восстановить',
     'Register' => 'Регистрация',
     'Registration' => 'Регистрация',
+    'Registration - confirm your e-mail' => 'Регистрация - подтверждение аккаунта',
     'Remember me' => 'Запомнить меня',
     'Repeat password' => 'Повторите пароль',
     'This E-mail already exists' => 'Такой E-mail уже существыет',
