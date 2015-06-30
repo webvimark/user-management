@@ -30,7 +30,7 @@ class m140611_133903_init_rbac extends \yii\db\Migration
 	        $auth_item_table_name = \Yii::$app->getModule('user-management')->auth_item_table;
 	        if (\Yii::$app->db->schema->getTableSchema($auth_item_table_name) === null)
 	        {
-			// Create auth_rule_table table
+			// Create auth_item_table table
 			$this->createTable($auth_item_table_name, [
 				'name' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'type' => Schema::TYPE_INTEGER . ' NOT NULL',
