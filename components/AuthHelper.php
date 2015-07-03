@@ -342,7 +342,7 @@ class AuthHelper
 			}
 			elseif ( strcmp(substr($file, -14), 'Controller.php') === 0 )
 			{
-				$id = Inflector::camel2id(substr(basename($file), 0, -14));
+				$id = Inflector::camel2id(substr(basename($file), 0, -14), '-', true);
 				$className = $namespace . Inflector::id2camel($id) . 'Controller';
 				if ( strpos($className, '-') === false && class_exists($className) && is_subclass_of($className, 'yii\base\Controller') )
 				{
