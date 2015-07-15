@@ -256,13 +256,13 @@ abstract class AbstractItem extends ActiveRecord
 		AuthHelper::invalidatePermissions();
 	}
 
-	public function beforeAddChildren($parentName, $childrenNames, $throwException = false)
+	public static function beforeAddChildren($parentName, $childrenNames, $throwException = false)
 	{
 		$event = new AbstractItemEvent(compact('parentName', 'childrenNames', 'throwException'));
 		$event->trigger(get_called_class(), self::EVENT_BEFORE_ADD_CHILDREN, $event);
 	}
 
-	public function beforeRemoveChildren($parentName, $childrenNames)
+	public static function beforeRemoveChildren($parentName, $childrenNames)
 	{
 		$event = new AbstractItemEvent(compact('parentName', 'childrenNames', 'throwException'));
 		$event->trigger(get_called_class(), self::EVENT_BEFORE_REMOVE_CHILDREN, $event);
