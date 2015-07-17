@@ -39,7 +39,7 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 		$model->user_id    = $userId;
 		$model->token      = uniqid();
 		$model->ip         = LittleBigHelper::getRealIp();
-		$model->language   = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : null;
+		$model->language   = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : '';
 		$model->browser    = $browser->getBrowser();
 		$model->os         = $browser->getPlatform();
 		$model->user_agent = $browser->getUserAgent();
