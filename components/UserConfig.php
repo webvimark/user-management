@@ -20,7 +20,12 @@ class UserConfig extends User
 	 * @inheritdoc
 	 */
 	public $enableAutoLogin = true;
-
+	
+	/**
+ 	 * @inheritdoc
+	 */
+	public $cookieLifetime = 2592000;
+  
 	/**
 	 * @inheritdoc
 	 */
