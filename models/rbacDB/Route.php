@@ -205,6 +205,12 @@ class Route extends AbstractItem
 			return true;
 		}
 
+		// Registration can be enabled either by this option or by adding '/user-management/auth/registration' route to guest permissions
+		if ( $route == '/user-management/auth/registration' && Yii::$app->getModule('user-management')->enableRegistration === true )
+		{
+			return true;
+		}
+
 		if ( static::isInCommonPermission($route) )
 		{
 			return true;

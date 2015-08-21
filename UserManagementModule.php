@@ -78,6 +78,14 @@ class UserManagementModule extends \yii\base\Module
 	public $confirmationTokenExpire = 3600; // 1 hour
 
 	/**
+	 * Registration can be enabled either by this option or by adding '/user-management/auth/registration' route
+	 * to guest permissions
+
+	 * @var bool
+	 */
+	public $enableRegistration = false;
+
+	/**
 	 * Roles that will be assigned to user registered via user-management/auth/registration
 	 *
 	 * @var array
