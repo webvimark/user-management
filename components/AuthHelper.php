@@ -123,7 +123,7 @@ class AuthHelper
 	public static function unifyRoute($route)
 	{
 		// If its like Html::a('Create', ['create']) or Html::a('Create', ['controller/create']) for modules
-		if ( is_array($route) AND strpos($route[0], '/') != 0 )
+		if ( is_array($route) )
 		{
 			$route = Url::toRoute($route);
 		}
