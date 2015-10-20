@@ -228,7 +228,7 @@ class Route extends AbstractItem
 	 */
 	protected static function isInCommonPermission($currentFullRoute)
 	{
-		$commonRoutes = Yii::$app->cache->get('__commonRoutes');
+		$commonRoutes = Yii::$app->cache ? Yii::$app->cache->get('__commonRoutes') : false;
 
 		if ( $commonRoutes === false )
 		{
@@ -240,7 +240,8 @@ class Route extends AbstractItem
 
 			$commonRoutes = Route::withSubRoutes($commonRoutesDB, ArrayHelper::map(Route::find()->asArray()->all(), 'name', 'name'));
 
-			Yii::$app->cache->set('__commonRoutes', $commonRoutes, 3600);
+			if ( Yii::$app->cache )
+				Yii::$app->cache->set('__commonRoutes', $commonRoutes, 3600);
 		}
 
 		return in_array($currentFullRoute, $commonRoutes);
