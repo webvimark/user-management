@@ -232,6 +232,10 @@ List of supported events can be found in *UserAuthEvent* class
 FAQ
 ---
 
+**Question**: Do you have API docs?
+
+**Answer**: Check this one http://opensource.id5.com.br/webvimark/doc/index.html (Credits to [lukBarros](https://github.com/lukBarros))
+
 **Question**: I want users to register and login with they e-mails! Mmmmm... And they should confirm it too!
 
 **Answer**: See configuration properties *$useEmailAsLogin* and *$emailConfirmationRequired*
