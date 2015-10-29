@@ -84,13 +84,24 @@ $this->params['breadcrumbs'][] = $this->title;
 					<span class="glyphicon glyphicon-th"></span> Routes
 
 					<?= Html::a(
+						'Refresh routes (and delete unused)',
+						['refresh-routes', 'id'=>$item->name, 'deleteUnused'=>1],
+						[
+							'class' => 'btn btn-default btn-sm pull-right',
+							'style'=>'margin-top:-5px; text-transform:none;',
+							'data-confirm'=>UserManagementModule::t('back', 'Routes that are not exists in this application will be deleted. Do not recommended for application with "advanced" structure, because frontend and backend have they own set of routes.'),
+						]
+					) ?>
+
+					<?= Html::a(
 						'Refresh routes',
 						['refresh-routes', 'id'=>$item->name],
 						[
 							'class' => 'btn btn-default btn-sm pull-right',
-							'style'=>'margin-top:-5px',
+							'style'=>'margin-top:-5px; text-transform:none;',
 						]
 					) ?>
+
 
 				</strong>
 			</div>

@@ -117,12 +117,13 @@ class PermissionController extends AdminDefaultController
 	 * Add new routes and remove unused (for example if module or controller was deleted)
 	 *
 	 * @param string $id
+	 * @param null   $deleteUnused
 	 *
 	 * @return \yii\web\Response
 	 */
-	public function actionRefreshRoutes($id)
+	public function actionRefreshRoutes($id, $deleteUnused = null)
 	{
-		Route::refreshRoutes();
+		Route::refreshRoutes($deleteUnused !== null);
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}

@@ -105,29 +105,42 @@ class Route extends AbstractItem
 	}
 
 	/**
-	 * Refresh list of all routes from controllers, modules, etc
+	 * Refresh list of all routes from controllers, modules, etc.
+	 *
+	 * If $deleteUnusedRoutes is true, than all routes that are not longer exists in this application
+	 * (for example if you delete some controller or module) will be deleted.
+	 *
+	 * $deleteUnusedRoutes = false is recommended for application with "advanced" structure, because frontend
+	 * and backend have they own set of routes.
+	 *
+	 * @param bool $deleteUnusedRoutes
 	 */
-	public static function refreshRoutes()
+	public static function refreshRoutes($deleteUnusedRoutes = true)
 	{
 		$allRoutes = AuthHelper::getRoutes();
 
 		$currentRoutes = ArrayHelper::map(Route::find()->asArray()->all(), 'name', 'name');
 
 		$toAdd = array_diff(array_keys($allRoutes), array_keys($currentRoutes));
-		$toRemove = array_diff(array_keys($currentRoutes), array_keys($allRoutes));
-
 
 		foreach ($toAdd as $addItem)
 		{
 			Route::create($addItem);
 		}
 
-		if ( $toRemove )
+		$toRemove = false;
+		if ( $deleteUnusedRoutes )
 		{
-			Route::deleteAll(['in', 'name', $toRemove]);
+			$toRemove = array_diff(array_keys($currentRoutes), array_keys($allRoutes));
+
+			if ( $toRemove )
+			{
+				Route::deleteAll(['in', 'name', $toRemove]);
+			}
 		}
 
-		if ( $toAdd OR $toRemove )
+
+		if ( $toAdd || $toRemove )
 		{
 			Yii::$app->cache->delete('__commonRoutes');
 		}
