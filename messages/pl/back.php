@@ -62,7 +62,7 @@ return [
     'Repeat password' => 'Powtórz hasło',
     'Reset' => 'Resetuj',
     'Role creation' => 'Tworzenie roli',
-    'Roles' => 'Rola',
+    'Roles' => 'Role',
     'Roles and permissions' => 'Role i uprawnienia',
     'Roles and permissions for user:' => 'Role i uprawnienia użytkownika: ',
     'Rule' => 'Reguła',
