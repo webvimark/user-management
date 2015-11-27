@@ -10,9 +10,7 @@ use webvimark\modules\UserManagement\models\rbacDB\Route;
 use webvimark\modules\UserManagement\models\rbacDB\search\PermissionSearch;
 use webvimark\components\AdminDefaultController;
 use webvimark\modules\UserManagement\UserManagementModule;
-use yii\db\Query;
 use Yii;
-use yii\rbac\DbManager;
 
 class PermissionController extends AdminDefaultController
 {

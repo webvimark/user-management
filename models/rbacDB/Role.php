@@ -18,7 +18,9 @@ class Role extends AbstractItem
 	 */
 	public static function getUserRoles($userId)
 	{
-		return (new DbManager())->getRolesByUser($userId);
+		$dbManager = Yii::$app->authManager instanceof DbManager ? : new DbManager();
+
+		return $dbManager->getRolesByUser($userId);
 	}
 
 	/**
@@ -31,7 +33,9 @@ class Role extends AbstractItem
 	 */
 	public static function getPermissionsByRole($roleName, $asArray = true)
 	{
-		$rbacPermissions = (new DbManager())->getPermissionsByRole($roleName);
+		$dbManager = Yii::$app->authManager instanceof DbManager ? : new DbManager();
+
+		$rbacPermissions = $dbManager->getPermissionsByRole($roleName);
 
 		$permissionNames = ArrayHelper::map($rbacPermissions, 'name', 'description');
 
