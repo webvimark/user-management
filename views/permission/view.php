@@ -51,12 +51,21 @@ $this->params['breadcrumbs'][] = $this->title;
 							<fieldset>
 								<legend><?= $groupName ?></legend>
 
-								<?= Html::checkboxList(
-									'child_permissions',
-									ArrayHelper::map($childPermissions, 'name', 'name'),
-									ArrayHelper::map($permissions, 'name', 'description'),
-									['separator'=>'<br>']
-								) ?>
+								<?php foreach ($permissions as $permission): ?>
+									<label>
+										<?php $isChecked = in_array($permission->name, ArrayHelper::map($childPermissions, 'name', 'name')) ? 'checked' : '' ?>
+										<input type="checkbox" <?= $isChecked ?> name="child_permissions[]" value="<?= $permission->name ?>">
+										<?= $permission->description ?>
+									</label>
+
+									<?= GhostHtml::a(
+										'<span class="glyphicon glyphicon-edit"></span>',
+										['view', 'id'=>$permission->name],
+										['target'=>'_blank']
+									) ?>
+									<br/>
+								<?php endforeach ?>
+
 							</fieldset>
 							<br/>
 						</div>

@@ -5,11 +5,11 @@
  * @var webvimark\modules\UserManagement\models\User $user
  */
 
+use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\BootstrapPluginAsset;
 use yii\helpers\ArrayHelper;
-use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use yii\helpers\Html;
 
 BootstrapPluginAsset::register($this);
@@ -39,40 +39,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<?= Html::beginForm(['set-roles', 'id'=>$user->id]) ?>
 
-				<?= Html::checkboxList(
-					'roles',
-					ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name'),
-					ArrayHelper::map(Role::getAvailableRoles(), 'name', 'description'),
-					[
-						'item'=>function ($index, $label, $name, $checked, $value) {
-								$list = '<ul style="padding-left: 10px">';
-								foreach (Role::getPermissionsByRole($value) as $permissionName => $permissionDescription)
-								{
-									$list .= $permissionDescription ? "<li>{$permissionDescription}</li>" : "<li>{$permissionName}</li>";
-								}
-								$list .= '</ul>';
+				<?php foreach (Role::getAvailableRoles() as $aRole): ?>
+					<label>
+						<?php $isChecked = in_array($aRole['name'], ArrayHelper::map(Role::getUserRoles($user->id), 'name', 'name')) ? 'checked' : '' ?>
 
-								$helpIcon = Html::beginTag('span', [
-									'title'        => UserManagementModule::t('back', 'Permissions for role - "{role}"',[
-											'role'=>$label,
-										]),
-									'data-content' => $list,
-									'data-html'    => 'true',
-									'role'         => 'button',
-									'style'        => 'margin-bottom: 5px; padding: 0 5px',
-									'class'        => 'btn btn-sm btn-default role-help-btn',
-								]);
-								$helpIcon .= '?';
-								$helpIcon .= Html::endTag('span');
+						<?php if ( Yii::$app->getModule('user-management')->userCanHaveMultipleRoles ): ?>
+							<input type="checkbox" <?= $isChecked ?> name="roles[]" value="<?= $aRole['name'] ?>">
 
-								$isChecked = $checked ? 'checked' : '';
-								$checkbox = "<label><input type='checkbox' name='{$name}' value='{$value}' {$isChecked}> {$label}</label>";
+						<?php else: ?>
+							<input type="radio" <?= $isChecked ?> name="roles" value="<?= $aRole['name'] ?>">
 
-								return $helpIcon . ' ' . $checkbox;
-							},
-						'separator'=>'<br>',
-					]
-				) ?>
+						<?php endif; ?>
+
+						<?= $aRole['description'] ?>
+					</label>
+
+					<?= GhostHtml::a(
+						'<span class="glyphicon glyphicon-edit"></span>',
+						['/user-management/role/view', 'id'=>$aRole['name']],
+						['target'=>'_blank']
+					) ?>
+					<br/>
+				<?php endforeach ?>
+
 				<br/>
 
 				<?php if ( Yii::$app->user->isSuperadmin OR Yii::$app->user->id != $user->id ): ?>
@@ -111,7 +100,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 								<ul>
 									<?php foreach ($permissions as $permission): ?>
-										<li><?= $permission->description ?></li>
+										<li>
+											<?= $permission->description ?>
+
+											<?= GhostHtml::a(
+												'<span class="glyphicon glyphicon-edit"></span>',
+												['/user-management/permission/view', 'id'=>$permission->name],
+												['target'=>'_blank']
+											) ?>
+										</li>
 									<?php endforeach ?>
 								</ul>
 							</fieldset>

@@ -45,40 +45,21 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="panel-body">
 				<?= Html::beginForm(['set-child-roles', 'id'=>$role->name]) ?>
 
-				<?= Html::checkboxList(
-					'child_roles',
-					ArrayHelper::map($childRoles, 'name', 'name'),
-					ArrayHelper::map($allRoles, 'name', 'description'),
-					[
-						'item'=>function ($index, $label, $name, $checked, $value) {
-								$list = '<ul style="padding-left: 10px">';
-								foreach (Role::getPermissionsByRole($value) as $permissionName => $permissionDescription)
-								{
-									$list .= $permissionDescription ? "<li>{$permissionDescription}</li>" : "<li>{$permissionName}</li>";
-								}
-								$list .= '</ul>';
+				<?php foreach ($allRoles as $aRole): ?>
+					<label>
+						<?php $isChecked = in_array($aRole['name'], ArrayHelper::map($childRoles, 'name', 'name')) ? 'checked' : '' ?>
+						<input type="checkbox" <?= $isChecked ?> name="child_roles[]" value="<?= $aRole['name'] ?>">
+						<?= $aRole['description'] ?>
+					</label>
 
-								$helpIcon = Html::beginTag('span', [
-									'title'        => UserManagementModule::t('back', 'Permissions for role - "{role}"',[
-											'role'=>$label,
-										]),
-									'data-content' => $list,
-									'data-html'    => 'true',
-									'role'         => 'button',
-									'style'        => 'margin-bottom: 5px; padding: 0 5px',
-									'class'        => 'btn btn-sm btn-default role-help-btn',
-								]);
-								$helpIcon .= '?';
-								$helpIcon .= Html::endTag('span');
+					<?= GhostHtml::a(
+						'<span class="glyphicon glyphicon-edit"></span>',
+						['/user-management/role/view', 'id'=>$aRole['name']],
+						['target'=>'_blank']
+					) ?>
+					<br/>
+				<?php endforeach ?>
 
-								$isChecked = $checked ? 'checked' : '';
-								$checkbox = "<label><input type='checkbox' name='{$name}' value='{$value}' {$isChecked}> {$label}</label>";
-
-								return $helpIcon . ' ' . $checkbox;
-							},
-						'separator'=>'<br>'
-					]
-				) ?>
 
 				<hr/>
 				<?= Html::submitButton(
@@ -107,12 +88,21 @@ $this->params['breadcrumbs'][] = $this->title;
 							<fieldset>
 								<legend><?= $groupName ?></legend>
 
-								<?= Html::checkboxList(
-									'child_permissions',
-									ArrayHelper::map($currentPermissions, 'name', 'name'),
-									ArrayHelper::map($permissions, 'name', 'description'),
-									['separator'=>'<br>']
-								) ?>
+								<?php foreach ($permissions as $permission): ?>
+									<label>
+										<?php $isChecked = in_array($permission->name, ArrayHelper::map($currentPermissions, 'name', 'name')) ? 'checked' : '' ?>
+										<input type="checkbox" <?= $isChecked ?> name="child_permissions[]" value="<?= $permission->name ?>">
+										<?= $permission->description ?>
+									</label>
+
+									<?= GhostHtml::a(
+										'<span class="glyphicon glyphicon-edit"></span>',
+										['/user-management/permission/view', 'id'=>$permission->name],
+										['target'=>'_blank']
+									) ?>
+									<br/>
+								<?php endforeach ?>
+
 							</fieldset>
 							<br/>
 						</div>

@@ -60,7 +60,7 @@ class UserPermissionController extends BaseController
 		$oldAssignments = array_keys(Role::getUserRoles($id));
 
 		// To be sure that user didn't attempt to assign himself some unavailable roles
-		$newAssignments = array_intersect(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin, true), Yii::$app->request->post('roles', []));
+		$newAssignments = array_intersect(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin, true), (array)Yii::$app->request->post('roles', []));
 
 		$toAssign = array_diff($newAssignments, $oldAssignments);
 		$toRevoke = array_diff($oldAssignments, $newAssignments);

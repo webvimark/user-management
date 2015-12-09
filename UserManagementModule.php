@@ -113,6 +113,17 @@ class UserManagementModule extends \yii\base\Module
 	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
 
 	/**
+	 * Affects only web interface in "/user-management/user-permission/set" route. Tt means you still can assign
+	 * multiple roles (for example via migrations) even if this attribute is "false"
+	 *
+	 * If true there will be checkbox list and user can have multiple roles.
+	 * Otherwise there will be radio list and only 1 role can be assigned to user.
+	 *
+	 * @var bool
+	 */
+	public $userCanHaveMultipleRoles = true;
+
+	/**
 	 * How much attempts user can made to login or recover password in $attemptsTimeout seconds interval
 	 *
 	 * @var int
