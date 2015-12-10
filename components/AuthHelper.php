@@ -331,26 +331,29 @@ class AuthHelper
 			$path = $module->getBasePath() . '/controllers';
 		}
 
-		foreach (scandir($path) as $file)
+		if ( is_dir($path) )
 		{
-			if ( strpos($file, '.') === 0 )
+			foreach (scandir($path) as $file)
 			{
-				continue;
-			}
-
-			if ( is_dir($path . '/' . $file) )
-			{
-				self::getControllerRoutes($module, $namespace . $file . '\\', $prefix . $file . '/', $result);
-			}
-			elseif ( strcmp(substr($file, -14), 'Controller.php') === 0 )
-			{
-				$id = Inflector::camel2id(substr(basename($file), 0, -14), '-', true);
-				$className = $namespace . Inflector::id2camel($id) . 'Controller';
-				if ( strpos($className, '-') === false && class_exists($className) && is_subclass_of($className, 'yii\base\Controller') )
+				if ( strpos($file, '.') === 0 )
 				{
-					$controller = new $className($prefix . $id, $module);
-					self::getActionRoutes($controller, $result);
-					$result[] = '/' . $controller->uniqueId . '/*';
+					continue;
+				}
+
+				if ( is_dir($path . '/' . $file) )
+				{
+					self::getControllerRoutes($module, $namespace . $file . '\\', $prefix . $file . '/', $result);
+				}
+				elseif ( strcmp(substr($file, -14), 'Controller.php') === 0 )
+				{
+					$id = Inflector::camel2id(substr(basename($file), 0, -14), '-', true);
+					$className = $namespace . Inflector::id2camel($id) . 'Controller';
+					if ( strpos($className, '-') === false && class_exists($className) && is_subclass_of($className, 'yii\base\Controller') )
+					{
+						$controller = new $className($prefix . $id, $module);
+						self::getActionRoutes($controller, $result);
+						$result[] = '/' . $controller->uniqueId . '/*';
+					}
 				}
 			}
 		}
