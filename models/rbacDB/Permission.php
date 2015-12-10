@@ -17,7 +17,9 @@ class Permission extends AbstractItem
 	 */
 	public static function getUserPermissions($userId)
 	{
-		return (new DbManager())->getPermissionsByUser($userId);
+		$dbManager = Yii::$app->authManager instanceof DbManager ? Yii::$app->authManager : new DbManager();
+		
+		return $dbManager->getPermissionsByUser($userId);
 	}
 
 	/**

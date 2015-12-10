@@ -85,7 +85,7 @@ abstract class AbstractItem extends ActiveRecord
 
 		$childrenNames = (array) $childrenNames;
 
-		$dbManager = new DbManager();
+		$dbManager = Yii::$app->authManager instanceof DbManager ? Yii::$app->authManager : new DbManager();
 
 		static::beforeAddChildren($parentName, $childrenNames, $throwException = false);
 		foreach ($childrenNames as $childName)
