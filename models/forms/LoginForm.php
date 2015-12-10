@@ -105,7 +105,8 @@ class LoginForm extends Model
 	{
 		if ( $this->_user === false )
 		{
-			$this->_user = User::findByUsername($this->username);
+			$u = new \Yii::$app->user->identityClass;
+			$this->_user = ($u instanceof User ? $u->findByUsername($this->username) : User::findByUsername($this->username));
 		}
 
 		return $this->_user;
