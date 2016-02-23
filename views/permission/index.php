@@ -1,4 +1,5 @@
 <?php
+use webvimark\extensions\GridBulkActions\GridBulkActions;
 use webvimark\extensions\GridPageSize\GridPageSize;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
@@ -7,6 +8,7 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /**
@@ -53,7 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				'firstPageLabel'=>'<<',
 			],
 			'filterModel' => $searchModel,
-			'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}</div></div>',
+			'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}'.GridBulkActions::widget([
+						'gridId'=>'permission-grid',
+						'actions'=>[Url::to(['bulk-delete'])=>GridBulkActions::t('app', 'Delete'),],
+						]).'</div></div>',
 			'columns' => [
 				['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 
@@ -83,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							return $model->group_code ? $model->group->name : '';
 						},
 				],
-
+				['class' => 'yii\grid\CheckboxColumn', 'options'=>['style'=>'width:10px'] ],
 				[
 					'class' => 'yii\grid\ActionColumn',
 					'contentOptions'=>['style'=>'width:70px; text-align:center;'],
