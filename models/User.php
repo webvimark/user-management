@@ -366,7 +366,7 @@ class User extends UserIdentity
 				if ( Yii::$app->user->id == $this->id )
 				{
 					// Make sure user will not deactivate himself
-					$this->status = static::STATUS_ACTIVE;
+					// $this->status = static::STATUS_ACTIVE;
 
 					// Superadmin could not demote himself
 					if ( Yii::$app->user->isSuperadmin AND $this->superadmin != 1 )
