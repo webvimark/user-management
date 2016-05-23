@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Banned' => '',
+    'Banned' => 'Banido',
     'Superadmin' => '',
     'Active' => 'Ativo',
     'Are you sure you want to delete this user?' => 'Você tem certeza de que deseja excluir este usuário?',
