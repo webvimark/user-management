@@ -417,4 +417,19 @@ class User extends UserIdentity
 
 		return parent::beforeDelete();
 	}
+	
+	/*
+	*
+	*Função criada para facilitar a listagem de roles do usuário
+	*/
+	public function getRole() 
+	{
+			$role = (new \yii\db\Query())
+					->select('item_name')
+					->from('tbl_auth_assignment')
+					->where('user_id=:id', array(':id'=>$this->id))
+					->scalar();
+
+			return $role;
+	}
 }
