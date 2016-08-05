@@ -20,13 +20,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require --prefer-dist webvimark/module-user-management 1.0.5
+composer require --prefer-dist webvimark/module-user-management 1.0.6
 ```
 
 or add
 
 ```
-"webvimark/module-user-management": "1.0.5"
+"webvimark/module-user-management": "1.0.6"
 ```
 
 to the require section of your `composer.json` file.
@@ -85,6 +85,7 @@ To see full list of options check *UserManagementModule* file
 'modules'=>[
 	'user-management' => [
 		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+	        'controllerNamespace'=>'vendor\webvimark\modules\UserManagement\controllers', // To prevent yii help from crashing
 	],
 ],
 
