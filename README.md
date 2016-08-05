@@ -20,13 +20,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require --prefer-dist webvimark/module-user-management 1.0.6
+composer require --prefer-dist webvimark/module-user-management 1.0.7
 ```
 
 or add
 
 ```
-"webvimark/module-user-management": "1.0.6"
+"webvimark/module-user-management": "1.0.7"
 ```
 
 to the require section of your `composer.json` file.
