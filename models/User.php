@@ -432,4 +432,15 @@ class User extends UserIdentity
 
 			return $role;
 	}
+
+	public static function generateAccessToken($userId)
+    {
+    	$user = User::findOne($userId);
+        $user->access_token = Yii::$app->security->generateRandomString();
+
+        if($user->save(false)){
+        	return true;
+        } 
+        return false;
+    }
 }
