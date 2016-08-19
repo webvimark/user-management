@@ -7,7 +7,6 @@ use Yii;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\models\search\UserSearch;
 use yii\web\NotFoundHttpException;
-
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -62,5 +61,16 @@ class UserController extends AdminDefaultController
 
 		return $this->renderIsAjax('changePassword', compact('model'));
 	}
+
+	public function actionGenerateAccessToken($userId)
+    {
+        if(User::generateAccessToken($userId)){
+            Yii::$app->session->setFlash('success',Yii::t('app', 'Token successfully generated'));
+        } else {
+            Yii::$app->session->setFlash('error',Yii::t('app', 'Failed to generate Token'));
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
 
 }
