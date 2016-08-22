@@ -51,9 +51,9 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 	<?php endif; ?>
 
     <div class="form-group">
-		<label class="control-label col-sm-3" id="password" for="user-acess-token">Access Token</label>
+		<label class="control-label col-sm-3" id="password" for="token">Access Token</label>
 		<div class="col-sm-6">                       
-        	<input type="password" size="20" class="form-control" id="user-acess-token" readonly="true" value="<?=$model->access_token ?>">
+        	<input type="password" size="20" class="form-control" id="token" readonly="true" value="<?=$model->access_token ?>">
 
         </div>
 	</div>
@@ -102,56 +102,39 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 <?php  
 
 $this->registerJs('
-    (function ($) {
 
-        $(\'#generate\').click(function(){
+    $(\'#generate\').click(function(){
 
-            if (confirm(\'Deseja gerar um novo Token?\')) {
-                $.ajax
-                ({ 
-                    url: \''.Url::toRoute(['user/generate-access-token']).'\',
-                    type: \'GET\',
-                    data: {userId : '.$model->id.'},
-                    success: function(result)
-                    {
-                        return true;
-                    }
-                });
-            }
-        });        
-
-        $(\'#copy\').click(function(){
-        	event.preventDefault();
-            var $temp = $("<input>");
-            $("body").append($temp);
-            $temp.val($("#user-acess-token").val()).select();
-            document.execCommand("copy");
-            alert("'.Yii::t('app','Token copied to clipboard').'")
-            $temp.remove();
-        });
-
-        $.toggleShowPassword = function (options) {
-            var settings = $.extend({
-                field: "#password",
-                control: "#toggle_show_password",
-            }, options);
-
-            var control = $(settings.control);
-            var field = $(settings.field)
-
-            control.bind(\'click\', function () {
-                if (control.is(\':checked\')) {
-                    field.attr(\'type\', \'text\');
-                } else {
-                    field.attr(\'type\', \'password\');
+        if (confirm(\'Deseja gerar um novo Token?\')) {
+            $.ajax
+            ({ 
+                url: \''.Url::toRoute(['user/generate-access-token']).'\',
+                type: \'GET\',
+                data: {userId : '.$model->id.'},
+                success: function(result)
+                {
+                    return true;
                 }
-            })
-        };
-    }(jQuery));
+            });
+        }
+    });        
 
-    $.toggleShowPassword({
-        field: \'#user-acess-token\',
-        control: \'#show\'
+    $(\'#copy\').click(function(){
+    	event.preventDefault();
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($("#token").val()).select();
+        document.execCommand("copy");
+        alert("'.Yii::t('app','Token copied to clipboard').'")
+        $temp.remove();
+    });
+
+    $("#show").on("ifChanged", function(event){
+        if(this.checked){
+            $("#token").prop("type", "text");
+        } else {
+            $("#token").prop("type", "password");
+        }
     });
 ');
 

@@ -33,6 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				['class' => 'btn btn-sm btn-default']
 			) ?>
 
+			<?= GhostHtml::a(UserManagementModule::t('back', 'Change password'), ['change-password', 'id'=>$model->id], ['class'=>'btn btn-sm btn-default', 'data-pjax'=>0]); ?>
+
 			<?= GhostHtml::a(UserManagementModule::t('back', 'Delete'), ['delete', 'id' => $model->id], [
 			    'class' => 'btn btn-sm btn-danger pull-right',
 			    'data' => [

@@ -60,21 +60,19 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filterModel' => $searchModel,
 				'layout'=>'{items}<div class="row"><div class="col-sm-8">{pager}</div><div class="col-sm-4 text-right">{summary}'.GridBulkActions::widget(['gridId'=>'user-grid']).'</div></div>',
 				'columns' => [
-					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
-
+					// ['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'superadmin',
 						'visible'=>Yii::$app->user->isSuperadmin,
 					],
-
-					[
-						'attribute'=>'username',
-						'value'=>function(User $model){
-								return Html::a($model->username,['view', 'id'=>$model->id],['data-pjax'=>0]);
-							},
-						'format'=>'raw',
-					],
+					// [
+					// 	'attribute'=>'username',
+					// 	'value'=>function(User $model){
+					// 			return Html::a($model->username,['view', 'id'=>$model->id],['data-pjax'=>0]);
+					// 		},
+					// 	'format'=>'raw',
+					// ],
 					[
 						'attribute'=>'email',
 						'format'=>'raw',
@@ -94,14 +92,14 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 						'visible'=>User::hasPermission('viewUserRoles'),
 					],
-					[
-						'attribute'=>'registration_ip',
-						'value'=>function(User $model){
-								return Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]);
-							},
-						'format'=>'raw',
-						'visible'=>User::hasPermission('viewRegistrationIp'),
-					],
+					// [
+					// 	'attribute'=>'registration_ip',
+					// 	'value'=>function(User $model){
+					// 			return Html::a($model->registration_ip, "http://ipinfo.io/" . $model->registration_ip, ["target"=>"_blank"]);
+					// 		},
+					// 	'format'=>'raw',
+					// 	'visible'=>User::hasPermission('viewRegistrationIp'),
+					// ],
 					[
 						'value'=>function(User $model){
 								return GhostHtml::a(
@@ -115,18 +113,18 @@ $this->params['breadcrumbs'][] = $this->title;
 							'width'=>'10px',
 						],
 					],
-					[
-						'value'=>function(User $model){
-								return GhostHtml::a(
-									UserManagementModule::t('back', 'Change password'),
-									['change-password', 'id'=>$model->id],
-									['class'=>'btn btn-sm btn-default', 'data-pjax'=>0]);
-							},
-						'format'=>'raw',
-						'options'=>[
-							'width'=>'10px',
-						],
-					],
+					// [
+					// 	'value'=>function(User $model){
+					// 			return GhostHtml::a(
+					// 				UserManagementModule::t('back', 'Change password'),
+					// 				['change-password', 'id'=>$model->id],
+					// 				['class'=>'btn btn-sm btn-default', 'data-pjax'=>0]);
+					// 		},
+					// 	'format'=>'raw',
+					// 	'options'=>[
+					// 		'width'=>'10px',
+					// 	],
+					// ],
 					[
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'status',
