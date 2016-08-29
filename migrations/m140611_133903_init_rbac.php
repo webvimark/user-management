@@ -40,7 +40,7 @@ class m140611_133903_init_rbac extends \yii\db\Migration
 				'created_at' => Schema::TYPE_INTEGER,
 				'updated_at' => Schema::TYPE_INTEGER,
 				'PRIMARY KEY (name)',
-				'FOREIGN KEY (rule_name) REFERENCES ' . Yii::$app->getModule('user-management')->auth_rule_table . ' (name) ON DELETE SET NULL ON UPDATE CASCADE',
+				'FOREIGN KEY (rule_name) REFERENCES ' . Yii::$app->getModule('user-management')->auth_rule_table . ' (name) ON DELETE NO ACTION ON UPDATE CASCADE',
 			], $tableOptions);
 			
 			$this->createIndex('idx-auth_item-type', Yii::$app->getModule('user-management')->auth_item_table, 'type');
@@ -55,8 +55,8 @@ class m140611_133903_init_rbac extends \yii\db\Migration
 				'parent' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'child' => Schema::TYPE_STRING . '(64) NOT NULL',
 				'PRIMARY KEY (parent, child)',
-				'FOREIGN KEY (parent) REFERENCES ' . Yii::$app->getModule('user-management')->auth_item_table . ' (name) ON DELETE CASCADE ON UPDATE CASCADE',
-				'FOREIGN KEY (child) REFERENCES ' . Yii::$app->getModule('user-management')->auth_item_table . ' (name) ON DELETE CASCADE ON UPDATE CASCADE',
+				'FOREIGN KEY (parent) REFERENCES ' . Yii::$app->getModule('user-management')->auth_item_table . ' (name) ON DELETE NO ACTION ON UPDATE NO ACTION',
+				'FOREIGN KEY (child) REFERENCES ' . Yii::$app->getModule('user-management')->auth_item_table . ' (name) ON DELETE NO ACTION ON UPDATE NO ACTION',
 			], $tableOptions);
 	        }
 
