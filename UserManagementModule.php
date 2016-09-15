@@ -113,6 +113,27 @@ class UserManagementModule extends \yii\base\Module
 	public $registrationBlackRegexp = '/^(.)*admin(.)*$/i';
 
 	/**
+	 * Pattern that will be applied for password.
+	 * Default pattern does not restrict user and can enter any set of characters.
+	 *
+	 * example of pattern :
+	 * '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$'
+	 *
+	 * This example pattern allow user enter only:
+	 *
+	 * ^: anchored to beginning of string
+	 * \S*: any set of characters
+	 * (?=\S{8,}): of at least length 8
+	 * (?=\S*[a-z]): containing at least one lowercase letter
+	 * (?=\S*[A-Z]): and at least one uppercase letter
+	 * (?=\S*[\d]): and at least one number
+	 * $: anchored to the end of the string
+	 *
+	 * @var string
+	 */
+	 public $passwordRegexp = '/^(.*)+$/';
+
+	/**
 	 * Affects only web interface in "/user-management/user-permission/set" route. Tt means you still can assign
 	 * multiple roles (for example via migrations) even if this attribute is "false"
 	 *

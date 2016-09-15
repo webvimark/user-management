@@ -35,6 +35,7 @@ class ChangeOwnPasswordForm extends Model
 			[['password', 'repeat_password'], 'required'],
 			[['password', 'repeat_password', 'current_password'], 'string', 'max'=>255],
 			[['password', 'repeat_password', 'current_password'], 'trim'],
+			['password', 'match', 'pattern' => Yii::$app->getModule('user-management')->passwordRegexp],
 
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
 
