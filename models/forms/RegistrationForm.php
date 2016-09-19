@@ -33,6 +33,7 @@ class RegistrationForm extends Model
 			['username', 'purgeXSS'],
 
 			['password', 'string', 'max' => 255],
+			['password', 'match', 'pattern' => Yii::$app->getModule('user-management')->passwordRegexp],
 
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
 		];

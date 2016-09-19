@@ -264,6 +264,7 @@ class User extends UserIdentity
 			['password', 'required', 'on'=>['newUser', 'changePassword']],
 			['password', 'string', 'max' => 255, 'on'=>['newUser', 'changePassword']],
 			['password', 'trim', 'on'=>['newUser', 'changePassword']],
+			['password', 'match', 'pattern' => Yii::$app->getModule('user-management')->passwordRegexp],
 
 			['repeat_password', 'required', 'on'=>['newUser', 'changePassword']],
 			['repeat_password', 'compare', 'compareAttribute'=>'password'],
