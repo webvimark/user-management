@@ -31,7 +31,7 @@ return [
     'Group' => 'Groupe',
     'Inactive' => 'Inactif',
     'Language' => 'Langage',
-    'Login' => 'Identifiant',
+    'Login' => 'Se connecter',
     'Name' => 'Nom',
     'OS' => 'OS',
     'Password' => 'Mot de passe',
