@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<span class="glyphicon glyphicon-th"></span> Routes
 
 					<?= Html::a(
-						'Refresh routes (and delete unused)',
+						UserManagementModule::t('back', 'Refresh routes (and delete unused)'),
 						['refresh-routes', 'id'=>$item->name, 'deleteUnused'=>1],
 						[
 							'class' => 'btn btn-default btn-sm pull-right',
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					) ?>
 
 					<?= Html::a(
-						'Refresh routes',
+						UserManagementModule::t('back', 'Refresh routes'),
 						['refresh-routes', 'id'=>$item->name],
 						[
 							'class' => 'btn btn-default btn-sm pull-right',
@@ -128,15 +128,15 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 
 					<div class="col-sm-6">
-						<input id="search-in-routes" autofocus="on" type="text" class="form-control input-sm" placeholder="Search route">
+						<input id="search-in-routes" autofocus="on" type="text" class="form-control input-sm" placeholder="<?= UserManagementModule::t('back', 'Search route'); ?>">
 					</div>
 
 					<div class="col-sm-3 text-right">
 						<span id="show-only-selected-routes" class="btn btn-default btn-sm">
-							<i class="fa fa-minus"></i> Show only selected
+							<i class="fa fa-minus"></i> <?= UserManagementModule::t('back', 'Show only selected'); ?>
 						</span>
 						<span id="show-all-routes" class="btn btn-default btn-sm hide">
-							<i class="fa fa-plus"></i> Show all
+							<i class="fa fa-plus"></i> <?= UserManagementModule::t('back', 'Show all'); ?>
 						</span>
 
 					</div>
