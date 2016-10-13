@@ -13,7 +13,7 @@ return [
     'E-mail is invalid' => 'L\adresse email est invalide',
     'Forgot password ?' => 'Mot de passe perdu ?',
     'Incorrect username or password.' => 'Identifiant ou mot de passe incorrect',
-    'Login' => 'Identifiant',
+    'Login' => 'Se connecter',
     'Login has been taken' => 'L\'identifiant à été pris',
     'Password' => 'Mot de passe',
     'Password recovery' => 'Récupération de mot de passe',
