@@ -31,8 +31,9 @@ class m140808_073114_create_auth_item_group_table extends Migration
 			$this->addForeignKey('fk_auth_item_group_code', Yii::$app->getModule('user-management')->auth_item_table, 'group_code', Yii::$app->getModule('user-management')->auth_item_group_table, 'code', 'SET NULL', 'CASCADE');
 	        }
 
-		Yii::$app->cache->flush();
-
+		if (Yii::$app->cache) {
+			Yii::$app->cache->flush();
+		}
 	}
 
 	public function safeDown()
@@ -42,6 +43,8 @@ class m140808_073114_create_auth_item_group_table extends Migration
 
 		$this->dropTable(Yii::$app->getModule('user-management')->auth_item_group_table);
 
-		Yii::$app->cache->flush();
+		if (Yii::$app->cache) {
+			Yii::$app->cache->flush();
+		}
 	}
 }
