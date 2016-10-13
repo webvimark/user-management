@@ -101,6 +101,7 @@ class GhostAccessControl extends ActionFilter
 		if ( Yii::$app->user->getIsGuest() )
 		{
 			Yii::$app->user->loginRequired(true, (strpos(Yii::$app->request->headers->get('Accept'), 'html') !== false));
+			
 		}
 		else
 		{
