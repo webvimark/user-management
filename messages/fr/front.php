@@ -8,6 +8,7 @@ return [
     'Confirm E-mail' => 'Confirmation d\'email',
     'Continue' => 'Continuer',
     'Could not send confirmation email' => 'Impossible d\'envoyer la confirmation d\'email',
+    'E-mail' => '',
     'E-mail confirmation for' => 'Confirmation d\'email pour',
     'E-mail confirmed' => 'Email confirmé',
     'E-mail is invalid' => 'L\adresse email est invalide',

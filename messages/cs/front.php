@@ -25,6 +25,7 @@ return [
     'Confirm E-mail' => '',
     'Continue' => '',
     'Could not send confirmation email' => '',
+    'E-mail' => '',
     'E-mail confirmation for' => '',
     'E-mail confirmed' => '',
     'E-mail is invalid' => '',

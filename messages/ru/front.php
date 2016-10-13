@@ -25,6 +25,7 @@ return [
     'Confirm' => 'Подтвердить',
     'Confirm E-mail' => 'Подтвердить E-mail',
     'Could not send confirmation email' => 'Не удалось отправить e-mail для активации аккаунта',
+    'E-mail' => '',
     'E-mail confirmation for' => 'Подтверждение E-mail для',
     'E-mail confirmed' => 'E-mail подтверждён',
     'E-mail is invalid' => 'Неверный E-mail',
