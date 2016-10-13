@@ -26,6 +26,7 @@ return [
     'Confirm' => 'Bestätigen',
     'Confirm E-mail' => 'E-Mail bestätigen',
     'Could not send confirmation email' => 'E-Mail zur Kontoaktivierung konnte nicht versandt werden',
+    'E-mail' => '',
     'E-mail confirmation for' => 'E-Mail-Bestätigung für',
     'E-mail confirmed' => 'E-Mail bestätigt',
     'E-mail is invalid' => 'E-Mail ist ungültig',

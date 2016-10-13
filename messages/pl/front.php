@@ -24,6 +24,7 @@ return [
     'Confirm' => 'Potwierdź',
     'Confirm E-mail' => 'Potwierdź adres e-mail',
     'Could not send confirmation email' => 'Nie udało się wysłać maila potwierdzającego',
+    'E-mail' => '',
     'E-mail confirmation for' => 'Potwierdzenie e-maila dla',
     'E-mail confirmed' => 'Adres e-mail potwierdzony',
     'E-mail is invalid' => 'Nieprawidłowy adres e-mail',

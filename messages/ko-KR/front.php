@@ -27,6 +27,7 @@ return [
     'Check your E-mail for further instructions' => '다음에 따라 이메일을 체크해주세요',
     'Confirm' => '확인',
     'Confirm E-mail' => 'E-Mail 확인',
+    'E-mail' => '',
     'E-mail confirmation for' => 'E-Mail을 확인',
     'E-mail confirmed' => 'E-Mail 확인됨',
     'E-mail is invalid' => 'E-Mail이 부정확합니다',

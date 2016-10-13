@@ -1,0 +1,84 @@
+# Sublime project files
+*.sublime-*
+
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# Yii framework
+# =========================
+!assets/.gitignore
+runtime/*
+!runtime/.gitignore
+data/*.db
+themes/classic/views/
+!web/uploads
+/web/uploads/*
+
+# composer vendor dir
+/vendor
+
+# composer itself is not needed
+composer.phar
+composer.lock
+
+# SASS
+.sass-cache
+
+# =========================
+# Operating System Files
+# =========================
+
+# Unix / Linux
+# =========================
+*~
+
+# OSX
+# =========================
+
+# Mac DS_Store Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must ends with two \r.
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Windows
+# =========================
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml

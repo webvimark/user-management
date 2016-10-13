@@ -318,7 +318,7 @@ class User extends UserIdentity
 			'id'                 => 'ID',
 			'username'           => UserManagementModule::t('back', 'Login'),
 			'superadmin'         => UserManagementModule::t('back', 'Superadmin'),
-			'confirmation_token' => 'Confirmation Token',
+			'confirmation_token' => UserManagementModule::t('back', 'Confirmation Token'),
 			'registration_ip'    => UserManagementModule::t('back', 'Registration IP'),
 			'bind_to_ip'         => UserManagementModule::t('back', 'Bind to IP'),
 			'status'             => UserManagementModule::t('back', 'Status'),
@@ -328,7 +328,7 @@ class User extends UserIdentity
 			'password'           => UserManagementModule::t('back', 'Password'),
 			'repeat_password'    => UserManagementModule::t('back', 'Repeat password'),
 			'email_confirmed'    => UserManagementModule::t('back', 'E-mail confirmed'),
-			'email'              => 'E-mail',
+			'email'              => UserManagementModule::t('back', 'E-mail'),
 		];
 	}
 
