@@ -100,7 +100,7 @@ class GhostAccessControl extends ActionFilter
 	{
 		if ( Yii::$app->user->getIsGuest() )
 		{
-			Yii::$app->user->loginRequired(Yii::$app->request->isAjax, false);
+			Yii::$app->user->loginRequired(false, false);
 		}
 		else
 		{
