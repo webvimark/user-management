@@ -142,7 +142,9 @@ class Route extends AbstractItem
 
 		if ( $toAdd || $toRemove )
 		{
-			Yii::$app->cache->delete('__commonRoutes');
+			if (Yii::$app->cache) {
+				Yii::$app->cache->delete('__commonRoutes');
+			}
 		}
 	}
 
