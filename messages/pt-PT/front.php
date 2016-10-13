@@ -20,7 +20,7 @@ return [
     'Captcha' => '',
     'Check your e-mail {email} for instructions to activate account' => 'Verifique o seu e-mail {email} para obter instruções para ativar a conta',
     'Could not send confirmation email' => 'Não foi possível enviar email de confirmação',
-    'Login' => 'Nome de utilizador',
+    'Login' => 'Entrar',
     'Registration - confirm your e-mail' => 'Registo - Confirme o seu e-mail',
     'Authorization' => 'Autorização',
     'Check your E-mail for further instructions' => 'Verifique o seu e-mail para mais instruções',
