@@ -69,7 +69,7 @@ class ConfirmEmailForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'email' => 'E-mail',
+			'email' => UserManagementModule::t('front', 'E-mail'),
 		];
 	}
 
