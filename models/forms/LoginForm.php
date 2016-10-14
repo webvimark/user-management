@@ -32,7 +32,7 @@ class LoginForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'username'   => UserManagementModule::t('front', 'Login'),
+			'username'   => UserManagementModule::t('front', 'Username'),
 			'password'   => UserManagementModule::t('front', 'Password'),
 			'rememberMe' => UserManagementModule::t('front', 'Remember me'),
 		];
