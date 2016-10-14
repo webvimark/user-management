@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'E-mail' => '',
+    'E-mail' => 'Email',
     'Username' => 'Nom d\'utilisateur',
     'Authorization' => 'Autorisation',
     'Captcha' => 'Captcha',
