@@ -52,7 +52,7 @@ return [
     'Inactive' => 'Inactif',
     'IP' => 'Adresse IP',
     'Language' => 'Langage',
-    'Login' => 'Se connecter',
+    'Login' => 'Identifiant',
     'Name' => 'Nom',
     'OS' => 'OS',
     'Password' => 'Mot de passe',
