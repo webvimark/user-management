@@ -34,7 +34,7 @@ class User extends UserIdentity
 	const STATUS_ACTIVE = 1;
 	const STATUS_INACTIVE = 0;
 	const STATUS_BANNED = -1;
-
+	const STATUS_FRONTEND = 10;
 	/**
 	 * @var string
 	 */
@@ -207,6 +207,7 @@ class User extends UserIdentity
 			self::STATUS_ACTIVE   => UserManagementModule::t('back', 'Active'),
 			self::STATUS_INACTIVE => UserManagementModule::t('back', 'Inactive'),
 			self::STATUS_BANNED   => UserManagementModule::t('back', 'Banned'),
+			self::STATUS_FRONTEND => UserManagementModule::t('back', 'Frontend'),
 		);
 	}
 
@@ -366,7 +367,7 @@ class User extends UserIdentity
 				if ( Yii::$app->user->id == $this->id )
 				{
 					// Make sure user will not deactivate himself
-					$this->status = static::STATUS_ACTIVE;
+					// $this->status = static::STATUS_ACTIVE;
 
 					// Superadmin could not demote himself
 					if ( Yii::$app->user->isSuperadmin AND $this->superadmin != 1 )
@@ -417,4 +418,30 @@ class User extends UserIdentity
 
 		return parent::beforeDelete();
 	}
+	
+	/*
+	*
+	*Função criada para facilitar a listagem de roles do usuário
+	*/
+	public function getRole() 
+	{
+			$role = (new \yii\db\Query())
+					->select('item_name')
+					->from('tbl_auth_assignment')
+					->where('user_id=:id', array(':id'=>$this->id))
+					->scalar();
+
+			return $role;
+	}
+
+	public static function generateAccessToken($userId)
+    {
+    	$user = User::findOne($userId);
+        $user->access_token = Yii::$app->security->generateRandomString();
+
+        if($user->save(false)){
+        	return true;
+        } 
+        return false;
+    }
 }

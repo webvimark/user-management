@@ -3,6 +3,7 @@
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
@@ -49,9 +50,29 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?php endif; ?>
 
+    <div class="form-group">
+		<label class="control-label col-sm-3" id="password" for="token">Access Token</label>
+		<div class="col-sm-6">                       
+        	<input type="password" size="20" class="form-control" id="token" readonly="true" value="<?=$model->access_token ?>">
+
+        </div>
+	</div>
 
 	<div class="form-group">
-		<div class="col-sm-offset-3 col-sm-9">
+        <div class="col-sm-6 col-sm-offset-3">
+        	<div class="checkbox">
+	            <label for="show">
+		            <input id="show" type="checkbox">
+	                <?=Yii::t('app','Show Token') ?>
+	            </label>
+        	</div>
+        </div>
+    </div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-3">
+			<div class="col-sm-3">
+				
 			<?php if ( $model->isNewRecord ): ?>
 				<?= Html::submitButton(
 					'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', 'Create'),
@@ -63,7 +84,12 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 					['class' => 'btn btn-primary']
 				) ?>
 			<?php endif; ?>
-		</div>
+			</div>
+			<div class="col-sm-5 text-right">
+		        <button id="copy" class="btn btn-info"><?=Yii::t('app','Copy Token') ?></button>
+		        <button id="generate" class="btn btn-success"><?=Yii::t('app','Generate Token') ?></button>
+			</div>
+	    </div>
 	</div>
 
 	<?php ActiveForm::end(); ?>
@@ -71,3 +97,45 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 </div>
 
 <?php BootstrapSwitch::widget() ?>
+
+
+<?php  
+
+$this->registerJs('
+
+    $(\'#generate\').click(function(){
+
+        if (confirm(\'Deseja gerar um novo Token?\')) {
+            $.ajax
+            ({ 
+                url: \''.Url::toRoute(['user/generate-access-token']).'\',
+                type: \'GET\',
+                data: {userId : '.$model->id.'},
+                success: function(result)
+                {
+                    return true;
+                }
+            });
+        }
+    });        
+
+    $(\'#copy\').click(function(){
+    	event.preventDefault();
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($("#token").val()).select();
+        document.execCommand("copy");
+        alert("'.Yii::t('app','Token copied to clipboard').'")
+        $temp.remove();
+    });
+
+    $("#show").on("ifChanged", function(event){
+        if(this.checked){
+            $("#token").prop("type", "text");
+        } else {
+            $("#token").prop("type", "password");
+        }
+    });
+');
+
+?>
