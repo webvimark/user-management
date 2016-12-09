@@ -69,9 +69,6 @@ use yii\helpers\Html;
 <?php
 $css = <<<CSS
 html, body {
-	background: #eee;
-	-webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-	box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 	height: 100%;
 	min-height: 100%;
 	position: relative;
