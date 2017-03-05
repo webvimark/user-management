@@ -283,7 +283,14 @@ class UserManagementModule extends \yii\base\Module
 	{
 		if ( !isset($this->mailerOptions['from']) )
 		{
-			$this->mailerOptions['from'] = [Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot'];
+			$adminEmail = Yii::$app->params['adminEmail'];
+			if (is_array($adminEmail) && ArrayHelper::isAssociative($adminEmail)) {
+				$this->mailerOptions['from'] = $adminEmail;
+			} else {
+				$this->mailerOptions['from'] = array_map(function ($email) {
+					return [$email => Yii::$app->name . ' robot'];
+				}, (array)$adminEmail);
+			}
 		}
 
 		$this->mailerOptions = ArrayHelper::merge($this->_defaultMailerOptions, $this->mailerOptions);
