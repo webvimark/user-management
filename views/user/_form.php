@@ -44,7 +44,7 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
 	<?php if ( User::hasPermission('editUserEmail') ): ?>
 
-		<?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
+		<?= $form->field($model, 'email')->textInput(['maxlength' => 254]) ?>
 		<?= $form->field($model, 'email_confirmed')->checkbox() ?>
 
 	<?php endif; ?>

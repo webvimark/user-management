@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					'validateOnBlur'=>false,
 				]); ?>
 
-				<?= $form->field($model, 'email')->textInput(['maxlength' => 255, 'autofocus'=>true]) ?>
+				<?= $form->field($model, 'email')->textInput(['maxlength' => 254, 'autofocus'=>true]) ?>
 
 				<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-9">

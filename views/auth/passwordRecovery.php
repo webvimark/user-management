@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'validateOnBlur'=>false,
 	]); ?>
 
-	<?= $form->field($model, 'email')->textInput(['maxlength' => 255, 'autofocus'=>true]) ?>
+	<?= $form->field($model, 'email')->textInput(['maxlength' => 254, 'autofocus'=>true]) ?>
 
 	<?= $form->field($model, 'captcha')->widget(Captcha::className(), [
 		'template' => '<div class="row"><div class="col-sm-2">{image}</div><div class="col-sm-3">{input}</div></div>',
