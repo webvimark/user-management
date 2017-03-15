@@ -6,57 +6,55 @@ use yii\web\User;
 use Yii;
 
 /**
- * Class UserConfig
- * @package webvimark\modules\UserManagement\components
+ * Class UserConfig.
  */
 class UserConfig extends User
 {
-	/**
-	 * @inheritdoc
-	 */
-	public $identityClass = 'webvimark\modules\UserManagement\models\User';
+    /**
+     * {@inheritdoc}
+     */
+    public $identityClass = 'webvimark\modules\UserManagement\models\User';
 
-	/**
-	 * @inheritdoc
-	 */
-	public $enableAutoLogin = true;
-	
-	/**
- 	 * @inheritdoc
-	 */
-	public $cookieLifetime = 2592000;
-  
-	/**
-	 * @inheritdoc
-	 */
-	public $loginUrl = ['/user-management/auth/login'];
+    /**
+     * {@inheritdoc}
+     */
+    public $enableAutoLogin = true;
 
-	/**
-	 * Allows to call Yii::$app->user->isSuperadmin
-	 *
-	 * @return bool
-	 */
-	public function getIsSuperadmin()
-	{
-		return @Yii::$app->user->identity->superadmin == 1;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public $cookieLifetime = 2592000;
 
-	/**
-	 * @return string
-	 */
-	public function getUsername()
-	{
-		return @Yii::$app->user->identity->username;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public $loginUrl = ['/user-management/auth/login'];
 
-	/**
-	 * @inheritdoc
-	 */
-	protected function afterLogin($identity, $cookieBased, $duration)
-	{
-		AuthHelper::updatePermissions($identity);
+    /**
+     * Allows to call Yii::$app->user->isSuperadmin.
+     *
+     * @return bool
+     */
+    public function getIsSuperadmin()
+    {
+        return @Yii::$app->user->identity->superadmin == 1;
+    }
 
-		parent::afterLogin($identity, $cookieBased, $duration);
-	}
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return @Yii::$app->user->identity->username;
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    protected function afterLogin($identity, $cookieBased, $duration)
+    {
+        AuthHelper::updatePermissions($identity);
+
+        parent::afterLogin($identity, $cookieBased, $duration);
+    }
 }
