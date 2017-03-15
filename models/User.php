@@ -302,7 +302,7 @@ class User extends UserIdentity
     {
         return [
             'id' => 'ID',
-            'username' => UserManagementModule::t('back', 'Login'),
+            'username' => UserManagementModule::t('back', 'User'),
             'superadmin' => UserManagementModule::t('back', 'Superadmin'),
             'confirmation_token' => UserManagementModule::t('back', 'Confirmation Token'),
             'registration_ip' => UserManagementModule::t('back', 'Registration IP'),
@@ -315,6 +315,7 @@ class User extends UserIdentity
             'repeat_password' => UserManagementModule::t('back', 'Repeat password'),
             'email_confirmed' => UserManagementModule::t('back', 'E-mail confirmed'),
             'email' => UserManagementModule::t('back', 'E-mail'),
+            'auth_type' => UserManagementModule::t('back', 'Authentication type'),
         ];
     }
 

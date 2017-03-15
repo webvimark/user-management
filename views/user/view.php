@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'boolean',
                         'visible' => User::hasPermission('viewUserEmail'),
                     ],
+                    'auth_type',
                     [
                         'label' => UserManagementModule::t('back', 'Roles'),
                         'value' => implode('<br>', ArrayHelper::map(Role::getUserRoles($model->id), 'name', 'description')),

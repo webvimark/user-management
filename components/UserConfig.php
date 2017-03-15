@@ -23,6 +23,11 @@ class UserConfig extends User
     /**
      * {@inheritdoc}
      */
+    public $enableLdap = false;
+
+    /**
+     * {@inheritdoc}
+     */
     public $cookieLifetime = 2592000;
 
     /**

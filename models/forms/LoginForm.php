@@ -103,6 +103,17 @@ class LoginForm extends Model
             $this->_user = ($u instanceof User ? $u->findByUsername($this->username) : User::findByUsername($this->username));
         }
 
+        if (!$this->_user and Yii::$app->user->enableLdap) {
+            // If the user doesn't exist in the database,
+            // it might be the first login of a LDAP user.
+            $new_user = new \Yii::$app->user->identityClass();
+            $new_user->id = null;
+            $new_user->username = $this->username;
+            $new_user->password_hash = Yii::$app->getSecurity()->generatePasswordHash(Yii::$app->getSecurity()->generateRandomString());
+            $new_user->auth_type = 'ldap';
+            $this->_user = $new_user;
+        }
+
         return $this->_user;
     }
 }
