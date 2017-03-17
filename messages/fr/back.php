@@ -17,6 +17,12 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Authentication type' => '',
+    'Could not bind to the LDAP server.' => '',
+    'Routes that are not exists in this application will be deleted. Do not recommended for application with "advanced" structure, because frontend and backend have they own set of routes.' => '',
+    'The provided LDAP parameters are syntactically wrong.' => '',
+    'Unknown auth type.' => '',
+    'Login' => '@@Identifiant@@',
     'Active' => 'Actif',
     'Are you sure you want to delete this user?' => 'Etes-vous sûre de vouloir supprimer cet utilisateur ?',
     'Banned' => 'Banni',
@@ -49,10 +55,9 @@ return [
     'For example: 123.34.56.78, 168.111.192.12' => 'Par exemple: 123.34.56.78, 168.111.192.12',
     'Group' => 'Groupe',
     'ID' => 'ID',
-    'Inactive' => 'Inactif',
     'IP' => 'Adresse IP',
+    'Inactive' => 'Inactif',
     'Language' => 'Langage',
-    'Login' => 'Identifiant',
     'Name' => 'Nom',
     'OS' => 'OS',
     'Password' => 'Mot de passe',
@@ -70,7 +75,6 @@ return [
     'Roles' => 'Rôles',
     'Roles and permissions' => 'Rôles et permissions',
     'Roles and permissions for user:' => 'Rôles et permissions pour l\'utilisateur:',
-    'Routes that are not exists in this application will be deleted. Do not recommended for application with "advanced" structure, because frontend and backend have they own set of routes.' => '',
     'Rule' => 'Rêgle',
     'Save' => 'Enregistrer',
     'Saved' => 'Enregistrement',
