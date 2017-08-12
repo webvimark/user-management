@@ -89,6 +89,7 @@ class RegistrationForm extends Model
 		}
 
 		$user = new User();
+		$user->username = $this->username;
 		$user->password = $this->password;
 
 		if ( Yii::$app->getModule('user-management')->useEmailAsLogin )
@@ -118,10 +119,6 @@ class RegistrationForm extends Model
 			{
 				$user->username = $this->username;
 			}
-		}
-		else
-		{
-			$user->username = $this->username;
 		}
 
 
