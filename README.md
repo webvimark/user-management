@@ -266,3 +266,5 @@ FAQ
 4) Define your own UserManagementModule::$registrationFormClass. In this class you can do whatever you want like validating custom forms and saving profiles
 
 5) Create your controller where user can view profiles
+
+6) This test file.
