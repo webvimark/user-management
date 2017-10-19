@@ -25,6 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	]); ?>
 
 	<?= $form->field($model, 'username')->textInput(['maxlength' => 50, 'autocomplete'=>'off', 'autofocus'=>true]) ?>
+	
+	<?= !Yii::$app->getModule('user-management')->useEmailAsLogin ? $form->field($model, 'email')->textInput(['maxlength' => 128, 'autocomplete'=>'off']) : ''?>
 
 	<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 

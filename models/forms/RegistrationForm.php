@@ -13,6 +13,7 @@ class RegistrationForm extends Model
 	public $password;
 	public $repeat_password;
 	public $captcha;
+	public $email;
 
 	/**
 	 * @inheritdoc
@@ -45,9 +46,13 @@ class RegistrationForm extends Model
 		else
 		{
 			$rules[] = ['username', 'string', 'max' => 50];
-
+            $rules[] = ['email', 'string', 'max' => 128];
 			$rules[] = ['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp];
 			$rules[] = ['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp];
+			//verification to make email field required ir not
+			if(Yii::$app->getModule('user-management')->emailConfirmationRequired){
+			    $rules[] = [['email'], 'required'];
+			}
 		}
 
 		return $rules;
@@ -69,10 +74,11 @@ class RegistrationForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'username'        => Yii::$app->getModule('user-management')->useEmailAsLogin ? 'E-mail' : UserManagementModule::t('front', 'Login'),
+			'username'        => Yii::$app->getModule('user-management')->useEmailAsLogin ? 'E-mail' : UserManagementModule::t('front', 'Username'),
 			'password'        => UserManagementModule::t('front', 'Password'),
 			'repeat_password' => UserManagementModule::t('front', 'Repeat password'),
 			'captcha'         => UserManagementModule::t('front', 'Captcha'),
+		    'email'           => UserManagementModule::t('front', 'E-mail'),
 		];
 	}
 
@@ -90,40 +96,37 @@ class RegistrationForm extends Model
 
 		$user = new User();
 		$user->password = $this->password;
-
-		if ( Yii::$app->getModule('user-management')->useEmailAsLogin )
+		$user->username = $this->username;
+		
+        if ( Yii::$app->getModule('user-management')->useEmailAsLogin )
 		{
 			$user->email = $this->username;
-
 			// If email confirmation required then we save user with "inactive" status
 			// and without username (username will be filled with email value after confirmation)
-			if ( Yii::$app->getModule('user-management')->emailConfirmationRequired )
+		}else 
+		{
+		    //If doesn't use email as login it needs email to confirm account
+		    $user->email = $this->email;
+		}
+
+		//In this way its possible to use emailConfirmation without restriction of use emailAsLogin
+		if ( Yii::$app->getModule('user-management')->emailConfirmationRequired )
+		{
+			$user->status = User::STATUS_INACTIVE;
+			$user->generateConfirmationToken();
+			$user->save(false);
+
+			$this->saveProfile($user);
+
+			if ( $this->sendConfirmationEmail($user) )
 			{
-				$user->status = User::STATUS_INACTIVE;
-				$user->generateConfirmationToken();
-				$user->save(false);
-
-				$this->saveProfile($user);
-
-				if ( $this->sendConfirmationEmail($user) )
-				{
-					return $user;
-				}
-				else
-				{
-					$this->addError('username', UserManagementModule::t('front', 'Could not send confirmation email'));
-				}
+				return $user;
 			}
 			else
 			{
-				$user->username = $this->username;
+				$this->addError('username', UserManagementModule::t('front', 'Could not send confirmation email'));
 			}
 		}
-		else
-		{
-			$user->username = $this->username;
-		}
-
 
 		if ( $user->save() )
 		{
