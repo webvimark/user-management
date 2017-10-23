@@ -1,5 +1,5 @@
 {
-	"name": "webvimark/module-user-management",
+	"name": "davidias2004/module-user-management",
 	"description": "User with improved RBAC",
 	"autoload": {
 		"psr-4": {

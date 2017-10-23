@@ -151,19 +151,24 @@ class AuthController extends BaseController
 						if ( Yii::$app->getModule('user-management')->useEmailAsLogin AND Yii::$app->getModule('user-management')->emailConfirmationRequired )
 						{
 							return $this->renderIsAjax('registrationWaitForEmailConfirmation', compact('user'));
-						}
-						else
-						{
-							$roles = (array)$this->module->rolesAfterRegistration;
-
-							foreach ($roles as $role)
-							{
-								User::assignRole($user->id, $role);
-							}
-
-							Yii::$app->user->login($user);
-
-							return $this->redirect(Yii::$app->user->returnUrl);
+						}else{
+						    if (Yii::$app->getModule('user-management')->emailConfirmationRequired )
+						    {
+						        return $this->renderIsAjax('registrationWaitForEmailConfirmation', compact('user'));
+						    }						    
+    						else
+    						{
+    							$roles = (array)$this->module->rolesAfterRegistration;
+    
+    							foreach ($roles as $role)
+    							{
+    								User::assignRole($user->id, $role);
+    							}
+    
+    							Yii::$app->user->login($user);
+    
+    							return $this->redirect(Yii::$app->user->returnUrl);
+    						}
 						}
 
 					}
@@ -186,7 +191,7 @@ class AuthController extends BaseController
 	 */
 	public function actionConfirmRegistrationEmail($token)
 	{
-		if ( Yii::$app->getModule('user-management')->useEmailAsLogin AND Yii::$app->getModule('user-management')->emailConfirmationRequired )
+		if (Yii::$app->getModule('user-management')->emailConfirmationRequired )
 		{
 			$model = new $this->module->registrationFormClass;
 
