@@ -186,7 +186,7 @@ class AuthController extends BaseController
 	 */
 	public function actionConfirmRegistrationEmail($token)
 	{
-		if ( Yii::$app->getModule('user-management')->useEmailAsLogin AND Yii::$app->getModule('user-management')->emailConfirmationRequired )
+		if (Yii::$app->getModule('user-management')->emailConfirmationRequired )
 		{
 			$model = new $this->module->registrationFormClass;
 
