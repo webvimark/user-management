@@ -177,7 +177,6 @@ class RegistrationForm extends Model
 
 		if ( $user )
 		{
-			$user->username = $user->email;
 			$user->status = User::STATUS_ACTIVE;
 			$user->email_confirmed = 1;
 			$user->removeConfirmationToken();
