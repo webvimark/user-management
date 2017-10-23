@@ -47,6 +47,7 @@ class RegistrationForm extends Model
 		{
 			$rules[] = ['username', 'string', 'max' => 50];
             $rules[] = ['email', 'string', 'max' => 128];
+            $rules[] = ['email', 'email'];
 			$rules[] = ['username', 'match', 'pattern'=>Yii::$app->getModule('user-management')->registrationRegexp];
 			$rules[] = ['username', 'match', 'not'=>true, 'pattern'=>Yii::$app->getModule('user-management')->registrationBlackRegexp];
 			//verification to make email field required ir not
