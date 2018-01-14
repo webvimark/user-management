@@ -1,12 +1,12 @@
 <?php
 
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\UserVisitLog $model
+ * @var wpler\modules\UserManagement\models\UserVisitLog $model
  */
 
 $this->title = $model->id;

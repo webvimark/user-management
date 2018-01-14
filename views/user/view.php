@@ -1,16 +1,16 @@
 <?php
 
-use webvimark\modules\UserManagement\components\GhostHtml;
-use webvimark\modules\UserManagement\models\rbacDB\Role;
-use webvimark\modules\UserManagement\models\User;
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\components\GhostHtml;
+use wpler\modules\UserManagement\models\rbacDB\Role;
+use wpler\modules\UserManagement\models\User;
+use wpler\modules\UserManagement\UserManagementModule;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\User $model
+ * @var wpler\modules\UserManagement\models\User $model
  */
 
 $this->title = $model->username;
