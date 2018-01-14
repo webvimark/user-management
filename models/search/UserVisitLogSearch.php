@@ -1,15 +1,15 @@
 <?php
 
-namespace webvimark\modules\UserManagement\models\search;
+namespace wpler\modules\UserManagement\models\search;
 
-use webvimark\modules\UserManagement\models\User;
+use wpler\modules\UserManagement\models\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use webvimark\modules\UserManagement\models\UserVisitLog;
+use wpler\modules\UserManagement\models\UserVisitLog;
 
 /**
- * UserVisitLogSearch represents the model behind the search form about `webvimark\modules\UserManagement\models\UserVisitLog`.
+ * UserVisitLogSearch represents the model behind the search form about `wpler\modules\UserManagement\models\UserVisitLog`.
  */
 class UserVisitLogSearch extends UserVisitLog
 {

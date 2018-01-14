@@ -1,8 +1,8 @@
 <?php
 
-namespace webvimark\modules\UserManagement\models\rbacDB\search;
+namespace wpler\modules\UserManagement\models\rbacDB\search;
 
-use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
+use wpler\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;

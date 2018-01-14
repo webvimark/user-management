@@ -1,21 +1,21 @@
 <?php
 
-use webvimark\modules\UserManagement\components\GhostHtml;
-use webvimark\modules\UserManagement\models\rbacDB\Role;
-use webvimark\modules\UserManagement\models\User;
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\components\GhostHtml;
+use wpler\modules\UserManagement\models\rbacDB\Role;
+use wpler\modules\UserManagement\models\User;
+use wpler\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-use webvimark\extensions\GridBulkActions\GridBulkActions;
-use webvimark\extensions\GridPageSize\GridPageSize;
+use wpler\extensions\GridBulkActions\GridBulkActions;
+use wpler\extensions\GridPageSize\GridPageSize;
 use yii\grid\GridView;
 
 /**
  * @var yii\web\View $this
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var webvimark\modules\UserManagement\models\search\UserSearch $searchModel
+ * @var wpler\modules\UserManagement\models\search\UserSearch $searchModel
  */
 
 $this->title = UserManagementModule::t('back', 'Users');
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 
 					[
-						'class'=>'webvimark\components\StatusColumn',
+						'class'=>'wpler\components\StatusColumn',
 						'attribute'=>'superadmin',
 						'visible'=>Yii::$app->user->isSuperadmin,
 					],
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'visible'=>User::hasPermission('viewUserEmail'),
 					],
 					[
-						'class'=>'webvimark\components\StatusColumn',
+						'class'=>'wpler\components\StatusColumn',
 						'attribute'=>'email_confirmed',
 						'visible'=>User::hasPermission('viewUserEmail'),
 					],
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 					],
 					[
-						'class'=>'webvimark\components\StatusColumn',
+						'class'=>'wpler\components\StatusColumn',
 						'attribute'=>'status',
 						'optionsArray'=>[
 							[User::STATUS_ACTIVE, UserManagementModule::t('back', 'Active'), 'success'],

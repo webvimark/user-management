@@ -4,6 +4,7 @@ User management module for Yii 2
 Perks
 ---
 
+* This is a fork of [wpler/user-management-module](https://github.com/wpler/user-management) passed for SQLite
 * User management
 * RBAC (roles, permissions and stuff) with web interface
 * Registration, authorization, password recovery and so on
@@ -20,13 +21,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require webvimark/module-user-management
+composer require wpler/module-user-management
 ```
 
 or add
 
 ```
-"webvimark/module-user-management": "^1"
+"wpler/module-user-management": "^1"
 ```
 
 to the require section of your `composer.json` file.
@@ -40,18 +41,18 @@ Configuration
 
 'components'=>[
 	'user' => [
-		'class' => 'webvimark\modules\UserManagement\components\UserConfig',
+		'class' => 'wpler\modules\UserManagement\components\UserConfig',
 
 		// Comment this if you don't want to record user logins
 		'on afterLogin' => function($event) {
-				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
+				\wpler\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
 			}
 	],
 ],
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+		'class' => 'wpler\modules\UserManagement\UserManagementModule',
 
 		// 'enableRegistration' => true,
 
@@ -96,8 +97,8 @@ To see full list of options check *UserManagementModule* file
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
-	        'controllerNamespace'=>'vendor\webvimark\modules\UserManagement\controllers', // To prevent yii help from crashing
+		'class' => 'wpler\modules\UserManagement\UserManagementModule',
+	        'controllerNamespace'=>'vendor\wpler\modules\UserManagement\controllers', // To prevent yii help from crashing
 	],
 ],
 
@@ -107,7 +108,7 @@ To see full list of options check *UserManagementModule* file
 
 ```php
 
-./yii migrate --migrationPath=vendor/webvimark/module-user-management/migrations/
+./yii migrate --migrationPath=vendor/wpler/module-user-management/migrations/
 
 ```
 
@@ -119,7 +120,7 @@ public function behaviors()
 {
 	return [
 		'ghost-access'=> [
-			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+			'class' => 'wpler\modules\UserManagement\components\GhostAccessControl',
 		],
 	];
 }
@@ -132,8 +133,8 @@ Where you can go
 ```php
 
 <?php
-use webvimark\modules\UserManagement\components\GhostMenu;
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\components\GhostMenu;
+use wpler\modules\UserManagement\UserManagementModule;
 
 echo GhostMenu::widget([
 	'encodeLabels'=>false,
@@ -231,7 +232,7 @@ Events can be handled via config file like following
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+		'class' => 'wpler\modules\UserManagement\UserManagementModule',
 		'on afterRegistration' => function(UserAuthEvent $event) {
 			// Here you can do your own stuff like assign roles, send emails and so on
 		},
@@ -247,7 +248,7 @@ FAQ
 
 **Question**: Do you have API docs?
 
-**Answer**: Check this one http://opensource.id5.com.br/webvimark/doc/index.html (Credits to [lukBarros](https://github.com/lukBarros))
+**Answer**: Check this one on webvimark original module http://opensource.id5.com.br/webvimark/doc/index.html (Credits to [lukBarros](https://github.com/lukBarros))
 
 **Question**: I want users to register and login with they e-mails! Mmmmm... And they should confirm it too!
 
@@ -255,13 +256,13 @@ FAQ
 
 **Question**: I want to have profile for user with avatar, birthday and stuff. What should I do ?
 
-**Answer**: Profiles are to project-specific, so you'll have to implement them yourself (but you can find example here - https://github.com/webvimark/user-management/wiki/Profile-and-custom-registration). Here is how to do it without modifying this module
+**Answer**: Profiles are to project-specific, so you'll have to implement them yourself (but you can find example here on webvimark original module - https://github.com/webvimark/user-management/wiki/Profile-and-custom-registration). Here is how to do it without modifying this module
 
 1) Create table and model for profile, that have user_id (connect with "user" table)
 
 2) Check AuthController::actionRegistration() how it works (*you can skip this part*)
 
-3) Define your layout for registration. Check example in *AuthHelper::layoutHandler()*. Now use theming to change registraion.php file
+3) Define your layout for registration. Check example in *AuthHelper::layoutHandler()*. Now use theming to change registration.php file
 
 4) Define your own UserManagementModule::$registrationFormClass. In this class you can do whatever you want like validating custom forms and saving profiles
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this yii\web\View
- * @var $user webvimark\modules\UserManagement\models\User
+ * @var $user wpler\modules\UserManagement\models\User
  */
 use yii\helpers\Html;
 

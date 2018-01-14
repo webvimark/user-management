@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\search\UserSearch $model
+ * @var wpler\modules\UserManagement\models\search\UserSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>

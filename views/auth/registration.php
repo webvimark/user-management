@@ -1,13 +1,13 @@
 <?php
 
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\forms\RegistrationForm $model
+ * @var wpler\modules\UserManagement\models\forms\RegistrationForm $model
  */
 
 $this->title = UserManagementModule::t('front', 'Registration');
