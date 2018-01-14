@@ -1,9 +1,26 @@
 {
 	"name": "wpler/module-user-management",
+	"type": "yii2-extension",
+	"keywords": ["yii2","yii2-user","user-management"],
 	"description": "User with improved RBAC",
+	"authors": [
+		{
+			"name": "WPLer",
+			"email": "support@wpler.com"
+		},
+		{
+			"name": "webvimark"
+		}
+	],
+	"license": "BSD-3-Clause",
+	"support": {
+		"issues": "https://github.com/Stefan39/user-management/issues",
+		"source": "https://github.com/Stefan39/user-management",
+		"docs": "https://github.com/Stefan39/user-management/wiki"
+	},
 	"autoload": {
 		"psr-4": {
-			"webvimark\\modules\\UserManagement\\": ""
+			"wpler\\modules\\UserManagement\\": ""
 		}
 	},
 	"require": {

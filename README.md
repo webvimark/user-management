@@ -1,10 +1,12 @@
 User management module for Yii 2
 =====
 
+This is a fork of [wpler/user-management-module](https://github.com/webvimark/user-management) passed for SQLite and fixed some new 
+issues of the original. Also this fork will include some new widgets for working with Bootstrap-4 (beta) into the next updates. 
+
 Perks
 ---
 
-* This is a fork of [wpler/user-management-module](https://github.com/wpler/user-management) passed for SQLite
 * User management
 * RBAC (roles, permissions and stuff) with web interface
 * Registration, authorization, password recovery and so on
