@@ -1,7 +1,7 @@
 User management module for Yii 2
 =====
 
-This is a fork of [wpler/user-management-module](https://github.com/webvimark/user-management) passed for SQLite and fixed some new 
+This is a fork of [webvimark/user-management-module](https://github.com/webvimark/user-management) passed for SQLite and fixed some new 
 issues of the original. Also this fork will include some new widgets for working with Bootstrap-4 (beta) into the next updates. 
 
 Perks
@@ -29,7 +29,7 @@ composer require wpler/module-user-management
 or add
 
 ```
-"wpler/module-user-management": "^1"
+"wpler/module-user-management": "~1"
 ```
 
 to the require section of your `composer.json` file.
