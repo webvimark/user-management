@@ -3,7 +3,7 @@
 namespace wpler\modules\UserManagement\models;
 
 use Ikimea\Browser\Browser;
-use wpler\helpers\LittleBigHelper;
+use \webvimark\helpers\LittleBigHelper;
 use wpler\modules\UserManagement\UserManagementModule;
 use Yii;
 
@@ -22,7 +22,7 @@ use Yii;
  *
  * @property User $user
  */
-class UserVisitLog extends \wpler\components\BaseActiveRecord
+class UserVisitLog extends \webvimark\components\BaseActiveRecord
 {
 	CONST SESSION_TOKEN = '__visitorToken';
 

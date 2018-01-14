@@ -1,7 +1,7 @@
 <?php
 namespace wpler\modules\UserManagement\models\forms;
 
-use wpler\helpers\LittleBigHelper;
+use webvimark\helpers\LittleBigHelper;
 use wpler\modules\UserManagement\models\User;
 use wpler\modules\UserManagement\UserManagementModule;
 use yii\base\Model;

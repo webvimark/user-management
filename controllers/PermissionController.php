@@ -8,7 +8,7 @@ use wpler\modules\UserManagement\models\rbacDB\AbstractItem;
 use wpler\modules\UserManagement\models\rbacDB\Permission;
 use wpler\modules\UserManagement\models\rbacDB\Route;
 use wpler\modules\UserManagement\models\rbacDB\search\PermissionSearch;
-use wpler\components\AdminDefaultController;
+use \webvimark\components\AdminDefaultController;
 use wpler\modules\UserManagement\UserManagementModule;
 use Yii;
 

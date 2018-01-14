@@ -6,8 +6,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
-use wpler\extensions\GridBulkActions\GridBulkActions;
-use wpler\extensions\GridPageSize\GridPageSize;
+use \webvimark\extensions\GridBulkActions\GridBulkActions;
+use \webvimark\extensions\GridPageSize\GridPageSize;
 use yii\grid\GridView;
 
 /**

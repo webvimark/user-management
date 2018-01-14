@@ -2,7 +2,7 @@
 
 namespace wpler\modules\UserManagement\controllers;
 
-use wpler\components\BaseController;
+use \webvimark\components\BaseController;
 use wpler\modules\UserManagement\components\UserAuthEvent;
 use wpler\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
 use wpler\modules\UserManagement\models\forms\ConfirmEmailForm;

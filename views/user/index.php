@@ -8,8 +8,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
-use wpler\extensions\GridBulkActions\GridBulkActions;
-use wpler\extensions\GridPageSize\GridPageSize;
+use \webvimark\extensions\GridBulkActions\GridBulkActions;
+use \webvimark\extensions\GridPageSize\GridPageSize;
 use yii\grid\GridView;
 
 /**
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					['class' => 'yii\grid\SerialColumn', 'options'=>['style'=>'width:10px'] ],
 
 					[
-						'class'=>'wpler\components\StatusColumn',
+						'class'=>'\webvimark\components\StatusColumn',
 						'attribute'=>'superadmin',
 						'visible'=>Yii::$app->user->isSuperadmin,
 					],
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'visible'=>User::hasPermission('viewUserEmail'),
 					],
 					[
-						'class'=>'wpler\components\StatusColumn',
+						'class'=>'\webvimark\components\StatusColumn',
 						'attribute'=>'email_confirmed',
 						'visible'=>User::hasPermission('viewUserEmail'),
 					],
@@ -138,7 +138,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						],
 					],
 					[
-						'class'=>'wpler\components\StatusColumn',
+						'class'=>'\webvimark\components\StatusColumn',
 						'attribute'=>'status',
 						'optionsArray'=>[
 							[User::STATUS_ACTIVE, UserManagementModule::t('back', 'Active'), 'success'],

@@ -1,7 +1,7 @@
 <?php
 
 use wpler\modules\UserManagement\models\User;
-use wpler\extensions\BootstrapSwitch\BootstrapSwitch;
+use \webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 use wpler\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;

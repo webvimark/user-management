@@ -2,7 +2,7 @@
 
 namespace wpler\modules\UserManagement\controllers;
 
-use wpler\components\AdminDefaultController;
+use \webvimark\components\AdminDefaultController;
 use Yii;
 use wpler\modules\UserManagement\models\User;
 use wpler\modules\UserManagement\models\search\UserSearch;

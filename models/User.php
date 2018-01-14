@@ -2,8 +2,8 @@
 
 namespace wpler\modules\UserManagement\models;
 
-use wpler\helpers\LittleBigHelper;
-use wpler\helpers\Singleton;
+use \webvimark\helpers\LittleBigHelper;
+use \webvimark\helpers\Singleton;
 use wpler\modules\UserManagement\components\AuthHelper;
 use wpler\modules\UserManagement\components\UserIdentity;
 use wpler\modules\UserManagement\models\rbacDB\Role;

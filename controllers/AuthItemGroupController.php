@@ -5,7 +5,7 @@ namespace wpler\modules\UserManagement\controllers;
 use wpler\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use wpler\modules\UserManagement\models\rbacDB\search\AuthItemGroupSearch;
 use Yii;
-use wpler\components\AdminDefaultController;
+use \webvimark\components\AdminDefaultController;
 
 /**
  * AuthItemGroupController implements the CRUD actions for AuthItemGroup model.

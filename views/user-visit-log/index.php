@@ -1,10 +1,10 @@
 <?php
 
-use wpler\extensions\DateRangePicker\DateRangePicker;
+use \webvimark\extensions\DateRangePicker\DateRangePicker;
 use wpler\modules\UserManagement\UserManagementModule;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
-use wpler\extensions\GridPageSize\GridPageSize;
+use \webvimark\extensions\GridPageSize\GridPageSize;
 use yii\grid\GridView;
 
 /**

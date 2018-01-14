@@ -6,7 +6,7 @@ use wpler\modules\UserManagement\components\AuthHelper;
 use wpler\modules\UserManagement\models\rbacDB\Permission;
 use wpler\modules\UserManagement\models\rbacDB\Role;
 use wpler\modules\UserManagement\models\rbacDB\search\RoleSearch;
-use wpler\components\AdminDefaultController;
+use \webvimark\components\AdminDefaultController;
 use wpler\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\rbac\DbManager;

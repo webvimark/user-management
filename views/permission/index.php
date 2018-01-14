@@ -1,6 +1,6 @@
 <?php
-use wpler\extensions\GridBulkActions\GridBulkActions;
-use wpler\extensions\GridPageSize\GridPageSize;
+use \webvimark\extensions\GridBulkActions\GridBulkActions;
+use \webvimark\extensions\GridPageSize\GridPageSize;
 use wpler\modules\UserManagement\components\GhostHtml;
 use wpler\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use wpler\modules\UserManagement\models\rbacDB\Permission;

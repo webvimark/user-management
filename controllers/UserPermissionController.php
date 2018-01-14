@@ -2,7 +2,7 @@
 
 namespace wpler\modules\UserManagement\controllers;
 
-use wpler\components\BaseController;
+use \webvimark\components\BaseController;
 use wpler\modules\UserManagement\models\rbacDB\Permission;
 use wpler\modules\UserManagement\models\rbacDB\Role;
 use wpler\modules\UserManagement\models\User;

@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var app\modules\merchant\models\search\AuthItemGroupSearch $model
+ * @var wpler\modules\UserManagement\models\rbacDB\search\AuthItemGroupSearch $model
  * @var yii\widgets\ActiveForm $form
  */
 ?>
