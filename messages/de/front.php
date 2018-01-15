@@ -20,7 +20,7 @@ return [
     'Captcha' => '',
     'E-mail' => '',
     'Login' => '',
-    'Username' => '',
+    'Username' => 'Benutzername',
     'Authorization' => 'Autorisierung',
     'Check your E-mail for further instructions' => 'Überprüfen Sie Ihre E-Mail-Adresse für weitere Anweisungen',
     'Check your e-mail {email} for instructions to activate account' => 'Überprüfen Sie Ihre E-Mail-Adresse {email} für weitere Anweisungen zur Kontoaktivierung',
