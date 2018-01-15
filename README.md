@@ -1,8 +1,15 @@
 User management module for Yii 2
 =====
 
-This is a fork of [webvimark/user-management-module](https://github.com/webvimark/user-management) passed for SQLite and fixed some new 
-issues of the original. Also this fork will include some new widgets for working with Bootstrap-4 (beta) into the next updates. 
+This is a fork of [webvimark/user-management-module](https://github.com/webvimark/user-management) to further development for using SQLite 
+and NoSQL databases.
+
+In addition, this extension is to be extended to use Bootstrap 4 Styles by given module setting.
+
+[![Latest Stable Version](https://poser.pugx.org/wpler/module-user-management/v/stable)](https://packagist.org/packages/wpler/module-user-management)
+[![Latest Unstable Version](https://poser.pugx.org/wpler/module-user-management/v/unstable)](https://packagist.org/packages/wpler/module-user-management)
+[![Total Downloads](https://poser.pugx.org/wpler/module-user-management/downloads)](https://packagist.org/packages/wpler/module-user-management)
+
 
 Perks
 ---

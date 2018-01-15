@@ -49,4 +49,10 @@ return [
     'Too many attempts' => 'Лимит попыток превышен',
     'Unable to send message for email provided' => 'Не удалось отправить письмо на указанный email',
     'You could not login from this IP' => 'Вы не можете входить с этого IP',
+    'Hello {username}, follow this link to confirm your E-mail address:' => '',
+    'Confirm E-mail' => '',
+    'Hello {username}, follow this link to reset your password:' => '',
+    'Reset password' => '',
+    'Hello, you have been registered on {hostinfo}' => '',
+    'Follow this link to confirm your E-mail address and activate your account:' => '',
 ];

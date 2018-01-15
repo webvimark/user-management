@@ -49,4 +49,10 @@ return [
     'Too many attempts' => '너무 많은 시도를 했습니다',
     'Unable to send message for email provided' => '제출된 주소로 메일을 보낼수 없습니다',
     'You could not login from this IP' => '이 아이피로 로그인 할 수 없습니다',
+    'Hello {username}, follow this link to confirm your E-mail address:' => '',
+    'Confirm E-mail' => '',
+    'Hello {username}, follow this link to reset your password:' => '',
+    'Reset password' => '',
+    'Hello, you have been registered on {hostinfo}' => '',
+    'Follow this link to confirm your E-mail address and activate your account:' => '',
 ];
