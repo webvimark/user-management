@@ -5,7 +5,7 @@ namespace wpler\modules\UserManagement\controllers;
 use Yii;
 use wpler\modules\UserManagement\models\UserVisitLog;
 use wpler\modules\UserManagement\models\search\UserVisitLogSearch;
-use \webvimark\components\AdminDefaultController;
+use wpler\modules\UserManagement\components\AdminDefaultController;
 
 /**
  * UserVisitLogController implements the CRUD actions for UserVisitLog model.
