@@ -3,7 +3,7 @@
  * Admin Default Controller
  */
 
-namespace wpler\modules\UserManagement\controllers;
+namespace wpler\modules\UserManagement\components;
 
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
