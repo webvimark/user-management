@@ -2,6 +2,7 @@
 
 namespace wpler\modules\UserManagement;
 
+use wpler\modules\UserManagement\models\User;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -208,6 +209,20 @@ class UserManagementModule extends \yii\base\Module
 	 */
 	public static function menuItems()
 	{
+		$menuItems=[];
+		if (User::hasPermission('viewUsers')) {
+			$menuItems[]=['label'=>'<i class="glyphicon glyphicon-circle-arrow-right"></i> '.UserManagementModule::t('back','Users'),'url'=>['/user-management/user/index']];
+		}
+		if (User::hasPermission('viewUserRoles')) {
+			$menuItems[]=['label'=>'<i class="glyphicon glyphicon-circle-arrow-right"></i> '.UserManagementModule::t('back','Roles'),'url'=>['/user-management/role/index']];
+			$menuItems[]=['label'=>'<i class="glyphicon glyphicon-circle-arrow-right"></i> '.UserManagementModule::t('back','Permissions'),'url'=>['/user-management/permission/index']];
+			$menuItems[]=['label'=>'<i class="glyphicon glyphicon-circle-arrow-right"></i> '.UserManagementModule::t('back','Permission groups'),'url'=>['/user-management/auth-item-group/index']];
+		}
+		if (User::hasPermission('viewVisitLog')) {
+			$menuItems[]=['label'=>'<i class="glyphicon glyphicon-circle-arrow-right"></i> '.UserManagementModule::t('back','Visit log'),'url'=>['/user-management/user-visit-log/index']];
+		}
+		return $menuItems;
+		/*
 		return [
 			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
 			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
@@ -215,6 +230,7 @@ class UserManagementModule extends \yii\base\Module
 			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
 			['label' => '<i class="fa fa-angle-double-right"></i> ' . UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
 		];
+		*/
 	}
 
 	/**
