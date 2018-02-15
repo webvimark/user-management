@@ -97,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					],
 					[
 						'attribute'=>'gridRoleSearch',
-						'filter'=>ArrayHelper::map(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin),'name', 'description'),
+						'filter'=>ArrayHelper::map(Role::getAvailableRoles(Yii::$app->user->isSuperadmin),'name', 'description'),
 						'value'=>function(User $model){
 								return implode(', ', ArrayHelper::map($model->roles, 'name', 'description'));
 							},
