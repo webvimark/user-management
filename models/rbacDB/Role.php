@@ -54,9 +54,14 @@ class Role extends AbstractItem
 	 */
 	public static function getAvailableRoles($showAll = false, $asArray = false)
 	{
-		$condition = (Yii::$app->user->isSuperadmin OR $showAll) ? [] : ['name'=>Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES)];
+		//$condition = (Yii::$app->user->isSuperadmin OR $showAll) ? [] : ['name'=>Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES)];
+        $condition = (Yii::$app->user->isSuperadmin OR $showAll) ? false : ['name'=>Yii::$app->session->get(AuthHelper::SESSION_PREFIX_ROLES)];
 
-		$result = static::find()->andWhere($condition)->all();
+		if (false===$condition) {
+            $result = static::find()->all();
+        } else {
+		    $result = static::find()->andWhere($condition)->all();
+        }
 
 		return $asArray ? ArrayHelper::map($result, 'name', 'name') : $result;
 	}
