@@ -49,4 +49,10 @@ return [
     'Too many attempts' => 'Trop de tentatives',
     'Unable to send message for email provided' => 'Impossible d\'envoyer le message pour l\'email fournit',
     'You could not login from this IP' => 'Vous ne pouvez pas vous identifier à partir de cette adresse IP',
+    'Hello {username}, follow this link to confirm your E-mail address:' => '',
+    'Confirm E-mail' => '',
+    'Hello {username}, follow this link to reset your password:' => '',
+    'Reset password' => '',
+    'Hello, you have been registered on {hostinfo}' => '',
+    'Follow this link to confirm your E-mail address and activate your account:' => '',
 ];

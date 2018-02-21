@@ -1,13 +1,13 @@
 <?php
 
-use webvimark\modules\UserManagement\UserManagementModule;
+use wpler\modules\UserManagement\UserManagementModule;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 use yii\helpers\Html;
 
 /**
  * @var yii\web\View $this
- * @var webvimark\modules\UserManagement\models\forms\PasswordRecoveryForm $model
+ * @var wpler\modules\UserManagement\models\forms\PasswordRecoveryForm $model
  */
 
 $this->title = UserManagementModule::t('front', 'Password recovery');

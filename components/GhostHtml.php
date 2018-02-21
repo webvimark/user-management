@@ -3,9 +3,9 @@
  * @var $this yii\web\View
  */
 
-namespace webvimark\modules\UserManagement\components;
+namespace wpler\modules\UserManagement\components;
 
-use webvimark\modules\UserManagement\models\User;
+use wpler\modules\UserManagement\models\User;
 use yii\helpers\Html;
 
 /**
@@ -13,7 +13,7 @@ use yii\helpers\Html;
  *
  * Show elements only to those, who can access to them
  *
- * @package webvimark\modules\UserManagement\components
+ * @package wpler\modules\UserManagement\components
  */
 class GhostHtml extends Html
 {

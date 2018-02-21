@@ -22,7 +22,7 @@ class m141023_141535_create_user_visit_log extends Migration
 				'token'          => 'string not null',
 				'ip'             => 'varchar(15) not null',
 				'language'       => 'char(2) not null',
-				'browser_and_os' => 'string not null',
+				'user_agent'     => 'string not null',
 				'user_id'        => 'int',
 				'visit_time'     => 'int not null',
 				0                => 'FOREIGN KEY (user_id) REFERENCES '.Yii::$app->getModule('user-management')->user_table.' (id) ON DELETE SET NULL ON UPDATE CASCADE',

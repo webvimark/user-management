@@ -1,10 +1,10 @@
 <?php
 
-namespace webvimark\modules\UserManagement\models;
+namespace wpler\modules\UserManagement\models;
 
 use Ikimea\Browser\Browser;
-use webvimark\helpers\LittleBigHelper;
-use webvimark\modules\UserManagement\UserManagementModule;
+use \webvimark\helpers\LittleBigHelper;
+use wpler\modules\UserManagement\UserManagementModule;
 use Yii;
 
 /**
