@@ -260,15 +260,12 @@ class User extends UserIdentity
 			['email', 'email'],
 			['email', 'validateEmailConfirmedUnique'],
 
-            ['name', 'required'],
             ['name', 'string', 'max' => 50],
             ['name', 'trim'],
-            ['surname', 'required'],
             ['surname', 'string', 'max' => 50],
             ['surname', 'trim'],
 
-            ['qualification', 'integer'],
-            ['qualification', 'required'],
+            ['qualification', 'string'],
 
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
