@@ -16,8 +16,8 @@ class UserSearch extends User
 	{
 		return [
 			[['id', 'superadmin', 'status', 'created_at', 'updated_at', 'email_confirmed'], 'integer'],
-			[['username', 'gridRoleSearch', 'registration_ip', 'email'], 'string'],
-		];
+            [['username', 'name', 'surname', 'gridRoleSearch', 'registration_ip', 'email'], 'string'],
+        ];
 	}
 
 	public function scenarios()
@@ -70,6 +70,8 @@ class UserSearch extends User
 		]);
 
         	$query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'pow_name', $this->name])
+            ->andFilterWhere(['like', 'pow_surname', $this->surname])
 			->andFilterWhere(['like', 'email', $this->email]);
 
 		return $dataProvider;

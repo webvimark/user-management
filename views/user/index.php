@@ -85,16 +85,15 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 						'format'=>'raw',
 					],
-					[
-						'attribute'=>'email',
-						'format'=>'raw',
-						'visible'=>User::hasPermission('viewUserEmail'),
-					],
-					[
-						'class'=>'webvimark\components\StatusColumn',
-						'attribute'=>'email_confirmed',
-						'visible'=>User::hasPermission('viewUserEmail'),
-					],
+                    [
+                        'attribute' => 'name'
+                    ],
+                    [
+                        'attribute' => 'surname'
+                    ],
+                    [
+                        'attribute' => 'qualification',
+                    ],
 					[
 						'attribute'=>'gridRoleSearch',
 						'filter'=>ArrayHelper::map(Role::getAvailableRoles(Yii::$app->user->isSuperAdmin),'name', 'description'),

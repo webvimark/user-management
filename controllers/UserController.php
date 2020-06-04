@@ -30,13 +30,44 @@ class UserController extends AdminDefaultController
 	{
 		$model = new User(['scenario'=>'newUser']);
 
-		if ( $model->load(Yii::$app->request->post()) && $model->save() )
-		{
-			return $this->redirect(['view',	'id' => $model->id]);
-		}
+        if ( $model->load(Yii::$app->request->post())) {
+            $model->username = $model->email;
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
 
 		return $this->renderIsAjax('create', compact('model'));
 	}
+
+    /**
+     * Updates an existing model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     *
+     * @param integer $id
+     *
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ( $this->scenarioOnUpdate ) {
+            $model->scenario = $this->scenarioOnUpdate;
+        }
+
+        if ( $model->load(Yii::$app->request->post())) {
+            $model->username = $model->email;
+
+            if ($model->save()) {
+                $redirect = $this->getRedirectPage('update', $model);
+            }
+            return $redirect === false ? '' : $this->redirect($redirect);
+        }
+
+        return $this->renderIsAjax('update', compact('model'));
+    }
 
 	/**
 	 * @param int $id User ID

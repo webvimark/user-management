@@ -50,7 +50,8 @@ $this->params['breadcrumbs'][] = $this->title;
 						'attribute'=>'status',
 						'value'=>User::getStatusValue($model->status),
 					],
-					'username',
+					'name',
+                    'surname',
 					[
 						'attribute'=>'email',
 						'value'=>$model->email,

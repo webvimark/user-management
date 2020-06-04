@@ -26,6 +26,9 @@ use yii\behaviors\TimestampBehavior;
  * @property string $registration_ip
  * @property integer $status
  * @property integer $superadmin
+ * @property string $name
+ * @property string $surname
+ * @property integer $qualification
  * @property integer $created_at
  * @property integer $updated_at
  */
@@ -257,6 +260,16 @@ class User extends UserIdentity
 			['email', 'email'],
 			['email', 'validateEmailConfirmedUnique'],
 
+            ['name', 'required'],
+            ['name', 'string', 'max' => 50],
+            ['name', 'trim'],
+            ['surname', 'required'],
+            ['surname', 'string', 'max' => 50],
+            ['surname', 'trim'],
+
+            ['qualification', 'integer'],
+            ['qualification', 'required'],
+
 			['bind_to_ip', 'validateBindToIp'],
 			['bind_to_ip', 'trim'],
 			['bind_to_ip', 'string', 'max' => 255],
@@ -329,6 +342,9 @@ class User extends UserIdentity
 			'repeat_password'    => UserManagementModule::t('back', 'Repeat password'),
 			'email_confirmed'    => UserManagementModule::t('back', 'E-mail confirmed'),
 			'email'              => UserManagementModule::t('back', 'E-mail'),
+            'name'               => UserManagementModule::t('back', 'Name'),
+            'surname'            => UserManagementModule::t('back', 'Surname'),
+            'qualification'      => UserManagementModule::t('back', 'Qualification'),
 		];
 	}
 
@@ -417,4 +433,20 @@ class User extends UserIdentity
 
 		return parent::beforeDelete();
 	}
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getQualification()
+    {
+        return $this->qualification;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDisplayname()
+    {
+        return ($this->surname == '') ? $this->username : $this->surname.' '.$this->name;
+    }
 }
