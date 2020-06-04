@@ -1,15 +1,15 @@
 <?php
 
-namespace webvimark\modules\UserManagement\controllers;
+namespace leo\modules\UserManagement\controllers;
 
 use webvimark\components\BaseController;
-use webvimark\modules\UserManagement\components\UserAuthEvent;
-use webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
-use webvimark\modules\UserManagement\models\forms\ConfirmEmailForm;
-use webvimark\modules\UserManagement\models\forms\LoginForm;
-use webvimark\modules\UserManagement\models\forms\PasswordRecoveryForm;
-use webvimark\modules\UserManagement\models\User;
-use webvimark\modules\UserManagement\UserManagementModule;
+use leo\modules\UserManagement\components\UserAuthEvent;
+use leo\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
+use leo\modules\UserManagement\models\forms\ConfirmEmailForm;
+use leo\modules\UserManagement\models\forms\LoginForm;
+use leo\modules\UserManagement\models\forms\PasswordRecoveryForm;
+use leo\modules\UserManagement\models\User;
+use leo\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

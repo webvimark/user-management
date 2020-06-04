@@ -20,13 +20,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require le-o/module-user-management
+composer require leo/module-user-management
 ```
 
 or add
 
 ```
-"le-o/module-user-management": "^1"
+"leo/module-user-management": "^1"
 ```
 
 to the require section of your `composer.json` file.
@@ -40,18 +40,18 @@ Configuration
 
 'components'=>[
 	'user' => [
-		'class' => 'le-o\modules\UserManagement\components\UserConfig',
+		'class' => 'leo\modules\UserManagement\components\UserConfig',
 
 		// Comment this if you don't want to record user logins
 		'on afterLogin' => function($event) {
-				\le-o\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
+				\leo\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
 			}
 	],
 ],
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'le-o\modules\UserManagement\UserManagementModule',
+		'class' => 'leo\modules\UserManagement\UserManagementModule',
 
 		// 'enableRegistration' => true,
 
@@ -96,8 +96,8 @@ To see full list of options check *UserManagementModule* file
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'le-o\modules\UserManagement\UserManagementModule',
-	        'controllerNamespace'=>'vendor\le-o\modules\UserManagement\controllers', // To prevent yii help from crashing
+		'class' => 'leo\modules\UserManagement\UserManagementModule',
+	        'controllerNamespace'=>'vendor\leo\modules\UserManagement\controllers', // To prevent yii help from crashing
 	],
 ],
 
@@ -107,7 +107,7 @@ To see full list of options check *UserManagementModule* file
 
 ```php
 
-./yii migrate --migrationPath=vendor/le-o/module-user-management/migrations/
+./yii migrate --migrationPath=vendor/leo/module-user-management/migrations/
 
 ```
 
@@ -119,7 +119,7 @@ public function behaviors()
 {
 	return [
 		'ghost-access'=> [
-			'class' => 'le-o\modules\UserManagement\components\GhostAccessControl',
+			'class' => 'leo\modules\UserManagement\components\GhostAccessControl',
 		],
 	];
 }
@@ -132,8 +132,8 @@ Where you can go
 ```php
 
 <?php
-use le-o\modules\UserManagement\components\GhostMenu;
-use le-o\modules\UserManagement\UserManagementModule;
+use leo\modules\UserManagement\components\GhostMenu;
+use leo\modules\UserManagement\UserManagementModule;
 
 echo GhostMenu::widget([
 	'encodeLabels'=>false,
@@ -231,7 +231,7 @@ Events can be handled via config file like following
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'le-o\modules\UserManagement\UserManagementModule',
+		'class' => 'leo\modules\UserManagement\UserManagementModule',
 		'on afterRegistration' => function(UserAuthEvent $event) {
 			// Here you can do your own stuff like assign roles, send emails and so on
 		},

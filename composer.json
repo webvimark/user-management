@@ -1,9 +1,9 @@
 {
-	"name": "le-o/module-user-management",
+	"name": "leo/module-user-management",
 	"description": "User with improved RBAC - a fork from webvimark",
 	"autoload": {
 		"psr-4": {
-			"webvimark\\modules\\UserManagement\\": ""
+			"leo\\modules\\UserManagement\\": ""
 		}
 	},
 	"require": {
