@@ -2,7 +2,7 @@
 
 namespace leo\modules\UserManagement\controllers;
 
-use webvimark\components\AdminDefaultController;
+use leo\components\AdminDefaultController;
 use Yii;
 use leo\modules\UserManagement\models\User;
 use leo\modules\UserManagement\models\search\UserSearch;

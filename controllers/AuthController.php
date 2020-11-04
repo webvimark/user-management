@@ -2,7 +2,7 @@
 
 namespace leo\modules\UserManagement\controllers;
 
-use webvimark\components\BaseController;
+use leo\components\BaseController;
 use leo\modules\UserManagement\components\UserAuthEvent;
 use leo\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
 use leo\modules\UserManagement\models\forms\ConfirmEmailForm;

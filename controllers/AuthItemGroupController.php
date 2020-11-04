@@ -5,7 +5,7 @@ namespace leo\modules\UserManagement\controllers;
 use leo\modules\UserManagement\models\rbacDB\AuthItemGroup;
 use leo\modules\UserManagement\models\rbacDB\search\AuthItemGroupSearch;
 use Yii;
-use webvimark\components\AdminDefaultController;
+use leo\components\AdminDefaultController;
 
 /**
  * AuthItemGroupController implements the CRUD actions for AuthItemGroup model.

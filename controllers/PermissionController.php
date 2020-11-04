@@ -8,7 +8,7 @@ use leo\modules\UserManagement\models\rbacDB\AbstractItem;
 use leo\modules\UserManagement\models\rbacDB\Permission;
 use leo\modules\UserManagement\models\rbacDB\Route;
 use leo\modules\UserManagement\models\rbacDB\search\PermissionSearch;
-use webvimark\components\AdminDefaultController;
+use leo\components\AdminDefaultController;
 use leo\modules\UserManagement\UserManagementModule;
 use Yii;
 

@@ -6,7 +6,7 @@ use leo\modules\UserManagement\components\AuthHelper;
 use leo\modules\UserManagement\models\rbacDB\Permission;
 use leo\modules\UserManagement\models\rbacDB\Role;
 use leo\modules\UserManagement\models\rbacDB\search\RoleSearch;
-use webvimark\components\AdminDefaultController;
+use leo\components\AdminDefaultController;
 use leo\modules\UserManagement\UserManagementModule;
 use Yii;
 use yii\rbac\DbManager;

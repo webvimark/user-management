@@ -5,7 +5,7 @@ namespace leo\modules\UserManagement\controllers;
 use Yii;
 use leo\modules\UserManagement\models\UserVisitLog;
 use leo\modules\UserManagement\models\search\UserVisitLogSearch;
-use webvimark\components\AdminDefaultController;
+use leo\components\AdminDefaultController;
 
 /**
  * UserVisitLogController implements the CRUD actions for UserVisitLog model.

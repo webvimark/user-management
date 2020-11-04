@@ -2,7 +2,7 @@
 
 namespace leo\modules\UserManagement\controllers;
 
-use webvimark\components\BaseController;
+use leo\components\BaseController;
 use leo\modules\UserManagement\models\rbacDB\Permission;
 use leo\modules\UserManagement\models\rbacDB\Role;
 use leo\modules\UserManagement\models\User;
