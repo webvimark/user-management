@@ -26,10 +26,6 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
 
-	<?= $form->field($model, 'name')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
-
-	<?= $form->field($model, 'surname')->textInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
-
 	<?php if ( $model->isNewRecord ): ?>
 
 		<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>

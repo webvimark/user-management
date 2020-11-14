@@ -276,8 +276,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `confirmation_token` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
   `superadmin` smallint(1) DEFAULT '0',
-  `name` varchar(255) DEFAULT NULL,
-  `surname` varchar(255) DEFAULT NULL,
   `qualification` varchar(255) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,

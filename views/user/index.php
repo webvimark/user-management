@@ -86,12 +86,6 @@ $this->params['breadcrumbs'][] = $this->title;
 						'format'=>'raw',
 					],
                     [
-                        'attribute' => 'name'
-                    ],
-                    [
-                        'attribute' => 'surname'
-                    ],
-                    [
                         'attribute' => 'qualification',
                     ],
 					[

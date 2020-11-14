@@ -26,8 +26,6 @@ class m140608_173539_create_user_table extends Migration
 			'confirmation_token' => 'string',
 			'status'             => 'int not null default 1',
 			'superadmin'         => 'smallint default 0',
-            'name'               => 'string',
-            'surname'            => 'string',
             'qualification'      => 'string',
 			'created_at'         => 'int not null',
 			'updated_at'         => 'int not null',

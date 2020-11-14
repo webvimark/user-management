@@ -54,7 +54,7 @@ class UserConfig extends User
      */
     public function getDisplayname()
     {
-        return (empty(@Yii::$app->user->identity->surname)) ? @Yii::$app->user->identity->username : @Yii::$app->user->identity->surname.' '.@Yii::$app->user->identity->name;
+        return @Yii::$app->user->identity->username;
     }
 
 	/**
