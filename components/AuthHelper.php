@@ -112,7 +112,7 @@ class AuthHelper
 	{
 		touch(static::getPermissionsLastModFile());
 	}
-	
+
 	/**
 	 * Return route without baseUrl and start it with slash
 	 *
@@ -350,7 +350,10 @@ class AuthHelper
 					$className = $namespace . Inflector::id2camel($id) . 'Controller';
 					if ( strpos($className, '-') === false && class_exists($className) && is_subclass_of($className, 'yii\base\Controller') )
 					{
-						$controller = new $className($prefix . $id, $module);
+						$controller = Yii::createObject($className,[
+							+							'id' => $prefix . $id,
+							+							'module' => $module,
+							+							]);
 						self::getActionRoutes($controller, $result);
 						$result[] = '/' . $controller->uniqueId . '/*';
 					}
@@ -358,4 +361,4 @@ class AuthHelper
 			}
 		}
 	}
-} 
+}
