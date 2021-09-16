@@ -12,6 +12,13 @@ Perks
 * Visit log
 * Optimised (zero DB queries during usual user workflow)
 * Nice widgets like GhostMenu or GhostHtml::a where elements are visible only if user has access to route where they point
+* LDAP support
+
+Features of this fork
+~~~
+
+* Correct maximum length of an email address
+* Improved Spanish translation
 
 
 Installation
@@ -19,19 +26,18 @@ Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-Either run
-
+Add the following lines to your `composer.json` file:
 ```
-composer require webvimark/module-user-management
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/quique/user-management"
+    }
+],
+"require": {
+	"webvimark/module-user-management": "dev-dev",
+},
 ```
-
-or add
-
-```
-"webvimark/module-user-management": "^1"
-```
-
-to the require section of your `composer.json` file.
 
 Configuration
 ---
@@ -42,6 +48,8 @@ Configuration
 
 'components'=>[
 	'user' => [
+		// 'identityClass' => 'app\models\User',
+		'enableLdap' => false, // Change it to true to enable LDAP authentication
 		'class' => 'webvimark\modules\UserManagement\components\UserConfig',
 
 		// Comment this if you don't want to record user logins
@@ -67,7 +75,7 @@ Configuration
 		// $: anchored to the end of the string
 
 		//'passwordRegexp' => '^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$',
-		
+
 
 		// Here you can set your handler to change layout for any controller or action
 		// Tip: you can use this event in any module
@@ -80,6 +88,22 @@ Configuration
 	],
 ],
 
+```
+
+If needed, you can extend the base User class in app/models/User.php
+(change the identityClass in the configuration accordingly):
+```php
+<?php
+namespace app\models;
+
+use webvimark\modules\UserManagement\models\User as BaseUser;
+// use Yii;
+// use yii\web\ServerErrorHttpException;
+
+class User extends BaseUser
+{
+    // Your custom stuff (vg your own getUserAttributes() function)
+}
 ```
 
 To learn about events check:
@@ -126,6 +150,15 @@ public function behaviors()
 	];
 }
 
+```
+
+5) If you want to use LDAP authentication, add these lines to your params:
+```php
+'ldap' => [
+    'host' => 'ldapserver.domain.net',
+    'port' => 389,
+    'base_dn' => 'ou=unit, dc=domain, dc=net', // Base Distinguished Name
+],
 ```
 
 Where you can go
