@@ -34,6 +34,7 @@ class User extends UserIdentity
 	const STATUS_ACTIVE = 1;
 	const STATUS_INACTIVE = 0;
 	const STATUS_BANNED = -1;
+	const STATUS_FRONTEND = 10;
 
 	/**
 	 * @var string
@@ -207,6 +208,7 @@ class User extends UserIdentity
 			self::STATUS_ACTIVE   => UserManagementModule::t('back', 'Active'),
 			self::STATUS_INACTIVE => UserManagementModule::t('back', 'Inactive'),
 			self::STATUS_BANNED   => UserManagementModule::t('back', 'Banned'),
+			self::STATUS_FRONTEND   => UserManagementModule::t('back', 'Frontend'),
 		);
 	}
 

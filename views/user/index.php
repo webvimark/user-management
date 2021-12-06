@@ -141,6 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						'class'=>'webvimark\components\StatusColumn',
 						'attribute'=>'status',
 						'optionsArray'=>[
+							[User::STATUS_FRONTEND, UserManagementModule::t('back', 'Frontend'), 'success'],
 							[User::STATUS_ACTIVE, UserManagementModule::t('back', 'Active'), 'success'],
 							[User::STATUS_INACTIVE, UserManagementModule::t('back', 'Inactive'), 'warning'],
 							[User::STATUS_BANNED, UserManagementModule::t('back', 'Banned'), 'danger'],
