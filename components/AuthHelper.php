@@ -350,7 +350,7 @@ class AuthHelper
 					$className = $namespace . Inflector::id2camel($id) . 'Controller';
 					if ( strpos($className, '-') === false && class_exists($className) && is_subclass_of($className, 'yii\base\Controller') )
 					{
-						$controller = new $className($prefix . $id, $module);
+						$controller = Yii::createObject($className, [$prefix . $id, $module]);
 						self::getActionRoutes($controller, $result);
 						$result[] = '/' . $controller->uniqueId . '/*';
 					}
