@@ -1,6 +1,6 @@
 <?php
 
-use webvimark\modules\UserManagement\UserManagementModule;
+use itbeauftragter\modules\UserManagement\UserManagementModule;
 
 /**
  * @var yii\web\View $this

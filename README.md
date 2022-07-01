@@ -1,8 +1,6 @@
 User management module for Yii 2
 =====
 
-`This repository is not actively maintained. If you want to add some changes, just fork it and safely use your fork.`
-
 Perks
 ---
 
@@ -22,13 +20,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-composer require webvimark/module-user-management
+composer require itbeauftragter/module-user-management
 ```
 
 or add
 
 ```
-"webvimark/module-user-management": "^1"
+"itbeauftragter/module-user-management": "^1"
 ```
 
 to the require section of your `composer.json` file.
@@ -42,18 +40,18 @@ Configuration
 
 'components'=>[
 	'user' => [
-		'class' => 'webvimark\modules\UserManagement\components\UserConfig',
+		'class' => 'itbeauftragter\modules\UserManagement\components\UserConfig',
 
 		// Comment this if you don't want to record user logins
 		'on afterLogin' => function($event) {
-				\webvimark\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
+				\itbeauftragter\modules\UserManagement\models\UserVisitLog::newVisitor($event->identity->id);
 			}
 	],
 ],
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+		'class' => 'itbeauftragter\modules\UserManagement\UserManagementModule',
 
 		// 'enableRegistration' => true,
 
@@ -98,8 +96,8 @@ To see full list of options check *UserManagementModule* file
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
-	        'controllerNamespace'=>'vendor\webvimark\modules\UserManagement\controllers', // To prevent yii help from crashing
+		'class' => 'itbeauftragter\modules\UserManagement\UserManagementModule',
+	        'controllerNamespace'=>'vendor\itbeauftragter\modules\UserManagement\controllers', // To prevent yii help from crashing
 	],
 ],
 
@@ -109,7 +107,7 @@ To see full list of options check *UserManagementModule* file
 
 ```php
 
-./yii migrate --migrationPath=vendor/webvimark/module-user-management/migrations/
+./yii migrate --migrationPath=vendor/itbeauftragter/module-user-management/migrations/
 
 ```
 
@@ -121,7 +119,7 @@ public function behaviors()
 {
 	return [
 		'ghost-access'=> [
-			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+			'class' => 'itbeauftragter\modules\UserManagement\components\GhostAccessControl',
 		],
 	];
 }
@@ -134,8 +132,8 @@ Where you can go
 ```php
 
 <?php
-use webvimark\modules\UserManagement\components\GhostMenu;
-use webvimark\modules\UserManagement\UserManagementModule;
+use itbeauftragter\modules\UserManagement\components\GhostMenu;
+use itbeauftragter\modules\UserManagement\UserManagementModule;
 
 echo GhostMenu::widget([
 	'encodeLabels'=>false,
@@ -233,7 +231,7 @@ Events can be handled via config file like following
 
 'modules'=>[
 	'user-management' => [
-		'class' => 'webvimark\modules\UserManagement\UserManagementModule',
+		'class' => 'itbeauftragter\modules\UserManagement\UserManagementModule',
 		'on afterRegistration' => function(UserAuthEvent $event) {
 			// Here you can do your own stuff like assign roles, send emails and so on
 		},
@@ -249,7 +247,7 @@ FAQ
 
 **Question**: Do you have API docs?
 
-**Answer**: Check this one http://opensource.id5.com.br/webvimark/doc/index.html (Credits to [lukBarros](https://github.com/lukBarros))
+**Answer**: Check this one http://opensource.id5.com.br/itbeauftragter/doc/index.html (Credits to [lukBarros](https://github.com/lukBarros))
 
 **Question**: I want users to register and login with they e-mails! Mmmmm... And they should confirm it too!
 
@@ -257,7 +255,7 @@ FAQ
 
 **Question**: I want to have profile for user with avatar, birthday and stuff. What should I do ?
 
-**Answer**: Profiles are to project-specific, so you'll have to implement them yourself (but you can find example here - https://github.com/webvimark/user-management/wiki/Profile-and-custom-registration). Here is how to do it without modifying this module
+**Answer**: Profiles are to project-specific, so you'll have to implement them yourself (but you can find example here - https://github.com/itbeauftragter/user-management/wiki/Profile-and-custom-registration). Here is how to do it without modifying this module
 
 1) Create table and model for profile, that have user_id (connect with "user" table)
 

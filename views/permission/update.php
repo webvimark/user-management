@@ -1,10 +1,10 @@
 <?php
 /**
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\models\rbacDB\Permission $model
+ * @var itbeauftragter\modules\UserManagement\models\rbacDB\Permission $model
  */
 
-use webvimark\modules\UserManagement\UserManagementModule;
+use itbeauftragter\modules\UserManagement\UserManagementModule;
 
 $this->title = UserManagementModule::t('back', 'Editing permission: ') . ' ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['index']];

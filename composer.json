@@ -1,9 +1,9 @@
 {
-	"name": "webvimark/module-user-management",
-	"description": "User with improved RBAC",
+	"name": "itbeauftragter/module-user-management",
+	"description": "Benutzer- und Authentifizierungsmanagement mit RBAC",
 	"autoload": {
 		"psr-4": {
-			"webvimark\\modules\\UserManagement\\": ""
+			"itbeauftragter\\modules\\UserManagement\\": ""
 		}
 	},
 	"require": {

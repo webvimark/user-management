@@ -1,10 +1,10 @@
 <?php
-use webvimark\extensions\GridBulkActions\GridBulkActions;
-use webvimark\extensions\GridPageSize\GridPageSize;
-use webvimark\modules\UserManagement\components\GhostHtml;
-use webvimark\modules\UserManagement\models\rbacDB\AuthItemGroup;
-use webvimark\modules\UserManagement\models\rbacDB\Role;
-use webvimark\modules\UserManagement\UserManagementModule;
+use itbeauftragter\extensions\GridBulkActions\GridBulkActions;
+use itbeauftragter\extensions\GridPageSize\GridPageSize;
+use itbeauftragter\modules\UserManagement\components\GhostHtml;
+use itbeauftragter\modules\UserManagement\models\rbacDB\AuthItemGroup;
+use itbeauftragter\modules\UserManagement\models\rbacDB\Role;
+use itbeauftragter\modules\UserManagement\UserManagementModule;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 
 /**
  * @var yii\data\ActiveDataProvider $dataProvider
- * @var webvimark\modules\UserManagement\models\rbacDB\search\RoleSearch $searchModel
+ * @var itbeauftragter\modules\UserManagement\models\rbacDB\search\RoleSearch $searchModel
  * @var yii\web\View $this
  */
 $this->title = UserManagementModule::t('back', 'Roles');

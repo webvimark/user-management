@@ -1,8 +1,8 @@
 <?php
-namespace webvimark\modules\UserManagement\models\rbacDB;
+namespace itbeauftragter\modules\UserManagement\models\rbacDB;
 
 use Exception;
-use webvimark\modules\UserManagement\components\AuthHelper;
+use itbeauftragter\modules\UserManagement\components\AuthHelper;
 use Yii;
 use yii\rbac\DbManager;
 

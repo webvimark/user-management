@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-use webvimark\modules\UserManagement\models\User;
+use itbeauftragter\modules\UserManagement\models\User;
 
 class m140809_072112_insert_superadmin_to_user extends Migration
 {

@@ -3,9 +3,9 @@
  *
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
- * @var webvimark\modules\UserManagement\models\rbacDB\Role $model
+ * @var itbeauftragter\modules\UserManagement\models\rbacDB\Role $model
  */
-use webvimark\modules\UserManagement\UserManagementModule;
+use itbeauftragter\modules\UserManagement\UserManagementModule;
 
 $this->title = UserManagementModule::t('back', 'Role creation');
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Roles'), 'url' => ['index']];
